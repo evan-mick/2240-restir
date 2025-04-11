@@ -565,6 +565,13 @@ namespace GLSLPT
         }
         else
         {
+
+            // TODO: I believe these are the framebuffers we need to attach for the resovoir
+            // The draws flip between the pathTraceFBO and the accumFBO
+            // can simply put another texture for the resovoirs there and be done
+            //
+
+
             // Renders to pathTraceTexture while using previously accumulated samples from accumTexture
             // Rendering is done a tile per frame, so if a 500x500 image is rendered with a tileWidth and tileHeight of 250 then, all tiles (for a single sample) 
             // get rendered after 4 frames

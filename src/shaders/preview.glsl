@@ -69,3 +69,4 @@ void main(void)
 
     color = pixelColor;
 }
+

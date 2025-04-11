@@ -99,6 +99,12 @@ namespace GLSLPT
         float roughnessMollificationAmt;
     };
 
+    struct Reservoir {
+        float outputSample;
+        float weightSum;
+        int sampleNum;
+    };
+
     class Scene;
 
     class Renderer

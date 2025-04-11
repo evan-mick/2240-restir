@@ -341,11 +341,366 @@ light
 	emission 5 5 5 
 }
 
+light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 8
+	v1 2.040 5 8
+	v2 -2.04973 5 8.5     
+	emission 5 5 5 
+}
 
-#light
+light
 {
 	type sphere
 	emission 80.0 80.0 80.0
 	position 0 390.0 -439.0
 	radius 60.0
+}
+
+light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}
+
+light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
+}light
+{
+	type quad
+	position -2.04973 5 5
+	v1 2.040 5 5
+	v2 -2.04973 5 5.5     
+	emission 5 5 5 
 }

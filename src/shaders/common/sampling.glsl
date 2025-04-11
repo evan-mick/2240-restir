@@ -253,7 +253,7 @@ vec3 SampleHG(vec3 V, float g, float r1, float r2)
 
     if (abs(g) < 0.001)
         cosTheta = 1 - 2 * r2;
-    else 
+    else
     {
         float sqrTerm = (1 - g * g) / (1 + g - 2 * g * r2);
         cosTheta = -(1 + g * g - sqrTerm * sqrTerm) / (2 * g);
@@ -275,3 +275,4 @@ float PhaseHG(float cosTheta, float g)
     float denom = 1 + g * g + 2 * g * cosTheta;
     return INV_4_PI * (1 - g * g) / (denom * sqrt(denom));
 }
+
