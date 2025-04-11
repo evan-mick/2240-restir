@@ -7,3 +7,4 @@ thirdparty/oidn/*
 
 .DS_Store
 .idea
+.cache
