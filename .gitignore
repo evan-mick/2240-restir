@@ -3,6 +3,7 @@
 .vs/
 build/*
 compile_commands.json
+thirdparty/oidn/*
 
 .DS_Store
 .idea
