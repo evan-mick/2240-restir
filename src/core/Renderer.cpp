@@ -250,6 +250,8 @@ namespace GLSLPT
         glBindTexture(GL_TEXTURE_2D, envMapTex);
         glActiveTexture(GL_TEXTURE10);
         glBindTexture(GL_TEXTURE_2D, envMapCDFTex);
+        glActiveTexture(GL_TEXTURE11);
+        glBindTexture(GL_TEXTURE_2D, reservoirTextures[0]);
     }
 
     void Renderer::ResizeRenderer()
@@ -308,6 +310,8 @@ namespace GLSLPT
         // Create FBOs for path trace shader 
         glGenFramebuffers(1, &pathTraceFBO);
         glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);
+        GLenum drawBuffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+        glDrawBuffers(2, drawBuffers);
 
         // Create Texture for FBO
         glGenTextures(1, &pathTraceTexture);
@@ -316,7 +320,6 @@ namespace GLSLPT
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glBindTexture(GL_TEXTURE_2D, 0);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pathTraceTexture, 0);
 
 
         glGenTextures(1, &reservoirTextures[0]);
@@ -325,7 +328,16 @@ namespace GLSLPT
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glBindTexture(GL_TEXTURE_2D, 0);
+
+        glGenTextures(1, &reservoirTextures[1]);
+        glBindTexture(GL_TEXTURE_2D, reservoirTextures[1]);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, tileWidth, tileHeight, 0, GL_RGBA, GL_FLOAT, 0);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glBindTexture(GL_TEXTURE_2D, 0);
+
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[0], 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pathTraceTexture, 0);
 
         // Create FBOs for low res preview shader 
         glGenFramebuffers(1, &pathTraceFBOLowRes);
@@ -531,7 +543,7 @@ namespace GLSLPT
         glUniform1i(glGetUniformLocation(shaderObject, "textureMapsArrayTex"), 8);
         glUniform1i(glGetUniformLocation(shaderObject, "envMapTex"), 9);
         glUniform1i(glGetUniformLocation(shaderObject, "envMapCDFTex"), 10);
-        glUniform1i(glGetUniformLocation(shaderObject, "reservoirOut"), 11);
+        glUniform1i(glGetUniformLocation(shaderObject, "reservoirs"), 11);
         pathTraceShader->StopUsing();
 
         pathTraceShaderLowRes->Use();
@@ -556,7 +568,7 @@ namespace GLSLPT
         glUniform1i(glGetUniformLocation(shaderObject, "textureMapsArrayTex"), 8);
         glUniform1i(glGetUniformLocation(shaderObject, "envMapTex"), 9);
         glUniform1i(glGetUniformLocation(shaderObject, "envMapCDFTex"), 10);
-        glUniform1i(glGetUniformLocation(shaderObject, "reservoirOut"), 11);
+        glUniform1i(glGetUniformLocation(shaderObject, "reservoirs"), 11);
         pathTraceShaderLowRes->StopUsing();
     }
 
@@ -567,8 +579,8 @@ namespace GLSLPT
         if (!scene->dirty && scene->renderOptions.maxSpp != -1 && sampleCounter >= scene->renderOptions.maxSpp)
             return;
 
-        glActiveTexture(GL_TEXTURE0);
 
+        glActiveTexture(GL_TEXTURE0);
         if (scene->dirty)
         {
             // Renders a low res preview if camera/instances are modified
@@ -594,9 +606,13 @@ namespace GLSLPT
             // get rendered after 4 frames
             glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);
             glViewport(0, 0, tileWidth, tileHeight);
+            glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
+            glActiveTexture(GL_TEXTURE11);
+            glBindTexture(GL_TEXTURE_2D, reservoirTextures[0]);
             quad->Draw(pathTraceShader);
 
+            glActiveTexture(GL_TEXTURE0);
             // pathTraceTexture is copied to accumTexture and re-used as input for the first step.
             glBindFramebuffer(GL_FRAMEBUFFER, accumFBO);
             glViewport(tileWidth * tile.x, tileHeight * tile.y, tileWidth, tileHeight);
