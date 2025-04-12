@@ -25,6 +25,7 @@
 #version 330
 
 out vec4 color;
+out vec4 reservoirOut;
 in vec2 TexCoords;
 
 #include common/uniforms.glsl
@@ -71,6 +72,8 @@ void main(void)
 
     vec4 pixelColor = PathTrace(ray);
 
-    color = pixelColor + accumColor;
-}
+    reservoirOut = vec4(1.0);
 
+    color = pixelColor + accumColor;
+    //color = reservoirOut;
+}

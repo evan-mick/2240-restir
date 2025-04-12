@@ -147,6 +147,7 @@ namespace GLSLPT
         GLuint pathTraceTexture;
         GLuint accumTexture;
         GLuint tileOutputTexture[2];
+        GLuint reservoirTextures[2];
         GLuint denoisedTexture;
 
         // Render resolution and window resolution

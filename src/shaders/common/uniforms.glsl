@@ -40,6 +40,7 @@ uniform sampler2DArray textureMapsArrayTex;
 
 uniform sampler2D envMapTex;
 uniform sampler2D envMapCDFTex;
+uniform sampler2D reservoirs;
 
 uniform vec2 envMapRes;
 uniform float envMapTotalSum;
@@ -51,3 +52,4 @@ uniform int maxDepth;
 uniform int topBVHIndex;
 uniform int frameNum;
 uniform float roughnessMollificationAmt;
+

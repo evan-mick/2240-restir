@@ -24,6 +24,7 @@
 
 #include "Config.h"
 #include "Renderer.h"
+#include "GL/glcorearb.h"
 #include "ShaderIncludes.h"
 #include "Scene.h"
 #include "OpenImageDenoise/oidn.hpp"
@@ -58,6 +59,7 @@ namespace GLSLPT
         , pathTraceTexture(0)
         , accumTexture(0)
         , tileOutputTexture()
+        , reservoirTextures()
         , denoisedTexture(0)
         , pathTraceFBO(0)
         , pathTraceFBOLowRes(0)
@@ -106,6 +108,8 @@ namespace GLSLPT
         glDeleteTextures(1, &accumTexture);
         glDeleteTextures(1, &tileOutputTexture[0]);
         glDeleteTextures(1, &tileOutputTexture[1]);
+        glDeleteTextures(1, &reservoirTextures[0]);
+        glDeleteTextures(1, &reservoirTextures[1]);
         glDeleteTextures(1, &denoisedTexture);
 
         // Delete buffers
@@ -256,6 +260,8 @@ namespace GLSLPT
         glDeleteTextures(1, &accumTexture);
         glDeleteTextures(1, &tileOutputTexture[0]);
         glDeleteTextures(1, &tileOutputTexture[1]);
+        glDeleteTextures(1, &reservoirTextures[0]);
+        glDeleteTextures(1, &reservoirTextures[1]);
         glDeleteTextures(1, &denoisedTexture);
 
         // Delete FBOs
@@ -311,6 +317,15 @@ namespace GLSLPT
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glBindTexture(GL_TEXTURE_2D, 0);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pathTraceTexture, 0);
+
+
+        glGenTextures(1, &reservoirTextures[0]);
+        glBindTexture(GL_TEXTURE_2D, reservoirTextures[0]);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, tileWidth, tileHeight, 0, GL_RGBA, GL_FLOAT, 0);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[0], 0);
 
         // Create FBOs for low res preview shader 
         glGenFramebuffers(1, &pathTraceFBOLowRes);
@@ -516,6 +531,7 @@ namespace GLSLPT
         glUniform1i(glGetUniformLocation(shaderObject, "textureMapsArrayTex"), 8);
         glUniform1i(glGetUniformLocation(shaderObject, "envMapTex"), 9);
         glUniform1i(glGetUniformLocation(shaderObject, "envMapCDFTex"), 10);
+        glUniform1i(glGetUniformLocation(shaderObject, "reservoirOut"), 11);
         pathTraceShader->StopUsing();
 
         pathTraceShaderLowRes->Use();
@@ -540,6 +556,7 @@ namespace GLSLPT
         glUniform1i(glGetUniformLocation(shaderObject, "textureMapsArrayTex"), 8);
         glUniform1i(glGetUniformLocation(shaderObject, "envMapTex"), 9);
         glUniform1i(glGetUniformLocation(shaderObject, "envMapCDFTex"), 10);
+        glUniform1i(glGetUniformLocation(shaderObject, "reservoirOut"), 11);
         pathTraceShaderLowRes->StopUsing();
     }
 
