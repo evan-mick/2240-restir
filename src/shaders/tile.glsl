@@ -73,8 +73,8 @@ void main(void)
     vec4 pixelColor = PathTrace(ray);
 
     vec4 res_sample = texelFetch(reservoirs, ivec2(gl_FragCoord.xy), 0);
-    reservoirOut = vec4(1.f - res_sample.r, 0.0, 0.0, 1.0);
+    //reservoirOut = vec4(max(1.0 - res_sample.r, res_sample.r), 0.0, 0.0, 1.0);
 
     color = pixelColor + accumColor;
-    //color = texelFetch(reservoirs, ivec2(gl_FragCoord.xy), 0);
+    //color = res_sample;
 }

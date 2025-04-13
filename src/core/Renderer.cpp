@@ -250,8 +250,8 @@ namespace GLSLPT
         glBindTexture(GL_TEXTURE_2D, envMapTex);
         glActiveTexture(GL_TEXTURE10);
         glBindTexture(GL_TEXTURE_2D, envMapCDFTex);
-        glActiveTexture(GL_TEXTURE11);
-        glBindTexture(GL_TEXTURE_2D, reservoirTextures[0]);
+        //glActiveTexture(GL_TEXTURE11);
+        //glBindTexture(GL_TEXTURE_2D, reservoirTextures[currentBuffer]);
     }
 
     void Renderer::ResizeRenderer()
@@ -336,7 +336,7 @@ namespace GLSLPT
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glBindTexture(GL_TEXTURE_2D, 0);
 
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[0], 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[1 - currentBuffer], 0);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pathTraceTexture, 0);
 
         // Create FBOs for low res preview shader 
@@ -609,7 +609,8 @@ namespace GLSLPT
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             glActiveTexture(GL_TEXTURE11);
-            glBindTexture(GL_TEXTURE_2D, reservoirTextures[0]);
+            glBindTexture(GL_TEXTURE_2D, reservoirTextures[currentBuffer]);
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[1 - currentBuffer], 0);
             quad->Draw(pathTraceShader);
 
             glActiveTexture(GL_TEXTURE0);
