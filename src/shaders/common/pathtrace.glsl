@@ -37,34 +37,34 @@ void GetMaterial(inout State state, in Ray r)
     vec4 param7 = texelFetch(materialsTex, ivec2(index + 6, 0), 0);
     vec4 param8 = texelFetch(materialsTex, ivec2(index + 7, 0), 0);
 
-    mat.baseColor          = param1.rgb;
-    mat.anisotropic        = param1.w;
+    mat.baseColor = param1.rgb;
+    mat.anisotropic = param1.w;
 
-    mat.emission           = param2.rgb;
+    mat.emission = param2.rgb;
 
-    mat.metallic           = param3.x;
-    mat.roughness          = max(param3.y, 0.001);
-    mat.subsurface         = param3.z;
-    mat.specularTint       = param3.w;
+    mat.metallic = param3.x;
+    mat.roughness = max(param3.y, 0.001);
+    mat.subsurface = param3.z;
+    mat.specularTint = param3.w;
 
-    mat.sheen              = param4.x;
-    mat.sheenTint          = param4.y;
-    mat.clearcoat          = param4.z;
+    mat.sheen = param4.x;
+    mat.sheenTint = param4.y;
+    mat.clearcoat = param4.z;
     mat.clearcoatRoughness = mix(0.1, 0.001, param4.w); // Remapping from gloss to roughness
 
-    mat.specTrans          = param5.x;
-    mat.ior                = param5.y;
-    mat.medium.type        = int(param5.z);
-    mat.medium.density     = param5.w;
+    mat.specTrans = param5.x;
+    mat.ior = param5.y;
+    mat.medium.type = int(param5.z);
+    mat.medium.density = param5.w;
 
-    mat.medium.color       = param6.rgb;
-    mat.medium.anisotropy  = clamp(param6.w, -0.9, 0.9);
+    mat.medium.color = param6.rgb;
+    mat.medium.anisotropy = clamp(param6.w, -0.9, 0.9);
 
-    ivec4 texIDs           = ivec4(param7);
+    ivec4 texIDs = ivec4(param7);
 
-    mat.opacity            = param8.x;
-    mat.alphaMode          = int(param8.y);
-    mat.alphaCutoff        = param8.z;
+    mat.opacity = param8.x;
+    mat.alphaMode = int(param8.y);
+    mat.alphaCutoff = param8.z;
 
     // Base Color Map
     if (texIDs.x >= 0)
@@ -87,9 +87,9 @@ void GetMaterial(inout State state, in Ray r)
     {
         vec3 texNormal = texture(textureMapsArrayTex, vec3(state.texCoord, texIDs.z)).rgb;
 
-#ifdef OPT_OPENGL_NORMALMAP
+        #ifdef OPT_OPENGL_NORMALMAP
         texNormal.y = 1.0 - texNormal.y;
-#endif
+        #endif
         texNormal = normalize(texNormal * 2.0 - 1.0);
 
         vec3 origNormal = state.normal;
@@ -97,10 +97,10 @@ void GetMaterial(inout State state, in Ray r)
         state.ffnormal = dot(origNormal, r.direction) <= 0.0 ? state.normal : -state.normal;
     }
 
-#ifdef OPT_ROUGHNESS_MOLLIFICATION
-    if(state.depth > 0)
+    #ifdef OPT_ROUGHNESS_MOLLIFICATION
+    if (state.depth > 0)
         mat.roughness = max(mix(0.0, state.mat.roughness, roughnessMollificationAmt), mat.roughness);
-#endif
+    #endif
 
     // Emission Map
     if (texIDs.w >= 0)
@@ -137,7 +137,7 @@ vec3 EvalTransmittance(Ray r)
         bool refractive = (1.0 - state.mat.metallic) * state.mat.specTrans > 0.0;
 
         // Refraction is ignored (Not physically correct but helps with sampling lights from inside refractive objects)
-        if(hit && !(alphatest || refractive))
+        if (hit && !(alphatest || refractive))
             return vec3(0.0);
 
         // Evaluate transmittance
@@ -164,8 +164,8 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface)
     ScatterSampleRec scatterSample;
 
     // Environment Light
-#ifdef OPT_ENVMAP
-#ifndef OPT_UNIFORM_LIGHT
+    #ifdef OPT_ENVMAP
+    #ifndef OPT_UNIFORM_LIGHT
     {
         vec3 color;
         vec4 dirPdf = SampleEnvMap(Li);
@@ -174,7 +174,7 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface)
 
         Ray shadowRay = Ray(scatterPos, lightDir);
 
-#if defined(OPT_MEDIUM) && defined(OPT_VOL_MIS)
+        #if defined(OPT_MEDIUM) && defined(OPT_VOL_MIS)
         // If there are volumes in the scene then evaluate transmittance rather than a binary anyhit test
         Li *= EvalTransmittance(shadowRay);
 
@@ -193,7 +193,7 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface)
             if (misWeight > 0.0)
                 Ld += misWeight * Li * scatterSample.f * envMapIntensity / lightPdf;
         }
-#else
+        #else
         // If there are no volumes in the scene then use a simple binary hit test
         bool inShadow = AnyHit(shadowRay, INF - EPS);
 
@@ -208,13 +208,13 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface)
                     Ld += misWeight * Li * scatterSample.f * envMapIntensity / lightPdf;
             }
         }
-#endif
+        #endif
     }
-#endif
-#endif
+    #endif
+    #endif
 
     // Analytic Lights
-#ifdef OPT_LIGHTS
+    #ifdef OPT_LIGHTS
     {
         LightSampleRec lightSample;
         Light light;
@@ -225,12 +225,12 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface)
         // Fetch light Data
         vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
         vec3 emission = texelFetch(lightsTex, ivec2(index + 1, 0), 0).xyz;
-        vec3 u        = texelFetch(lightsTex, ivec2(index + 2, 0), 0).xyz; // u vector for rect
-        vec3 v        = texelFetch(lightsTex, ivec2(index + 3, 0), 0).xyz; // v vector for rect
-        vec3 params   = texelFetch(lightsTex, ivec2(index + 4, 0), 0).xyz;
-        float radius  = params.x;
-        float area    = params.y;
-        float type    = params.z; // 0->Rect, 1->Sphere, 2->Distant
+        vec3 u = texelFetch(lightsTex, ivec2(index + 2, 0), 0).xyz; // u vector for rect
+        vec3 v = texelFetch(lightsTex, ivec2(index + 3, 0), 0).xyz; // v vector for rect
+        vec3 params = texelFetch(lightsTex, ivec2(index + 4, 0), 0).xyz;
+        float radius = params.x;
+        float area = params.y;
+        float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
 
         light = Light(position, emission, u, v, radius, area, type);
         SampleOneLight(light, scatterPos, lightSample);
@@ -241,7 +241,7 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface)
             Ray shadowRay = Ray(scatterPos, lightSample.direction);
 
             // If there are volumes in the scene then evaluate transmittance rather than a binary anyhit test
-#if defined(OPT_MEDIUM) && defined(OPT_VOL_MIS)
+            #if defined(OPT_MEDIUM) && defined(OPT_VOL_MIS)
             Li *= EvalTransmittance(shadowRay);
 
             if (isSurface)
@@ -254,12 +254,12 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface)
             }
 
             float misWeight = 1.0;
-            if(light.area > 0.0) // No MIS for distant light
+            if (light.area > 0.0) // No MIS for distant light
                 misWeight = PowerHeuristic(lightSample.pdf, scatterSample.pdf);
 
             if (scatterSample.pdf > 0.0)
                 Ld += misWeight * scatterSample.f * Li / lightSample.pdf;
-#else
+            #else
             // If there are no volumes in the scene then use a simple binary hit test
             bool inShadow = AnyHit(shadowRay, lightSample.dist - EPS);
 
@@ -268,16 +268,16 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface)
                 scatterSample.f = DisneyEval(state, -r.direction, state.ffnormal, lightSample.direction, scatterSample.pdf);
 
                 float misWeight = 1.0;
-                if(light.area > 0.0) // No MIS for distant light
+                if (light.area > 0.0) // No MIS for distant light
                     misWeight = PowerHeuristic(lightSample.pdf, scatterSample.pdf);
 
                 if (scatterSample.pdf > 0.0)
                     Ld += misWeight * Li * scatterSample.f / lightSample.pdf;
             }
-#endif
+            #endif
         }
     }
-#endif
+    #endif
 
     return Ld;
 }
@@ -298,25 +298,25 @@ vec4 PathTrace(Ray r)
     bool mediumSampled = false;
     bool surfaceScatter = false;
 
-    for (state.depth = 0;; state.depth++)
+    for (state.depth = 0; ; state.depth++)
     {
         bool hit = ClosestHit(r, state, lightSample);
 
         if (!hit)
         {
-#if defined(OPT_BACKGROUND) || defined(OPT_TRANSPARENT_BACKGROUND)
+            #if defined(OPT_BACKGROUND) || defined(OPT_TRANSPARENT_BACKGROUND)
             if (state.depth == 0)
                 alpha = 0.0;
-#endif
+            #endif
 
-#ifdef OPT_HIDE_EMITTERS
-            if(state.depth > 0)
-#endif
+            #ifdef OPT_HIDE_EMITTERS
+            if (state.depth > 0)
+            #endif
             {
-#ifdef OPT_UNIFORM_LIGHT
+                #ifdef OPT_UNIFORM_LIGHT
                 radiance += uniformLightCol * throughput;
-#else
-#ifdef OPT_ENVMAP
+                #else
+                #ifdef OPT_ENVMAP
                 vec4 envMapColPdf = EvalEnvMap(r);
 
                 float misWeight = 1.0;
@@ -325,25 +325,25 @@ vec4 PathTrace(Ray r)
                 if (state.depth > 0)
                     misWeight = PowerHeuristic(scatterSample.pdf, envMapColPdf.w);
 
-#if defined(OPT_MEDIUM) && !defined(OPT_VOL_MIS)
-                if(!surfaceScatter)
+                #if defined(OPT_MEDIUM) && !defined(OPT_VOL_MIS)
+                if (!surfaceScatter)
                     misWeight = 1.0f;
-#endif
+                #endif
 
-                if(misWeight > 0)
+                if (misWeight > 0)
                     radiance += misWeight * envMapColPdf.rgb * throughput * envMapIntensity;
-#endif
-#endif
-             }
-             break;
+                #endif
+                #endif
+            }
+            break;
         }
 
         GetMaterial(state, r);
 
         // Gather radiance from emissive objects. Emission from meshes is not importance sampled
         radiance += state.mat.emission * throughput;
-        
-#ifdef OPT_LIGHTS
+
+        #ifdef OPT_LIGHTS
 
         // Gather radiance from light and use scatterSample.pdf from previous bounce for MIS
         if (state.isEmitter)
@@ -353,34 +353,34 @@ vec4 PathTrace(Ray r)
             if (state.depth > 0)
                 misWeight = PowerHeuristic(scatterSample.pdf, lightSample.pdf);
 
-#if defined(OPT_MEDIUM) && !defined(OPT_VOL_MIS)
-            if(!surfaceScatter)
+            #if defined(OPT_MEDIUM) && !defined(OPT_VOL_MIS)
+            if (!surfaceScatter)
                 misWeight = 1.0f;
-#endif
+            #endif
 
             radiance += misWeight * lightSample.emission * throughput;
 
             break;
         }
-#endif
+        #endif
         // Stop tracing ray if maximum depth was reached
-        if(state.depth == maxDepth)
+        if (state.depth == maxDepth)
             break;
 
-#ifdef OPT_MEDIUM
+        #ifdef OPT_MEDIUM
 
         mediumSampled = false;
         surfaceScatter = false;
 
         // Handle absorption/emission/scattering from medium
         // TODO: Handle light sources placed inside medium
-        if(inMedium)
+        if (inMedium)
         {
-            if(state.medium.type == MEDIUM_ABSORB)
+            if (state.medium.type == MEDIUM_ABSORB)
             {
                 throughput *= exp(-(1.0 - state.medium.color) * state.hitDist * state.medium.density);
             }
-            else if(state.medium.type == MEDIUM_EMISSIVE)
+            else if (state.medium.type == MEDIUM_EMISSIVE)
             {
                 radiance += state.medium.color * state.hitDist * state.medium.density * throughput;
             }
@@ -412,18 +412,18 @@ vec4 PathTrace(Ray r)
         // If medium was not sampled then proceed with surface BSDF evaluation
         if (!mediumSampled)
         {
-#endif
-#ifdef OPT_ALPHA_TEST
+            #endif
+            #ifdef OPT_ALPHA_TEST
 
             // Ignore intersection and continue ray based on alpha test
             if ((state.mat.alphaMode == ALPHA_MODE_MASK && state.mat.opacity < state.mat.alphaCutoff) ||
-                (state.mat.alphaMode == ALPHA_MODE_BLEND && rand() > state.mat.opacity))
+                    (state.mat.alphaMode == ALPHA_MODE_BLEND && rand() > state.mat.opacity))
             {
                 scatterSample.L = r.direction;
                 state.depth--;
             }
             else
-#endif
+            #endif
             {
                 surfaceScatter = true;
 
@@ -442,7 +442,7 @@ vec4 PathTrace(Ray r)
             r.direction = scatterSample.L;
             r.origin = state.fhp + r.direction * EPS;
 
-#ifdef OPT_MEDIUM
+            #ifdef OPT_MEDIUM
 
             // Note: Nesting of volumes isn't supported due to lack of a volume stack for performance reasons
             // Ray is in medium only if it is entering a surface containing a medium
@@ -454,12 +454,12 @@ vec4 PathTrace(Ray r)
             }
             // FIXME: Objects clipping or inside a medium were shaded incorrectly as inMedium would be set to false.
             // This hack works for now but needs some rethinking
-            else if(state.mat.medium.type != MEDIUM_NONE)
+            else if (state.mat.medium.type != MEDIUM_NONE)
                 inMedium = false;
         }
-#endif
+        #endif
 
-#ifdef OPT_RR
+        #ifdef OPT_RR
         // Russian roulette
         if (state.depth >= OPT_RR_DEPTH)
         {
@@ -468,9 +468,9 @@ vec4 PathTrace(Ray r)
                 break;
             throughput /= q;
         }
-#endif
-
+        #endif
     }
 
     return vec4(radiance, alpha);
 }
+
