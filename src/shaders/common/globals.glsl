@@ -57,17 +57,6 @@ struct Medium
     float anisotropy;
 };
 
-struct Sample {
-    vec3 color;
-    float weight;
-};
-
-struct Reservoir {
-    Sample
-    sample ;
-    float sumWeights;
-};
-
 struct Material
 {
     vec3 baseColor;
