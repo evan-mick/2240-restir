@@ -216,7 +216,7 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface)
     // Analytic Lights
     #ifdef OPT_LIGHTS
     {
-        LightSampleRec lightSample;
+        LightSampleRec lightSample; // TODO: Is this what we store in the reservoir?
         Light light;
 
         //Pick a light to sample
@@ -233,7 +233,7 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface)
         float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
 
         light = Light(position, emission, u, v, radius, area, type);
-        SampleOneLight(light, scatterPos, lightSample);
+        SampleOneLight(light, scatterPos, lightSample); // TODO: Is this what we're sampling??
         Li = lightSample.emission;
 
         if (dot(lightSample.direction, lightSample.normal) < 0.0) // Required for quad lights with single sided emission
