@@ -25,7 +25,10 @@
 #version 330
 
 out vec4 color;
-out vec4 reservoirOut;
+out vec4 reservoirOut0;
+out vec4 reservoirOut1;
+out vec4 reservoirOut2;
+
 in vec2 TexCoords;
 
 #include common/uniforms.glsl
@@ -71,9 +74,6 @@ void main(void)
     vec4 accumColor = texture(accumTexture, coordsTile);
 
     vec4 pixelColor = PathTrace(ray);
-
-    vec4 res_sample = texelFetch(reservoirs, ivec2(gl_FragCoord.xy), 0);
-    //reservoirOut = vec4(max(1.0 - res_sample.r, res_sample.r), 0.0, 0.0, 1.0);
 
     color = pixelColor + accumColor;
     //color = res_sample;

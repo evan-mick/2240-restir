@@ -322,21 +322,17 @@ namespace GLSLPT
         glBindTexture(GL_TEXTURE_2D, 0);
 
 
-        glGenTextures(1, &reservoirTextures[0]);
-        glBindTexture(GL_TEXTURE_2D, reservoirTextures[0]);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, tileWidth, tileHeight, 0, GL_RGBA, GL_FLOAT, 0);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glBindTexture(GL_TEXTURE_2D, 0);
+        // Just defined here for reference
+        for (int i = 0; i < 8; i++) { // need 2*4 reservoir textures
+            glGenTextures(1, &reservoirTextures[i]);
+            glBindTexture(GL_TEXTURE_2D, reservoirTextures[i]);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, tileWidth, tileHeight, 0, GL_RGB, GL_FLOAT, 0);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
 
-        glGenTextures(1, &reservoirTextures[1]);
-        glBindTexture(GL_TEXTURE_2D, reservoirTextures[1]);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, tileWidth, tileHeight, 0, GL_RGBA, GL_FLOAT, 0);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glBindTexture(GL_TEXTURE_2D, 0);
-
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[1 - currentBuffer], 0);
+        SetReservoirFramebufferAttachments();
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pathTraceTexture, 0);
 
         // Create FBOs for low res preview shader 
@@ -521,54 +517,12 @@ namespace GLSLPT
         GLuint shaderObject;
         pathTraceShader->Use();
         shaderObject = pathTraceShader->getObject();
-
-        if (scene->envMap)
-        {
-            glUniform2f(glGetUniformLocation(shaderObject, "envMapRes"), (float)scene->envMap->width, (float)scene->envMap->height);
-            glUniform1f(glGetUniformLocation(shaderObject, "envMapTotalSum"), scene->envMap->totalSum);
-        }
-        
-        glUniform1i(glGetUniformLocation(shaderObject, "topBVHIndex"), scene->bvhTranslator.topLevelIndex);
-        glUniform2f(glGetUniformLocation(shaderObject, "resolution"), float(renderSize.x), float(renderSize.y));
-        glUniform2f(glGetUniformLocation(shaderObject, "invNumTiles"), invNumTiles.x, invNumTiles.y);
-        glUniform1i(glGetUniformLocation(shaderObject, "numOfLights"), scene->lights.size());
-        glUniform1i(glGetUniformLocation(shaderObject, "accumTexture"), 0);
-        glUniform1i(glGetUniformLocation(shaderObject, "BVH"), 1);
-        glUniform1i(glGetUniformLocation(shaderObject, "vertexIndicesTex"), 2);
-        glUniform1i(glGetUniformLocation(shaderObject, "verticesTex"), 3);
-        glUniform1i(glGetUniformLocation(shaderObject, "normalsTex"), 4);
-        glUniform1i(glGetUniformLocation(shaderObject, "materialsTex"), 5);
-        glUniform1i(glGetUniformLocation(shaderObject, "transformsTex"), 6);
-        glUniform1i(glGetUniformLocation(shaderObject, "lightsTex"), 7);
-        glUniform1i(glGetUniformLocation(shaderObject, "textureMapsArrayTex"), 8);
-        glUniform1i(glGetUniformLocation(shaderObject, "envMapTex"), 9);
-        glUniform1i(glGetUniformLocation(shaderObject, "envMapCDFTex"), 10);
-        glUniform1i(glGetUniformLocation(shaderObject, "reservoirs"), 11);
+        SetUniforms(shaderObject);
         pathTraceShader->StopUsing();
 
         pathTraceShaderLowRes->Use();
         shaderObject = pathTraceShaderLowRes->getObject();
-
-        if (scene->envMap)
-        {
-            glUniform2f(glGetUniformLocation(shaderObject, "envMapRes"), (float)scene->envMap->width, (float)scene->envMap->height);
-            glUniform1f(glGetUniformLocation(shaderObject, "envMapTotalSum"), scene->envMap->totalSum);
-        }
-        glUniform1i(glGetUniformLocation(shaderObject, "topBVHIndex"), scene->bvhTranslator.topLevelIndex);
-        glUniform2f(glGetUniformLocation(shaderObject, "resolution"), float(renderSize.x), float(renderSize.y));
-        glUniform1i(glGetUniformLocation(shaderObject, "numOfLights"), scene->lights.size());
-        glUniform1i(glGetUniformLocation(shaderObject, "accumTexture"), 0);
-        glUniform1i(glGetUniformLocation(shaderObject, "BVH"), 1);
-        glUniform1i(glGetUniformLocation(shaderObject, "vertexIndicesTex"), 2);
-        glUniform1i(glGetUniformLocation(shaderObject, "verticesTex"), 3);
-        glUniform1i(glGetUniformLocation(shaderObject, "normalsTex"), 4);
-        glUniform1i(glGetUniformLocation(shaderObject, "materialsTex"), 5);
-        glUniform1i(glGetUniformLocation(shaderObject, "transformsTex"), 6);
-        glUniform1i(glGetUniformLocation(shaderObject, "lightsTex"), 7);
-        glUniform1i(glGetUniformLocation(shaderObject, "textureMapsArrayTex"), 8);
-        glUniform1i(glGetUniformLocation(shaderObject, "envMapTex"), 9);
-        glUniform1i(glGetUniformLocation(shaderObject, "envMapCDFTex"), 10);
-        glUniform1i(glGetUniformLocation(shaderObject, "reservoirs"), 11);
+        SetUniforms(shaderObject);
         pathTraceShaderLowRes->StopUsing();
     }
 
@@ -609,8 +563,15 @@ namespace GLSLPT
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             glActiveTexture(GL_TEXTURE11);
-            glBindTexture(GL_TEXTURE_2D, reservoirTextures[currentBuffer]);
-            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[1 - currentBuffer], 0);
+            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*4) + 0]);
+            glActiveTexture(GL_TEXTURE12);
+            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*4) + 1]);
+            glActiveTexture(GL_TEXTURE13);
+            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*4) + 2]);
+            glActiveTexture(GL_TEXTURE14);
+            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*4) + 3]);
+            SetReservoirFramebufferAttachments();
+            //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[1 - currentBuffer], 0);
             quad->Draw(pathTraceShader);
 
             glActiveTexture(GL_TEXTURE0);
@@ -628,6 +589,43 @@ namespace GLSLPT
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             quad->Draw(tonemapShader);
         }
+    }
+
+    void Renderer::SetUniforms(GLuint shaderObject) {
+        if (scene->envMap)
+        {
+            glUniform2f(glGetUniformLocation(shaderObject, "envMapRes"), (float)scene->envMap->width, (float)scene->envMap->height);
+            glUniform1f(glGetUniformLocation(shaderObject, "envMapTotalSum"), scene->envMap->totalSum);
+        }
+        
+        glUniform1i(glGetUniformLocation(shaderObject, "topBVHIndex"), scene->bvhTranslator.topLevelIndex);
+        glUniform2f(glGetUniformLocation(shaderObject, "resolution"), float(renderSize.x), float(renderSize.y));
+        glUniform2f(glGetUniformLocation(shaderObject, "invNumTiles"), invNumTiles.x, invNumTiles.y);
+        glUniform1i(glGetUniformLocation(shaderObject, "numOfLights"), scene->lights.size());
+        glUniform1i(glGetUniformLocation(shaderObject, "accumTexture"), 0);
+        glUniform1i(glGetUniformLocation(shaderObject, "BVH"), 1);
+        glUniform1i(glGetUniformLocation(shaderObject, "vertexIndicesTex"), 2);
+        glUniform1i(glGetUniformLocation(shaderObject, "verticesTex"), 3);
+        glUniform1i(glGetUniformLocation(shaderObject, "normalsTex"), 4);
+        glUniform1i(glGetUniformLocation(shaderObject, "materialsTex"), 5);
+        glUniform1i(glGetUniformLocation(shaderObject, "transformsTex"), 6);
+        glUniform1i(glGetUniformLocation(shaderObject, "lightsTex"), 7);
+        glUniform1i(glGetUniformLocation(shaderObject, "textureMapsArrayTex"), 8);
+        glUniform1i(glGetUniformLocation(shaderObject, "envMapTex"), 9);
+        glUniform1i(glGetUniformLocation(shaderObject, "envMapCDFTex"), 10);
+        glUniform1i(glGetUniformLocation(shaderObject, "reservoirs0"), 11);
+        glUniform1i(glGetUniformLocation(shaderObject, "reservoirs1"), 12);
+        glUniform1i(glGetUniformLocation(shaderObject, "reservoirs2"), 13);
+        glUniform1i(glGetUniformLocation(shaderObject, "reservoirs3"), 14);
+    }
+
+    void Renderer::SetReservoirFramebufferAttachments() {
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*4 + 0], 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*4 + 1], 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*4 + 2], 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT4, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*4 + 3], 0);
+
+
     }
 
     void Renderer::Present()

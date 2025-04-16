@@ -147,7 +147,7 @@ namespace GLSLPT
         GLuint pathTraceTexture;
         GLuint accumTexture;
         GLuint tileOutputTexture[2];
-        GLuint reservoirTextures[2];
+        GLuint reservoirTextures[8]; // 2 (temporal) * 4 (bc 12 floats needed per texture), need to have multiple textures because more than 4 bytes needed per pixel. 
         GLuint denoisedTexture;
 
         // Render resolution and window resolution
@@ -189,5 +189,8 @@ namespace GLSLPT
         void InitGPUDataBuffers();
         void InitFBOs();
         void InitShaders();
+
+        void SetReservoirFramebufferAttachments();
+        void SetUniforms(GLuint shaderObject);
     };
 }
