@@ -310,8 +310,8 @@ namespace GLSLPT
         // Create FBOs for path trace shader 
         glGenFramebuffers(1, &pathTraceFBO);
         glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);
-        GLenum drawBuffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
-        glDrawBuffers(2, drawBuffers);
+        GLenum drawBuffers[5] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4 };
+        glDrawBuffers(5, drawBuffers);
 
         // Create Texture for FBO
         glGenTextures(1, &pathTraceTexture);
