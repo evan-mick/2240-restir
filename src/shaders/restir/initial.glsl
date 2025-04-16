@@ -17,6 +17,7 @@ in vec2 TexCoords;
 #include common/disney.glsl
 #include common/lambert.glsl
 #include common/pathtrace.glsl
+#include common/restir.glsl
 
 void main(void)
 {

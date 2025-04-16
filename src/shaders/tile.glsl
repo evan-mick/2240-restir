@@ -28,7 +28,7 @@ out vec4 color;
 out vec4 reservoirOut0;
 out vec4 reservoirOut1;
 out vec4 reservoirOut2;
-out vec4 reservoirOut3;
+//out vec4 reservoirOut3;
 
 in vec2 TexCoords;
 
@@ -42,6 +42,7 @@ in vec2 TexCoords;
 #include common/disney.glsl
 #include common/lambert.glsl
 #include common/pathtrace.glsl
+#include common/restir.glsl
 
 void main(void)
 {

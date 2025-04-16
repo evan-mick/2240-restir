@@ -323,10 +323,10 @@ namespace GLSLPT
 
 
         // Just defined here for reference
-        for (int i = 0; i < 8; i++) { // need 2*4 reservoir textures
+        for (int i = 0; i < 6; i++) { // need 2*3 reservoir textures
             glGenTextures(1, &reservoirTextures[i]);
             glBindTexture(GL_TEXTURE_2D, reservoirTextures[i]);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, tileWidth, tileHeight, 0, GL_RGB, GL_FLOAT, 0);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, tileWidth, tileHeight, 0, GL_RGBA, GL_FLOAT, 0);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
             glBindTexture(GL_TEXTURE_2D, 0);
@@ -563,13 +563,13 @@ namespace GLSLPT
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             glActiveTexture(GL_TEXTURE11);
-            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*4) + 0]);
+            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*3) + 0]);
             glActiveTexture(GL_TEXTURE12);
-            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*4) + 1]);
+            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*3) + 1]);
             glActiveTexture(GL_TEXTURE13);
-            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*4) + 2]);
-            glActiveTexture(GL_TEXTURE14);
-            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*4) + 3]);
+            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*3) + 2]);
+            //glActiveTexture(GL_TEXTURE14);
+            //glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*3) + 3]);
             SetReservoirFramebufferAttachments();
             //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[1 - currentBuffer], 0);
             quad->Draw(pathTraceShader);
@@ -616,14 +616,14 @@ namespace GLSLPT
         glUniform1i(glGetUniformLocation(shaderObject, "reservoirs0"), 11);
         glUniform1i(glGetUniformLocation(shaderObject, "reservoirs1"), 12);
         glUniform1i(glGetUniformLocation(shaderObject, "reservoirs2"), 13);
-        glUniform1i(glGetUniformLocation(shaderObject, "reservoirs3"), 14);
+        //glUniform1i(glGetUniformLocation(shaderObject, "reservoirs3"), 14);
     }
 
     void Renderer::SetReservoirFramebufferAttachments() {
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*4 + 0], 0);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*4 + 1], 0);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*4 + 2], 0);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT4, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*4 + 3], 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*3 + 0], 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*3 + 1], 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*3 + 2], 0);
+        //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT4, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*3 + 3], 0);
 
 
     }

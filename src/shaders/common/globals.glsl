@@ -120,6 +120,8 @@ struct State
     int matID;
     Material mat;
     Medium medium;
+
+    bool restir;
 };
 
 struct ScatterSampleRec
@@ -136,6 +138,11 @@ struct LightSampleRec
     vec3 direction;
     float dist;
     float pdf;
+};
+
+struct Reservoir {
+    LightSampleRec picked;
+    float sumWeights;
 };
 
 uniform Camera camera;
