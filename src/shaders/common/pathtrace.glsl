@@ -233,7 +233,8 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface)
         float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
 
         light = Light(position, emission, u, v, radius, area, type);
-        SampleOneLight(light, scatterPos, lightSample); // TODO: Is this what we're sampling??
+        SampleOneLight(light, scatterPos, lightSample); // TODO: CONVERT THIS TO OPTIONALLY TAKE IN RESTIR RESERVOIRS
+        // Restir needs light hit (scatterpos), pdf, need to recheck shadow stuff
         Li = lightSample.emission;
 
         if (dot(lightSample.direction, lightSample.normal) < 0.0) // Required for quad lights with single sided emission
@@ -473,4 +474,3 @@ vec4 PathTrace(Ray r)
 
     return vec4(radiance, alpha);
 }
-
