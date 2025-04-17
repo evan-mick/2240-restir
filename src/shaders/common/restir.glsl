@@ -13,13 +13,13 @@
 //    float pdf;
 //};
 
-void saveReservoir(Reservoir res) {
+void SaveReservoir(Reservoir res) {
     reservoirOut0 = vec4(res.picked.normal.x, res.picked.normal.y, res.picked.normal.z, res.picked.emission.x);
     reservoirOut1 = vec4(res.picked.emission.y, res.picked.emission.z, res.picked.direction.x, res.picked.direction.y);
     reservoirOut2 = vec4(res.picked.direction.z, res.picked.dist, res.picked.pdf, res.sumWeights);
 }
 
-Reservoir getReservoirFromPosition(sampler2D sampleFrom, ivec2 pos) {
+Reservoir GetReservoirFromPosition(ivec2 pos) {
     //    Reservoir res;
     //    res.picked.normal = texelFetch(sampleFrom, (pos.x * sizeof(Reservoir) + 0, pos.y), 0);
     //    res.picked.emission = texelFetch(sampleFrom, (pos.x * sizeof(Reservoir) + 1, pos.y), 0);
@@ -46,7 +46,7 @@ Reservoir getReservoirFromPosition(sampler2D sampleFrom, ivec2 pos) {
     return res;
 }
 
-Reservoir updateReservoir(Reservoir r, LightSampleRec s)
+Reservoir UpdateReservoir(Reservoir r, LightSampleRec s)
 {
     float weight = s.pdf; // NEED TO LOOK INTO THIS
     r.sumWeights += weight;
