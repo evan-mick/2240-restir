@@ -155,7 +155,7 @@ vec3 EvalTransmittance(Ray r)
 }
 #endif
 
-vec3 DirectLight(in Ray r, in State state, bool isSurface)
+vec3 DirectLightFull(in Ray r, in State state, bool isSurface, out LightSampleRec lightSample)
 {
     vec3 Ld = vec3(0.0);
     vec3 Li = vec3(0.0);
@@ -216,7 +216,7 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface)
     // Analytic Lights
     #ifdef OPT_LIGHTS
     {
-        LightSampleRec lightSample; // TODO: Is this what we store in the reservoir?
+        //LightSampleRec lightSample; // TODO: Is this what we store in the reservoir? Update: no, unless we don't care if it doesn't work with environment lights
         Light light;
 
         if (!state.restir) {
@@ -239,7 +239,8 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface)
         else {
             // Restir needs light hit (scatterpos), pdf, need to recheck shadow stuff
             // TODO: Restir, get the reservoir sample, this shouldn't return
-            return vec3(0.0);
+            //return vec3(0.0);
+            lightSample = GetReservoirFromPosition(ivec2(state.texCoord)).picked;
         }
         Li = lightSample.emission;
 
@@ -287,6 +288,11 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface)
     #endif
 
     return Ld;
+}
+
+vec3 DirectLight(in Ray r, in State state, bool isSurface) {
+    LightSampleRec outSample;
+    return DirectLightFull(r, state, isSurface, outSample);
 }
 
 vec4 PathTrace(Ray r)

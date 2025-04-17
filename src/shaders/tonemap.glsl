@@ -129,4 +129,3 @@ void main()
     outCol = vec4(color, 1.0);
     #endif
 }
-
