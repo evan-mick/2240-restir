@@ -195,7 +195,7 @@ namespace GLSLPT
         void InitFBOs();
         void InitShaders();
 
-        void SetReservoirFramebufferAttachments();
+        void SetReservoirFramebufferAttachments(bool inv);
         void SetUniforms(GLuint shaderObject);
     };
 }

@@ -37,11 +37,11 @@ Reservoir GetReservoirFromPosition(ivec2 pos) {
     vec4 third = texelFetch(reservoirs2, pos, 0);
 
     res.picked.normal = first.xyz;
-    res.picked.emission = vec3(first.w, second.x, second.y);
-    res.picked.direction = vec3(second.z, second.w, third.x);
+    res.picked.emission = vec3(first.a, second.x, second.y);
+    res.picked.direction = vec3(second.z, second.a, third.x);
     res.picked.dist = third.y;
     res.picked.pdf = third.z;
-    res.sumWeights = third.w;
+    res.sumWeights = third.a;
 
     return res;
 }
