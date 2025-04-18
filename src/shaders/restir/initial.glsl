@@ -1,9 +1,9 @@
 #version 330
 
-out vec4 color;
-out vec4 reservoirOut0;
-out vec4 reservoirOut1;
-out vec4 reservoirOut2;
+layout(location = 0) out vec4 color;
+layout(location = 1) out vec4 reservoirOut0;
+layout(location = 2) out vec4 reservoirOut1;
+layout(location = 3) out vec4 reservoirOut2;
 
 in vec2 TexCoords;
 
@@ -85,5 +85,8 @@ void main(void)
         prevRev = UpdateReservoir(prevRev, sam);
     }
     SaveReservoir(prevRev);
-    reservoirOut0 = vec4(1.0, 1.0, 1.0, 1.0);
+    //reservoirOut0 = vec4(1.0, 1.0, 1.0, 1.0);
+    //reservoirOut1 = vec4(1.0, 1.0, 1.0, 1.0);
+    //reservoirOut2 = vec4(1.0, 1.0, 1.0, 1.0);
+    //color = vec4(1.0);
 }

@@ -24,11 +24,10 @@
 
 #version 330
 
-out vec4 color;
-out vec4 reservoirOut0;
-out vec4 reservoirOut1;
-out vec4 reservoirOut2;
-//out vec4 reservoirOut3;
+layout(location = 0) out vec4 color;
+layout(location = 1) out vec4 reservoirOut0;
+layout(location = 2) out vec4 reservoirOut1;
+layout(location = 3) out vec4 reservoirOut2;
 
 in vec2 TexCoords;
 
@@ -79,6 +78,7 @@ void main(void)
 
     color = pixelColor + accumColor;
     //Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
-    //color = vec4(prevRev.picked.emission.r, 0.0, 0.0, 1.0);
-    //color = res_sample;
+    //vec3 col2 = prevRev.picked.emission.rgb;
+    //color = vec4(col2.r, col2.g, col2.b, 1.0); //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
+    //color.a = 1.0;
 }

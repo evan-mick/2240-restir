@@ -328,13 +328,13 @@ namespace GLSLPT
         for (int i = 0; i < reservoirTextureNum; i++) { 
             glGenTextures(1, &reservoirTextures[i]);
             glBindTexture(GL_TEXTURE_2D, reservoirTextures[i]);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, renderSize.x, renderSize.y, 0, GL_RGBA, GL_FLOAT, 0);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, renderSize.x, renderSize.y, 0, GL_RGBA, GL_FLOAT, 0);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
             glBindTexture(GL_TEXTURE_2D, 0);
         }
 
-        SetReservoirFramebufferAttachments();
+        SetReservoirFramebufferAttachments(false);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pathTraceTexture, 0);
 
         // Create FBOs for low res preview shader 
@@ -571,18 +571,21 @@ namespace GLSLPT
             glDrawBuffers(4, drawBuffers);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
-            SetReservoirFramebufferAttachments();
+            SetReservoirFramebufferAttachments(true);
             quad->Draw(initialSampleShader);
 
-
-
             float* data = new float[renderSize.x * renderSize.y * 4];
-            glGetTexImage(reservoirTextures[(1 - currentBuffer)*3], 0, GL_RGBA, GL_FLOAT, data);
+
+            //
+            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer)*3]);
+            glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
 
 
-            std::cout << data[0] << " " << data[1] << " "<< data[2] << " "<< data[3] << " " << std::endl;
-            std::cout << data[4] << " " << data[5] << " "<< data[6] << " "<< data[7] << " " << std::endl;
-            std::cout << data[8] << " " << data[9] << " "<< data[10] << " "<< data[11] << " " << std::endl;
+            //std::cout << data[0] << " " << data[1] << " "<< data[2] << " "<< data[3] << " " << std::endl;
+            //std::cout << data[4] << " " << data[5] << " "<< data[6] << " "<< data[7] << " " << std::endl;
+            //std::cout << data[8] << " " << data[9] << " "<< data[10] << " "<< data[11] << " " << std::endl;
+
+
 
             // Renders to pathTraceTexture while using previously accumulated samples from accumTexture
             // Rendering is done a tile per frame, so if a 500x500 image is rendered with a tileWidth and tileHeight of 250 then, all tiles (for a single sample) 
@@ -592,7 +595,7 @@ namespace GLSLPT
             glDrawBuffers(4, drawBuffers);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
-            SetReservoirFramebufferAttachments();
+            SetReservoirFramebufferAttachments(false);
             quad->Draw(pathTraceShader);
 
 
@@ -645,18 +648,20 @@ namespace GLSLPT
         //glUniform1i(glGetUniformLocation(shaderObject, "reservoirs3"), 14);
     }
 
-    void Renderer::SetReservoirFramebufferAttachments() {
+    void Renderer::SetReservoirFramebufferAttachments(bool inv) {
+
+        int buff = inv ? (1 - currentBuffer) : currentBuffer;
 
         glActiveTexture(GL_TEXTURE11);
-        glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*3) + 0]);
+        glBindTexture(GL_TEXTURE_2D, reservoirTextures[(buff*3) + 0]);
         glActiveTexture(GL_TEXTURE12);
-        glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*3) + 1]);
+        glBindTexture(GL_TEXTURE_2D, reservoirTextures[(buff*3) + 1]);
         glActiveTexture(GL_TEXTURE13);
-        glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*3) + 2]);
+        glBindTexture(GL_TEXTURE_2D, reservoirTextures[(buff*3) + 2]);
 
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*3 + 0], 0);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*3 + 1], 0);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*3 + 2], 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[(1 - buff)*3 + 0], 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, reservoirTextures[(1 - buff)*3 + 1], 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, reservoirTextures[(1 - buff)*3 + 2], 0);
         //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT4, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*3 + 3], 0);
 
 
