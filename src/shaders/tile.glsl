@@ -78,5 +78,7 @@ void main(void)
     vec4 pixelColor = PathTrace(ray);
 
     color = pixelColor + accumColor;
+    //Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
+    //color = vec4(prevRev.picked.emission.r, 0.0, 0.0, 1.0);
     //color = res_sample;
 }

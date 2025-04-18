@@ -20,7 +20,6 @@ in vec2 TexCoords;
 #include /../common/pathtrace.glsl
 
 LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
-    LightSampleRec ret;
     // This code for getting a ray is just stolen from tile.glsl
     vec2 coordsTile = mix(tileOffset, tileOffset + invNumTiles, TexCoords);
     InitRNG(pos, frameNum);
@@ -54,14 +53,22 @@ LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
 
     State state;
     state.restir = false;
+    LightSampleRec ret;
 
     bool hit = ClosestHit(ray, state, ret);
 
     // Should we be doing a proper pathtrace? something like this but instead using the sample from there? might be better for compatibility too
     if (hit) {
-        ray.origin = state.fhp;
-        ret.emission += DirectLightFull(ray, state, true, ret);
+        state.normal = vec3(0.0, 1.0, 0.0);
+        //ray.origin = state.fhp;
+        DirectLightFull(ray, state, true, ret);
     }
+
+    //ret.emission = vec3(100.0);
+    //ret.normal = vec3(0.0, 1.0, 0.0);
+    //ret.pdf = 1.0f;
+    //ret.dist = 1.0f;
+    ret.emission = vec3(1.0, 0.0, 0.0);
 
     return ret;
 }
@@ -78,5 +85,5 @@ void main(void)
         prevRev = UpdateReservoir(prevRev, sam);
     }
     SaveReservoir(prevRev);
-    color = vec4(0.0);
+    reservoirOut0 = vec4(1.0, 1.0, 1.0, 1.0);
 }
