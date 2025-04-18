@@ -4,11 +4,6 @@
 //    float weight;
 //};
 
-struct Reservoir {
-    LightSampleRec picked;
-    float sumWeights;
-};
-
 //struct LightSampleRec
 //{
 //    vec3 normal;
@@ -18,26 +13,45 @@ struct Reservoir {
 //    float pdf;
 //};
 
-Reservoir getReservoirFromPosition(sampler2D sampleFrom, ivec2 pos) {
+void SaveReservoir(Reservoir res) {
+    reservoirOut0 = vec4(res.picked.normal.x, res.picked.normal.y, res.picked.normal.z, res.picked.emission.x);
+    reservoirOut1 = vec4(res.picked.emission.y, res.picked.emission.z, res.picked.direction.x, res.picked.direction.y);
+    reservoirOut2 = vec4(res.picked.direction.z, res.picked.dist, res.picked.pdf, res.sumWeights);
+}
+
+Reservoir GetReservoirFromPosition(ivec2 pos) {
+    //    Reservoir res;
+    //    res.picked.normal = texelFetch(sampleFrom, (pos.x * sizeof(Reservoir) + 0, pos.y), 0);
+    //    res.picked.emission = texelFetch(sampleFrom, (pos.x * sizeof(Reservoir) + 1, pos.y), 0);
+    //    res.picked.direction = texelFetch(sampleFrom, (pos.x * sizeof(Reservoir) + 2, pos.y), 0);
+    //
+    //    vec3 finalThree = texelFetch(sampleFrom, (pos.x * sizeof(Reservoir) + 3, pos.y), 0);
+    //
+    //    res.picked.dist = finalThree.x;
+    //    res.picked.pdf = finalThree.y;
+    //    res.sumWeights = finalThree.z;
+
     Reservoir res;
-    res.picked.normal = texelFetch(sampleFrom, (pos.x * sizeof(Reservoir) + 0, pos.y), 0);
-    res.picked.emission = texelFetch(sampleFrom, (pos.x * sizeof(Reservoir) + 1, pos.y), 0);
-    res.picked.direction = texelFetch(sampleFrom, (pos.x * sizeof(Reservoir) + 2, pos.y), 0);
+    vec4 first = texelFetch(reservoirs0, pos, 0);
+    vec4 second = texelFetch(reservoirs1, pos, 0);
+    vec4 third = texelFetch(reservoirs2, pos, 0);
 
-    vec3 finalThree = texelFetch(sampleFrom, (pos.x * sizeof(Reservoir) + 3, pos.y), 0);
-
-    res.picked.dist = finalThree.x;
-    res.picked.pdf = finalThree.y;
-    res.sumWeights = finalThree.z;
+    res.picked.normal = first.xyz;
+    res.picked.emission = vec3(first.w, second.x, second.y);
+    res.picked.direction = vec3(second.z, second.w, third.x);
+    res.picked.dist = third.y;
+    res.picked.pdf = third.z;
+    res.sumWeights = third.w;
 
     return res;
 }
 
-Reservoir updateReservoir(Reservoir r, Sample s)
+Reservoir UpdateReservoir(Reservoir r, LightSampleRec s)
 {
-    r.sumWeights += s.weight;
-    if (rand() < s.weight / r.sum_weights) {
-        r.picked = s;
-    }
+    float weight = s.pdf; // NEED TO LOOK INTO THIS
+    r.sumWeights += weight;
+    //if (rand() < weight / r.sumWeights) {
+    r.picked = s;
+    //}
     return r;
 }

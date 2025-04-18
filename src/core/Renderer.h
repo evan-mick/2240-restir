@@ -142,12 +142,17 @@ namespace GLSLPT
         Program* outputShader;
         Program* tonemapShader;
 
+        // Shaders for ReSTIR
+        Program* initialSampleShader;
+
         // Render textures
         GLuint pathTraceTextureLowRes;
         GLuint pathTraceTexture;
         GLuint accumTexture;
         GLuint tileOutputTexture[2];
-        GLuint reservoirTextures[8]; // 2 (temporal) * 4 (bc 12 floats needed per texture), need to have multiple textures because more than 4 bytes needed per pixel. 
+
+        static constexpr int reservoirTextureNum = 6; // 2 * 3, 2 for temporal (buffer swapping), 3 for number of textures (bc 12 floats needed per pixel, and only up to 4 floats can be stored per texture)  
+        GLuint reservoirTextures[reservoirTextureNum];  
         GLuint denoisedTexture;
 
         // Render resolution and window resolution

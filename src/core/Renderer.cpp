@@ -108,8 +108,9 @@ namespace GLSLPT
         glDeleteTextures(1, &accumTexture);
         glDeleteTextures(1, &tileOutputTexture[0]);
         glDeleteTextures(1, &tileOutputTexture[1]);
-        glDeleteTextures(1, &reservoirTextures[0]);
-        glDeleteTextures(1, &reservoirTextures[1]);
+        for (int i = 0; i < reservoirTextureNum; i++) { 
+            glDeleteTextures(1, &reservoirTextures[i]);
+        }
         glDeleteTextures(1, &denoisedTexture);
 
         // Delete buffers
@@ -262,8 +263,9 @@ namespace GLSLPT
         glDeleteTextures(1, &accumTexture);
         glDeleteTextures(1, &tileOutputTexture[0]);
         glDeleteTextures(1, &tileOutputTexture[1]);
-        glDeleteTextures(1, &reservoirTextures[0]);
-        glDeleteTextures(1, &reservoirTextures[1]);
+        for (int i = 0; i < reservoirTextureNum; i++) { 
+            glDeleteTextures(1, &reservoirTextures[i]);
+        }
         glDeleteTextures(1, &denoisedTexture);
 
         // Delete FBOs
@@ -323,10 +325,10 @@ namespace GLSLPT
 
 
         // Just defined here for reference
-        for (int i = 0; i < 8; i++) { // need 2*4 reservoir textures
+        for (int i = 0; i < reservoirTextureNum; i++) { 
             glGenTextures(1, &reservoirTextures[i]);
             glBindTexture(GL_TEXTURE_2D, reservoirTextures[i]);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, tileWidth, tileHeight, 0, GL_RGB, GL_FLOAT, 0);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, tileWidth, tileHeight, 0, GL_RGBA, GL_FLOAT, 0);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
             glBindTexture(GL_TEXTURE_2D, 0);
@@ -419,6 +421,8 @@ namespace GLSLPT
         ShaderInclude::ShaderSource pathTraceShaderLowResSrcObj = ShaderInclude::load(shadersDirectory + "preview.glsl");
         ShaderInclude::ShaderSource outputShaderSrcObj = ShaderInclude::load(shadersDirectory + "output.glsl");
         ShaderInclude::ShaderSource tonemapShaderSrcObj = ShaderInclude::load(shadersDirectory + "tonemap.glsl");
+        ShaderInclude::ShaderSource restirInitialShaderSrcObj = ShaderInclude::load(shadersDirectory + "restir/initial.glsl");
+
 
         // Add preprocessor defines for conditional compilation
         std::string pathtraceDefines = "";
@@ -512,6 +516,7 @@ namespace GLSLPT
         pathTraceShaderLowRes = LoadShaders(vertexShaderSrcObj, pathTraceShaderLowResSrcObj);
         outputShader = LoadShaders(vertexShaderSrcObj, outputShaderSrcObj);
         tonemapShader = LoadShaders(vertexShaderSrcObj, tonemapShaderSrcObj);
+        initialSampleShader = LoadShaders(vertexShaderSrcObj, restirInitialShaderSrcObj);
 
         // Setup shader uniforms
         GLuint shaderObject;
@@ -519,6 +524,11 @@ namespace GLSLPT
         shaderObject = pathTraceShader->getObject();
         SetUniforms(shaderObject);
         pathTraceShader->StopUsing();
+
+        initialSampleShader->Use();
+        shaderObject = initialSampleShader->getObject();
+        SetUniforms(shaderObject);
+        initialSampleShader->StopUsing();
 
         pathTraceShaderLowRes->Use();
         shaderObject = pathTraceShaderLowRes->getObject();
@@ -554,6 +564,12 @@ namespace GLSLPT
             // can simply put another texture for the resovoirs there and be done
             //
 
+            glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);
+            glViewport(0, 0, tileWidth, tileHeight);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, accumTexture);
+            SetReservoirFramebufferAttachments();
+            quad->Draw(initialSampleShader);
 
             // Renders to pathTraceTexture while using previously accumulated samples from accumTexture
             // Rendering is done a tile per frame, so if a 500x500 image is rendered with a tileWidth and tileHeight of 250 then, all tiles (for a single sample) 
@@ -562,22 +578,13 @@ namespace GLSLPT
             glViewport(0, 0, tileWidth, tileHeight);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
-            glActiveTexture(GL_TEXTURE11);
-            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*4) + 0]);
-            glActiveTexture(GL_TEXTURE12);
-            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*4) + 1]);
-            glActiveTexture(GL_TEXTURE13);
-            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*4) + 2]);
-            glActiveTexture(GL_TEXTURE14);
-            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*4) + 3]);
             SetReservoirFramebufferAttachments();
-            //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[1 - currentBuffer], 0);
             quad->Draw(pathTraceShader);
 
-            glActiveTexture(GL_TEXTURE0);
             // pathTraceTexture is copied to accumTexture and re-used as input for the first step.
             glBindFramebuffer(GL_FRAMEBUFFER, accumFBO);
             glViewport(tileWidth * tile.x, tileHeight * tile.y, tileWidth, tileHeight);
+            glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, pathTraceTexture);
             quad->Draw(outputShader);
 
@@ -586,6 +593,7 @@ namespace GLSLPT
             glBindFramebuffer(GL_FRAMEBUFFER, outputFBO);
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tileOutputTexture[currentBuffer], 0);
             glViewport(0, 0, renderSize.x, renderSize.y);
+            glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             quad->Draw(tonemapShader);
         }
@@ -616,14 +624,22 @@ namespace GLSLPT
         glUniform1i(glGetUniformLocation(shaderObject, "reservoirs0"), 11);
         glUniform1i(glGetUniformLocation(shaderObject, "reservoirs1"), 12);
         glUniform1i(glGetUniformLocation(shaderObject, "reservoirs2"), 13);
-        glUniform1i(glGetUniformLocation(shaderObject, "reservoirs3"), 14);
+        //glUniform1i(glGetUniformLocation(shaderObject, "reservoirs3"), 14);
     }
 
     void Renderer::SetReservoirFramebufferAttachments() {
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*4 + 0], 0);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*4 + 1], 0);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*4 + 2], 0);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT4, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*4 + 3], 0);
+
+        glActiveTexture(GL_TEXTURE11);
+        glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*3) + 0]);
+        glActiveTexture(GL_TEXTURE12);
+        glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*3) + 1]);
+        glActiveTexture(GL_TEXTURE13);
+        glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer*3) + 2]);
+
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*3 + 0], 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*3 + 1], 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*3 + 2], 0);
+        //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT4, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*3 + 3], 0);
 
 
     }

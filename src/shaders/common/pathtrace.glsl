@@ -155,7 +155,7 @@ vec3 EvalTransmittance(Ray r)
 }
 #endif
 
-vec3 DirectLight(in Ray r, in State state, bool isSurface)
+vec3 DirectLightFull(in Ray r, in State state, bool isSurface, out LightSampleRec lightSample)
 {
     vec3 Ld = vec3(0.0);
     vec3 Li = vec3(0.0);
@@ -216,25 +216,32 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface)
     // Analytic Lights
     #ifdef OPT_LIGHTS
     {
-        LightSampleRec lightSample; // TODO: Is this what we store in the reservoir?
+        //LightSampleRec lightSample; // TODO: Is this what we store in the reservoir? Update: no, unless we don't care if it doesn't work with environment lights
         Light light;
 
-        //Pick a light to sample
-        int index = int(rand() * float(numOfLights)) * 5;
+        if (!state.restir) {
+            //Pick a light to sample
+            int index = int(rand() * float(numOfLights)) * 5;
 
-        // Fetch light Data
-        vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
-        vec3 emission = texelFetch(lightsTex, ivec2(index + 1, 0), 0).xyz;
-        vec3 u = texelFetch(lightsTex, ivec2(index + 2, 0), 0).xyz; // u vector for rect
-        vec3 v = texelFetch(lightsTex, ivec2(index + 3, 0), 0).xyz; // v vector for rect
-        vec3 params = texelFetch(lightsTex, ivec2(index + 4, 0), 0).xyz;
-        float radius = params.x;
-        float area = params.y;
-        float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
+            // Fetch light Data
+            vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
+            vec3 emission = texelFetch(lightsTex, ivec2(index + 1, 0), 0).xyz;
+            vec3 u = texelFetch(lightsTex, ivec2(index + 2, 0), 0).xyz; // u vector for rect
+            vec3 v = texelFetch(lightsTex, ivec2(index + 3, 0), 0).xyz; // v vector for rect
+            vec3 params = texelFetch(lightsTex, ivec2(index + 4, 0), 0).xyz;
+            float radius = params.x;
+            float area = params.y;
+            float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
 
-        light = Light(position, emission, u, v, radius, area, type);
-        SampleOneLight(light, scatterPos, lightSample); // TODO: CONVERT THIS TO OPTIONALLY TAKE IN RESTIR RESERVOIRS
-        // Restir needs light hit (scatterpos), pdf, need to recheck shadow stuff
+            light = Light(position, emission, u, v, radius, area, type);
+            SampleOneLight(light, scatterPos, lightSample); // TODO: CONVERT THIS TO OPTIONALLY TAKE IN RESTIR RESERVOIRS
+        }
+        else {
+            // Restir needs light hit (scatterpos), pdf, need to recheck shadow stuff
+            // TODO: Restir, get the reservoir sample, this shouldn't return
+            //return vec3(0.0);
+            lightSample = GetReservoirFromPosition(ivec2(state.texCoord)).picked;
+        }
         Li = lightSample.emission;
 
         if (dot(lightSample.direction, lightSample.normal) < 0.0) // Required for quad lights with single sided emission
@@ -283,6 +290,11 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface)
     return Ld;
 }
 
+vec3 DirectLight(in Ray r, in State state, bool isSurface) {
+    LightSampleRec outSample;
+    return DirectLightFull(r, state, isSurface, outSample);
+}
+
 vec4 PathTrace(Ray r)
 {
     vec3 radiance = vec3(0.0);
@@ -298,6 +310,8 @@ vec4 PathTrace(Ray r)
     bool inMedium = false;
     bool mediumSampled = false;
     bool surfaceScatter = false;
+
+    state.restir = false;
 
     for (state.depth = 0; ; state.depth++)
     {

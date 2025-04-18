@@ -23,8 +23,11 @@
  */
 
 #version 330
-
 out vec4 color;
+out vec4 reservoirOut0;
+out vec4 reservoirOut1;
+out vec4 reservoirOut2;
+
 in vec2 TexCoords;
 
 #include common/uniforms.glsl
@@ -36,6 +39,7 @@ in vec2 TexCoords;
 #include common/closest_hit.glsl
 #include common/disney.glsl
 #include common/lambert.glsl
+#include common/restir.glsl
 #include common/pathtrace.glsl
 
 void main(void)
@@ -69,4 +73,3 @@ void main(void)
 
     color = pixelColor;
 }
-
