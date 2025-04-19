@@ -240,7 +240,7 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, out LightSampleRe
             // Restir needs light hit (scatterpos), pdf, need to recheck shadow stuff
             // TODO: Restir, get the reservoir sample, this shouldn't return
             //return vec3(0.0);
-            lightSample = GetReservoirFromPosition(ivec2(state.texCoord)).picked;
+            lightSample = GetReservoirFromPosition(ivec2(0, 0)).picked;
         }
         Li = lightSample.emission;
 
@@ -295,7 +295,7 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface) {
     return DirectLightFull(r, state, isSurface, outSample);
 }
 
-vec4 PathTrace(Ray r)
+vec4 PathTraceFull(Ray r, bool restirSampling, out LightSampleRec directLightSample)
 {
     vec3 radiance = vec3(0.0);
     vec3 throughput = vec3(1.0);
@@ -311,7 +311,7 @@ vec4 PathTrace(Ray r)
     bool mediumSampled = false;
     bool surfaceScatter = false;
 
-    state.restir = false;
+    state.restir = restirSampling;
 
     for (state.depth = 0; ; state.depth++)
     {
@@ -414,7 +414,8 @@ vec4 PathTrace(Ray r)
                     state.fhp = r.origin;
 
                     // Transmittance Evaluation
-                    radiance += DirectLight(r, state, false) * throughput;
+                    //radiance += DirectLight(r, state, false) * throughput;
+                    radiance += DirectLightFull(r, state, true, directLightSample) * throughput;
 
                     // Pick a new direction based on the phase function
                     vec3 scatterDir = SampleHG(-r.direction, state.medium.anisotropy, rand(), rand());
@@ -443,7 +444,7 @@ vec4 PathTrace(Ray r)
                 surfaceScatter = true;
 
                 // Next event estimation
-                radiance += DirectLight(r, state, true) * throughput;
+                radiance += DirectLightFull(r, state, true, directLightSample) * throughput;
 
                 // Sample BSDF for color and outgoing direction
                 scatterSample.f = DisneySample(state, -r.direction, state.ffnormal, scatterSample.L, scatterSample.pdf);
@@ -484,7 +485,16 @@ vec4 PathTrace(Ray r)
             throughput /= q;
         }
         #endif
+        if (restirSampling) {
+            directLightSample.emission = vec3(5.0);
+            break;
+        }
     }
 
     return vec4(radiance, alpha);
+}
+
+vec4 PathTrace(Ray r) {
+    LightSampleRec lightSample;
+    return PathTraceFull(r, true, lightSample);
 }

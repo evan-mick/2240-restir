@@ -24,6 +24,7 @@
 
 #include "Config.h"
 #include "Renderer.h"
+#include "GL/gl3w.h"
 #include "GL/glcorearb.h"
 #include "ShaderIncludes.h"
 #include "Scene.h"
@@ -328,11 +329,11 @@ namespace GLSLPT
         for (int i = 0; i < reservoirTextureNum; i++) { 
             glGenTextures(1, &reservoirTextures[i]);
             glBindTexture(GL_TEXTURE_2D, reservoirTextures[i]);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, renderSize.x, renderSize.y, 0, GL_RGBA, GL_FLOAT, 0);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, renderSize.x, renderSize.y, 0, GL_RGBA, GL_FLOAT, 0);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glBindTexture(GL_TEXTURE_2D, 0);
         }
+        glBindTexture(GL_TEXTURE_2D, 0);
 
         SetReservoirFramebufferAttachments(false);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pathTraceTexture, 0);
@@ -580,8 +581,14 @@ namespace GLSLPT
             glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer)*3]);
             glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
 
+            std::cout << data[0] << " " << data[1] << " "<< data[2] << " "<< data[3] << " " << std::endl;
+            glBindTexture(GL_TEXTURE_2D, reservoirTextures[((currentBuffer)*3) + 1]);
+            glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
 
-            //std::cout << data[0] << " " << data[1] << " "<< data[2] << " "<< data[3] << " " << std::endl;
+            std::cout << data[0] << " " << data[1] << " "<< data[2] << " "<< data[3] << " " << std::endl;
+            glBindTexture(GL_TEXTURE_2D, reservoirTextures[((currentBuffer)*3) + 2]);
+            glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
+            std::cout << data[0] << " " << data[1] << " "<< data[2] << " "<< data[3] << " " << std::endl;
             //std::cout << data[4] << " " << data[5] << " "<< data[6] << " "<< data[7] << " " << std::endl;
             //std::cout << data[8] << " " << data[9] << " "<< data[10] << " "<< data[11] << " " << std::endl;
 

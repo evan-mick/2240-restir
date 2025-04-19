@@ -21,7 +21,6 @@ in vec2 TexCoords;
 
 LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
     // This code for getting a ray is just stolen from tile.glsl
-    vec2 coordsTile = mix(tileOffset, tileOffset + invNumTiles, TexCoords);
     InitRNG(pos, frameNum);
 
     float r1 = 2.0 * rand();
@@ -32,7 +31,7 @@ LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
     jitter.y = r2 < 1.0 ? sqrt(r2) - 1.0 : 1.0 - sqrt(2.0 - r2);
 
     jitter /= (resolution * 0.5);
-    vec2 d = (coordsTile * 2.0 - 1.0) + jitter;
+    vec2 d = (gl_FragCoord.xy * 2.0 - 1.0) + jitter;
 
     float scale = tan(camera.fov * 0.5);
     d.y *= resolution.y / resolution.x * scale;
@@ -51,24 +50,25 @@ LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
     //    LightSampleRec outSample;
     //    return DirectLightFull(r, state, isSurface, outSample);
 
-    State state;
-    state.restir = false;
     LightSampleRec ret;
 
-    bool hit = ClosestHit(ray, state, ret);
+    //    bool hit = ClosestHit(ray, state, ret);
 
+    vec4 pixelColor = PathTraceFull(ray, false, ret);
+    ret.emission = vec3(5.0);
     // Should we be doing a proper pathtrace? something like this but instead using the sample from there? might be better for compatibility too
-    if (hit) {
-        state.normal = vec3(0.0, 1.0, 0.0);
-        //ray.origin = state.fhp;
-        DirectLightFull(ray, state, true, ret);
-    }
+    //if (hit) {
+    //state.normal = vec3(0.0, 1.0, 0.0);
+    //ray.origin = state.fhp;
+    //DirectLightFull(ray, state, true, ret);
+    //}
 
     //ret.emission = vec3(100.0);
     //ret.normal = vec3(0.0, 1.0, 0.0);
     //ret.pdf = 1.0f;
-    //ret.dist = 1.0f;
-    ret.emission = vec3(1.0, 0.0, 0.0);
+    //ret.dist = 0.5f;
+    //ret.emission = vec3(1.0, 0.0, 0.0);
+    //ret.pdf = 2.0;
 
     return ret;
 }
@@ -79,9 +79,9 @@ void main(void)
     // Should shoot ray, generate light sample from place where hit, and return that
     // A simpler pathtrace function
     // Can use the same FBO as tile?
-    Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
+    Reservoir prevRev = GetReservoirFromPosition(ivec2(0, 0));
     for (int i = 0; i < 4; i++) {
-        LightSampleRec sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
+        LightSampleRec sam = GetNewSampleAtPixel(ivec2(0, 0));
         prevRev = UpdateReservoir(prevRev, sam);
     }
     SaveReservoir(prevRev);
