@@ -163,8 +163,8 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, out LightSampleRe
 
     ScatterSampleRec scatterSample;
 
-    // Environment Light
-    #ifdef OPT_ENVMAP
+// Environment Light
+/*    #ifdef OPT_ENVMAP
     #ifndef OPT_UNIFORM_LIGHT
     {
         vec3 color;
@@ -240,7 +240,7 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, out LightSampleRe
             // Restir needs light hit (scatterpos), pdf, need to recheck shadow stuff
             // TODO: Restir, get the reservoir sample, this shouldn't return
             //return vec3(0.0);
-            lightSample = GetReservoirFromPosition(ivec2(0, 0)).picked;
+            lightSample = GetReservoirFromPosition(ivec2(gl_FragCoord.xy)).picked;
         }
         Li = lightSample.emission;
 
@@ -295,7 +295,7 @@ vec3 DirectLight(in Ray r, in State state, bool isSurface) {
     return DirectLightFull(r, state, isSurface, outSample);
 }
 
-vec4 PathTraceFull(Ray r, bool restirSampling, out LightSampleRec directLightSample)
+vec4 PathTraceFull(Ray r, bool resample, out LightSampleRec directLightSample)
 {
     vec3 radiance = vec3(0.0);
     vec3 throughput = vec3(1.0);
@@ -311,7 +311,7 @@ vec4 PathTraceFull(Ray r, bool restirSampling, out LightSampleRec directLightSam
     bool mediumSampled = false;
     bool surfaceScatter = false;
 
-    state.restir = restirSampling;
+    state.restir = resample;
 
     for (state.depth = 0; ; state.depth++)
     {
@@ -485,10 +485,10 @@ vec4 PathTraceFull(Ray r, bool restirSampling, out LightSampleRec directLightSam
             throughput /= q;
         }
         #endif
-        if (restirSampling) {
-            directLightSample.emission = vec3(5.0);
-            break;
-        }
+        //if (!resample) {
+        //    //            directLightSample.emission = vec3(5.0);
+        //    break;
+        //}
     }
 
     return vec4(radiance, alpha);
@@ -498,3 +498,4 @@ vec4 PathTrace(Ray r) {
     LightSampleRec lightSample;
     return PathTraceFull(r, true, lightSample);
 }
+

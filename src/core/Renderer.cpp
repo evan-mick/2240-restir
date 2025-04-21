@@ -568,7 +568,7 @@ namespace GLSLPT
             GLenum drawBuffers[4] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
 
             glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);
-            glViewport(0, 0, tileWidth, tileHeight);
+            glViewport(0, 0, renderSize.x, renderSize.y);
             glDrawBuffers(4, drawBuffers);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
@@ -576,19 +576,18 @@ namespace GLSLPT
             quad->Draw(initialSampleShader);
 
             float* data = new float[renderSize.x * renderSize.y * 4];
-
-            //
+            std::cout << (renderSize.x * renderSize.y * 4) << std::endl;
+            int coord = 4*(renderSize.x/4 + ((renderSize.y/4) * renderSize.x));
             glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer)*3]);
             glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
-
-            std::cout << data[0] << " " << data[1] << " "<< data[2] << " "<< data[3] << " " << std::endl;
+            std::cout << "data at coord: " << coord << " " << data[coord + 0] << " " << data[coord + 1] << " "<< data[coord + 2] << " "<< data[coord + 3] << " ";
             glBindTexture(GL_TEXTURE_2D, reservoirTextures[((currentBuffer)*3) + 1]);
             glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
-
-            std::cout << data[0] << " " << data[1] << " "<< data[2] << " "<< data[3] << " " << std::endl;
+            std::cout << data[coord + 0] << " " << data[coord + 1] << " "<< data[coord + 2] << " "<< data[coord + 3] << " ";
             glBindTexture(GL_TEXTURE_2D, reservoirTextures[((currentBuffer)*3) + 2]);
             glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
-            std::cout << data[0] << " " << data[1] << " "<< data[2] << " "<< data[3] << " " << std::endl;
+            std::cout << data[coord + 0] << " " << data[coord + 1] << " "<< data[coord + 2] << " "<< data[coord + 3] << " " << std::endl;
+            delete data;
             //std::cout << data[4] << " " << data[5] << " "<< data[6] << " "<< data[7] << " " << std::endl;
             //std::cout << data[8] << " " << data[9] << " "<< data[10] << " "<< data[11] << " " << std::endl;
 
