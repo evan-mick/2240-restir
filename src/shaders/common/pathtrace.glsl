@@ -311,7 +311,7 @@ vec4 PathTraceFull(Ray r, bool resample, out LightSampleRec directLightSample)
     bool mediumSampled = false;
     bool surfaceScatter = false;
 
-    state.restir = false;
+    state.restir = resample;
 
     for (state.depth = 0; ; state.depth++)
     {
@@ -486,10 +486,10 @@ vec4 PathTraceFull(Ray r, bool resample, out LightSampleRec directLightSample)
         }
         #endif
         state.restir = false;
-        if (!resample) {
-            //            directLightSample.emission = vec3(5.0);
-            break;
-        }
+        //if (!resample) {
+        //            directLightSample.emission = vec3(5.0);
+        break; // this is for debugging
+        //}
     }
 
     return vec4(radiance, alpha);
