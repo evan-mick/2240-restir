@@ -23,7 +23,7 @@ LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
     // This code for getting a ray is just stolen from tile.glsl
     //    InitRNG(pos, frameNum);
 
-    vec2 coordsTile = mix(tileOffset, tileOffset + invNumTiles, TexCoords);
+    vec2 coordsTile = TexCoords; //mix(tileOffset, tileOffset + invNumTiles, TexCoords);
 
     InitRNG(gl_FragCoord.xy, frameNum);
 
@@ -50,30 +50,31 @@ LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
 
     Ray ray = Ray(camera.position + randomAperturePos, finalRayDir);
 
-    vec4 accumColor = texture(accumTexture, coordsTile);
+    //vec4 accumColor = texture(accumTexture, coordsTile);
 
     LightSampleRec ret;
     //vec4 pixelColor = PathTraceFull(ray, true, ret);
-    int index = int(rand() * float(numOfLights)) * 5;
+    //int index = int(rand() * float(numOfLights)) * 5;
 
-    // Fetch light Data
-    vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
-    vec3 emission = texelFetch(lightsTex, ivec2(index + 1, 0), 0).xyz;
-    vec3 u = texelFetch(lightsTex, ivec2(index + 2, 0), 0).xyz; // u vector for rect
-    vec3 v = texelFetch(lightsTex, ivec2(index + 3, 0), 0).xyz; // v vector for rect
-    vec3 params = texelFetch(lightsTex, ivec2(index + 4, 0), 0).xyz;
-    float radius = params.x;
-    float area = params.y;
-    float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
+    //// Fetch light Data
+    //vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
+    //vec3 emission = texelFetch(lightsTex, ivec2(index + 1, 0), 0).xyz;
+    //vec3 u = texelFetch(lightsTex, ivec2(index + 2, 0), 0).xyz; // u vector for rect
+    //vec3 v = texelFetch(lightsTex, ivec2(index + 3, 0), 0).xyz; // v vector for rect
+    //vec3 params = texelFetch(lightsTex, ivec2(index + 4, 0), 0).xyz;
+    //float radius = params.x;
+    //float area = params.y;
+    //float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
 
-    Light light = Light(position, emission, u, v, radius, area, type);
+    //Light light = Light(position, emission, u, v, radius, area, type);
     State state;
-    bool hit = ClosestHit(ray, state, ret);
-    vec3 scatterPos = state.fhp;
 
-    SampleOneLight(light, scatterPos, ret);
+    //bool hit = ClosestHit(ray, state, ret);
+    //vec3 scatterPos = state.fhp;
 
-    //  vec4 pixelColor = PathTraceFull(ray, false, ret);
+    //SampleOneLight(light, scatterPos, ret);
+
+    vec4 pixelColor = PathTraceFull(ray, false, ret);
     //ret.emission = vec3(500000000.0);
     // Should we be doing a proper pathtrace? something like this but instead using the sample from there? might be better for compatibility too
     //if (hit) {

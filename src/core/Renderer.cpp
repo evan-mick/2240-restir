@@ -301,11 +301,11 @@ namespace GLSLPT
         tileWidth = scene->renderOptions.tileWidth;
         tileHeight = scene->renderOptions.tileHeight;
 
-        invNumTiles.x = (float)tileWidth / renderSize.x;
-        invNumTiles.y = (float)tileHeight / renderSize.y;
+        invNumTiles.x = 1;//(float)tileWidth / renderSize.x;
+        invNumTiles.y = 1;//(float)tileHeight / renderSize.y;
 
-        numTiles.x = ceil((float)renderSize.x / tileWidth);
-        numTiles.y = ceil((float)renderSize.y / tileHeight);
+        numTiles.x = 1;//ceil((float)renderSize.x / tileWidth);
+        numTiles.y = 1;//ceil((float)renderSize.y / tileHeight);
 
         tile.x = -1;
         tile.y = numTiles.y - 1;
@@ -319,7 +319,8 @@ namespace GLSLPT
         // Create Texture for FBO
         glGenTextures(1, &pathTraceTexture);
         glBindTexture(GL_TEXTURE_2D, pathTraceTexture);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, tileWidth, tileHeight, 0, GL_RGBA, GL_FLOAT, 0);
+        //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, tileWidth, tileHeight, 0, GL_RGBA, GL_FLOAT, 0);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, renderSize.x, renderSize.y, 0, GL_RGBA, GL_FLOAT, 0);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glBindTexture(GL_TEXTURE_2D, 0);
@@ -597,7 +598,8 @@ namespace GLSLPT
             // Rendering is done a tile per frame, so if a 500x500 image is rendered with a tileWidth and tileHeight of 250 then, all tiles (for a single sample) 
             // get rendered after 4 frames
             glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);
-            glViewport(0, 0, tileWidth, tileHeight);
+            glViewport(0, 0, renderSize.x, renderSize.y);
+            //glViewport(0, 0, tileWidth, tileHeight);
             glDrawBuffers(4, drawBuffers);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
@@ -610,10 +612,24 @@ namespace GLSLPT
 
             // pathTraceTexture is copied to accumTexture and re-used as input for the first step.
             glBindFramebuffer(GL_FRAMEBUFFER, accumFBO);
-            glViewport(tileWidth * tile.x, tileHeight * tile.y, tileWidth, tileHeight);
+            //glViewport(tileWidth * tile.x, tileHeight * tile.y, tileWidth, tileHeight);
+            glViewport(0, 0, renderSize.x, renderSize.y);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, pathTraceTexture);
             quad->Draw(outputShader);
+
+            data = new float[renderSize.x * renderSize.y * 4];
+            coord = 4*(renderSize.x/4 + ((renderSize.y/4) * renderSize.x));
+            glBindTexture(GL_TEXTURE_2D, pathTraceTexture);
+            glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
+            std::cout << "data at coord: " << coord << " " << data[coord + 0] << " " << data[coord + 1] << " "<< data[coord + 2] << " "<< data[coord + 3] << " ";
+            glBindTexture(GL_TEXTURE_2D, pathTraceTexture);
+            glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
+            std::cout << data[coord + 0] << " " << data[coord + 1] << " "<< data[coord + 2] << " "<< data[coord + 3] << " ";
+            glBindTexture(GL_TEXTURE_2D, pathTraceTexture);
+            glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
+            std::cout << data[coord + 0] << " " << data[coord + 1] << " "<< data[coord + 2] << " "<< data[coord + 3] << " " << std::endl;
+            delete data;
 
             // Here we render to tileOutputTexture[currentBuffer] but display tileOutputTexture[1-currentBuffer] until all tiles are done rendering
             // When all tiles are rendered, we flip the bound texture and start rendering to the other one
@@ -623,6 +639,10 @@ namespace GLSLPT
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             quad->Draw(tonemapShader);
+
+
+            
+            
         }
     }
 

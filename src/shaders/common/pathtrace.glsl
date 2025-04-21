@@ -163,8 +163,8 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, out LightSampleRe
 
     ScatterSampleRec scatterSample;
 
-// Environment Light
-/*    #ifdef OPT_ENVMAP
+    // Environment Light
+    #ifdef OPT_ENVMAP
     #ifndef OPT_UNIFORM_LIGHT
     {
         vec3 color;
@@ -311,7 +311,7 @@ vec4 PathTraceFull(Ray r, bool resample, out LightSampleRec directLightSample)
     bool mediumSampled = false;
     bool surfaceScatter = false;
 
-    state.restir = resample;
+    state.restir = false;
 
     for (state.depth = 0; ; state.depth++)
     {
@@ -485,10 +485,11 @@ vec4 PathTraceFull(Ray r, bool resample, out LightSampleRec directLightSample)
             throughput /= q;
         }
         #endif
-        //if (!resample) {
-        //    //            directLightSample.emission = vec3(5.0);
-        //    break;
-        //}
+        state.restir = false;
+        if (!resample) {
+            //            directLightSample.emission = vec3(5.0);
+            break;
+        }
     }
 
     return vec4(radiance, alpha);
@@ -498,4 +499,3 @@ vec4 PathTrace(Ray r) {
     LightSampleRec lightSample;
     return PathTraceFull(r, true, lightSample);
 }
-
