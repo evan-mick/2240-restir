@@ -25,6 +25,7 @@
 #pragma once
 
 #include <vector>
+#include "GL/glcorearb.h"
 #include "Quad.h"
 #include "Program.h"
 #include "Vec2.h"
@@ -197,5 +198,7 @@ namespace GLSLPT
 
         void SetReservoirFramebufferAttachments(bool inv);
         void SetUniforms(GLuint shaderObject);
+
+        void DumpTexDataAtPoint(int x, int y, GLuint tex);
     };
 }

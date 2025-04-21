@@ -575,20 +575,10 @@ namespace GLSLPT
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             SetReservoirFramebufferAttachments(true);
             quad->Draw(initialSampleShader);
-
-            float* data = new float[renderSize.x * renderSize.y * 4];
-            std::cout << (renderSize.x * renderSize.y * 4) << std::endl;
-            int coord = 4*(renderSize.x/4 + ((renderSize.y/4) * renderSize.x));
-            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer)*3]);
-            glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
-            std::cout << "data at coord: " << coord << " " << data[coord + 0] << " " << data[coord + 1] << " "<< data[coord + 2] << " "<< data[coord + 3] << " ";
-            glBindTexture(GL_TEXTURE_2D, reservoirTextures[((currentBuffer)*3) + 1]);
-            glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
-            std::cout << data[coord + 0] << " " << data[coord + 1] << " "<< data[coord + 2] << " "<< data[coord + 3] << " ";
-            glBindTexture(GL_TEXTURE_2D, reservoirTextures[((currentBuffer)*3) + 2]);
-            glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
-            std::cout << data[coord + 0] << " " << data[coord + 1] << " "<< data[coord + 2] << " "<< data[coord + 3] << " " << std::endl;
-            delete data;
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3]);
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 1]);
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 2]);
+            
             //std::cout << data[4] << " " << data[5] << " "<< data[6] << " "<< data[7] << " " << std::endl;
             //std::cout << data[8] << " " << data[9] << " "<< data[10] << " "<< data[11] << " " << std::endl;
 
@@ -618,20 +608,7 @@ namespace GLSLPT
             glBindTexture(GL_TEXTURE_2D, pathTraceTexture);
             quad->Draw(outputShader);
 
-            data = new float[renderSize.x * renderSize.y * 4];
-            coord = 4*(renderSize.x/4 + ((renderSize.y/4) * renderSize.x));
-            glBindTexture(GL_TEXTURE_2D, pathTraceTexture);
-            glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
-            std::cout << "data at coord: " << coord << " " << data[coord + 0] << " " << data[coord + 1] << " "<< data[coord + 2] << " "<< data[coord + 3] << " ";
-            glBindTexture(GL_TEXTURE_2D, pathTraceTexture);
-            glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
-            std::cout << data[coord + 0] << " " << data[coord + 1] << " "<< data[coord + 2] << " "<< data[coord + 3] << " ";
-            glBindTexture(GL_TEXTURE_2D, pathTraceTexture);
-            glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
-            std::cout << data[coord + 0] << " " << data[coord + 1] << " "<< data[coord + 2] << " "<< data[coord + 3] << " " << std::endl;
-            delete data;
-
-            // Here we render to tileOutputTexture[currentBuffer] but display tileOutputTexture[1-currentBuffer] until all tiles are done rendering
+                // Here we render to tileOutputTexture[currentBuffer] but display tileOutputTexture[1-currentBuffer] until all tiles are done rendering
             // When all tiles are rendered, we flip the bound texture and start rendering to the other one
             glBindFramebuffer(GL_FRAMEBUFFER, outputFBO);
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tileOutputTexture[currentBuffer], 0);
@@ -641,9 +618,19 @@ namespace GLSLPT
             quad->Draw(tonemapShader);
 
 
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, accumTexture);
             
             
         }
+    }
+
+    void Renderer::DumpTexDataAtPoint(int x, int y, GLuint tex) {
+        float* data = new float[renderSize.x * renderSize.y * 4];
+        int coord = 4*(x + (y * renderSize.x));
+        glBindTexture(GL_TEXTURE_2D, tex);
+        glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
+        std::cout << "tex: " << tex << " coord: " << coord << " " << data[coord + 0] << " " << data[coord + 1] << " "<< data[coord + 2] << " "<< data[coord + 3] << " " << std::endl;;
+        delete data;
     }
 
     void Renderer::SetUniforms(GLuint shaderObject) {
