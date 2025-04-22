@@ -538,6 +538,12 @@ namespace GLSLPT
         shaderObject = pathTraceShaderLowRes->getObject();
         SetUniforms(shaderObject);
         pathTraceShaderLowRes->StopUsing();
+
+        outputShader->Use();
+        glUniform1i(glGetUniformLocation(outputShader->getObject(), "xcoord"), restirXBound);
+        pathTraceShaderLowRes->StopUsing();
+        
+
     }
 
     void Renderer::Render()
@@ -932,6 +938,10 @@ namespace GLSLPT
         glUniform1i(glGetUniformLocation(shaderObject, "enableAces"), scene->renderOptions.enableAces);
         glUniform1i(glGetUniformLocation(shaderObject, "simpleAcesFit"), scene->renderOptions.simpleAcesFit);
         glUniform3f(glGetUniformLocation(shaderObject, "backgroundCol"), scene->renderOptions.backgroundCol.x, scene->renderOptions.backgroundCol.y, scene->renderOptions.backgroundCol.z);
+        tonemapShader->StopUsing();
+
+        outputShader->Use();
+        glUniform1i(glGetUniformLocation(outputShader->getObject(), "xcoord"), restirXBound);
         tonemapShader->StopUsing();
     }
 }
