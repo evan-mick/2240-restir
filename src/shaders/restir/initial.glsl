@@ -68,6 +68,16 @@ LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
     Light light = Light(position, emission, u, v, radius, area, type);
     State state;
 
+    /*
+            scatterSample.f = DisneyEval(state, -r.direction, state.ffnormal, lightSample.direction, scatterSample.pdf);
+
+            float misWeight = 1.0;
+                if (light.area > 0.0) // No MIS for distant light
+                    misWeight = PowerHeuristic(lightSample.pdf, scatterSample.pdf);
+
+                if (scatterSample.pdf > 0.0)
+                    Ld += misWeight * Li * scatterSample.f / lightSample.pdf;*/
+
     bool hit = ClosestHit(ray, state, ret);
     vec3 scatterPos = state.fhp + state.normal * EPS;
     SampleOneLight(light, scatterPos, ret);

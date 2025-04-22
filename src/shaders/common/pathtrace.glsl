@@ -261,28 +261,24 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, bool restirSample
                 scatterSample.pdf = p;
             }
 
+            #else
+            // If there are no volumes in the scene then use a simple binary hit test
+            bool inShadow = AnyHit(shadowRay, lightSample.dist - EPS);
+
+            scatterSample.f = DisneyEval(state, -r.direction, state.ffnormal, lightSample.direction, scatterSample.pdf);
+            if (inShadow)
+            {
+                Li = vec3(0.0);
+            }
+            #endif
+
+            // Calculate radiance without shadow considerations
             float misWeight = 1.0;
             if (light.area > 0.0) // No MIS for distant light
                 misWeight = PowerHeuristic(lightSample.pdf, scatterSample.pdf);
 
             if (scatterSample.pdf > 0.0)
-                Ld += misWeight * scatterSample.f * Li / lightSample.pdf;
-            #else
-            // If there are no volumes in the scene then use a simple binary hit test
-            bool inShadow = AnyHit(shadowRay, lightSample.dist - EPS);
-
-            if (!inShadow)
-            {
-                scatterSample.f = DisneyEval(state, -r.direction, state.ffnormal, lightSample.direction, scatterSample.pdf);
-
-                float misWeight = 1.0;
-                if (light.area > 0.0) // No MIS for distant light
-                    misWeight = PowerHeuristic(lightSample.pdf, scatterSample.pdf);
-
-                if (scatterSample.pdf > 0.0)
-                    Ld += misWeight * Li * scatterSample.f / lightSample.pdf;
-            }
-            #endif
+                Ld += (misWeight * scatterSample.f / lightSample.pdf) * Li;
         }
     }
     #endif
