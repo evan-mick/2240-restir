@@ -309,10 +309,17 @@ vec4 PathTraceFull(Ray r, bool resample, out LightSampleRec directLightSample)
     bool mediumSampled = false;
     bool surfaceScatter = false;
 
-    state.restir = resample;
+    //state.restir = resample;
+
+    
 
     for (state.depth = 0; ; state.depth++)
     {
+
+        if (resample && state.depth > 0) {
+            resample = false;
+        }
+
         bool hit = ClosestHit(r, state, lightSample);
 
         if (!hit)
@@ -413,7 +420,7 @@ vec4 PathTraceFull(Ray r, bool resample, out LightSampleRec directLightSample)
 
                     // Transmittance Evaluation
                     //radiance += DirectLight(r, state, false) * throughput;
-                    radiance += DirectLightFull(r, state, true, false, directLightSample) * throughput;
+                    radiance += DirectLightFull(r, state, true, resample, directLightSample) * throughput;
 
                     // Pick a new direction based on the phase function
                     vec3 scatterDir = SampleHG(-r.direction, state.medium.anisotropy, rand(), rand());
@@ -442,7 +449,7 @@ vec4 PathTraceFull(Ray r, bool resample, out LightSampleRec directLightSample)
                 surfaceScatter = true;
 
                 // Next event estimation
-                radiance += DirectLightFull(r, state, true, true, directLightSample) * throughput;
+                radiance += DirectLightFull(r, state, true, resample, directLightSample) * throughput;
 
                 // Sample BSDF for color and outgoing direction
                 scatterSample.f = DisneySample(state, -r.direction, state.ffnormal, scatterSample.L, scatterSample.pdf);
@@ -487,7 +494,7 @@ vec4 PathTraceFull(Ray r, bool resample, out LightSampleRec directLightSample)
 
         //if (!resample) {
         //            directLightSample.emission = vec3(5.0);
-        break; // this is for debugging
+        //break; // this is for debugging
         //}
     }
 
