@@ -28,9 +28,12 @@ out vec4 color;
 in vec2 TexCoords;
 
 uniform sampler2D imgTex;
+uniform int xcoord;
 
 void main()
 {
     color = texture(imgTex, TexCoords);
+    if (abs(gl_FragCoord.x - xcoord) <= 1.0) {
+        color = vec4(1.0, 1.0, 1.0, 1.0); // white band
+    }
 }
-

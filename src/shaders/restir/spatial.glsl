@@ -19,4 +19,6 @@ in vec2 TexCoords;
 #include /../common/restir.glsl
 
 void main(void)
-{}
+{
+    SaveReservoir(GetReservoirFromPosition(ivec2(gl_FragCoord.xy)));
+}

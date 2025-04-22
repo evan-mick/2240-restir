@@ -89,7 +89,7 @@ void main(void)
 
     // Temporal reuse
     Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
-    cur = UpdateReservoir(cur, sam);
+    cur = CombineReservoirs(cur, prevRev);
 
     SaveReservoir(cur);
     //reservoirOut0 = vec4(ivec2(gl_FragCoord.xy), TexCoords.xy); //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);

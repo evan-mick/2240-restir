@@ -46,6 +46,8 @@ namespace GLSLPT
             tileWidth = 100;
             tileHeight = 100;
             maxDepth = 2;
+            restirXBounds = renderResolution.x * 0.5;
+            restirYBounds = renderResolution.y * 0.5;
             maxSpp = -1;
             RRDepth = 2;
             texArrayWidth = 2048;
@@ -76,6 +78,8 @@ namespace GLSLPT
         int tileWidth;
         int tileHeight;
         int maxDepth;
+        int restirXBounds;
+        int restirYBounds;
         int maxSpp;
         int RRDepth;
         int texArrayWidth;
@@ -145,7 +149,7 @@ namespace GLSLPT
 
         // Shaders for ReSTIR
         Program* initialSampleShader;
-        Program* spatioTemporalSampleShader;
+        Program* spatialSampleShader;
 
         // Render textures
         GLuint pathTraceTextureLowRes;
@@ -160,6 +164,8 @@ namespace GLSLPT
         // Render resolution and window resolution
         iVec2 renderSize;
         iVec2 windowSize;
+        int restirXBound;
+        int restirYBound;
 
         // Variables to track rendering status
         iVec2 tile;

@@ -297,6 +297,8 @@ namespace GLSLPT
 
         renderSize = scene->renderOptions.renderResolution;
         windowSize = scene->renderOptions.windowResolution;
+        restirXBound = scene->renderOptions.restirXBounds;
+        restirYBound = scene->renderOptions.restirYBounds;
 
         tileWidth = scene->renderOptions.tileWidth;
         tileHeight = scene->renderOptions.tileHeight;
@@ -424,6 +426,7 @@ namespace GLSLPT
         ShaderInclude::ShaderSource outputShaderSrcObj = ShaderInclude::load(shadersDirectory + "output.glsl");
         ShaderInclude::ShaderSource tonemapShaderSrcObj = ShaderInclude::load(shadersDirectory + "tonemap.glsl");
         ShaderInclude::ShaderSource restirInitialShaderSrcObj = ShaderInclude::load(shadersDirectory + "restir/initial.glsl");
+        ShaderInclude::ShaderSource restirSpatialShaderSrcObj = ShaderInclude::load(shadersDirectory + "restir/spatial.glsl");
 
 
         // Add preprocessor defines for conditional compilation
@@ -519,6 +522,8 @@ namespace GLSLPT
         outputShader = LoadShaders(vertexShaderSrcObj, outputShaderSrcObj);
         tonemapShader = LoadShaders(vertexShaderSrcObj, tonemapShaderSrcObj);
         initialSampleShader = LoadShaders(vertexShaderSrcObj, restirInitialShaderSrcObj);
+        spatialSampleShader = LoadShaders(vertexShaderSrcObj, restirSpatialShaderSrcObj);
+        
 
         // Setup shader uniforms
         GLuint shaderObject;
@@ -532,10 +537,21 @@ namespace GLSLPT
         SetTextureUniforms(shaderObject);
         initialSampleShader->StopUsing();
 
+        spatialSampleShader->Use();
+        shaderObject = spatialSampleShader->getObject();
+        SetTextureUniforms(shaderObject);
+        spatialSampleShader->StopUsing();
+
         pathTraceShaderLowRes->Use();
         shaderObject = pathTraceShaderLowRes->getObject();
         SetTextureUniforms(shaderObject);
         pathTraceShaderLowRes->StopUsing();
+
+        outputShader->Use();
+        glUniform1i(glGetUniformLocation(outputShader->getObject(), "xcoord"), restirXBound);
+        pathTraceShaderLowRes->StopUsing();
+        
+
     }
 
     void Renderer::Render()
@@ -583,6 +599,12 @@ namespace GLSLPT
             DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 1]);
             DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 2]);
             std::cout << std::endl;
+
+            glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);
+            glViewport(0, 0, renderSize.x, renderSize.y);
+            glDrawBuffers(4, drawBuffers);
+            SetReservoirFramebufferAttachments(false);
+            quad->Draw(spatialSampleShader);
             
             // Renders to pathTraceTexture while using previously accumulated samples from accumTexture
             // Rendering is done a tile per frame, so if a 500x500 image is rendered with a tileWidth and tileHeight of 250 then, all tiles (for a single sample) 
@@ -593,7 +615,7 @@ namespace GLSLPT
             glDrawBuffers(4, drawBuffers);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
-            SetReservoirFramebufferAttachments(false);
+            SetReservoirFramebufferAttachments(true);
             quad->Draw(pathTraceShader);
             
             DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3]);
@@ -656,6 +678,8 @@ namespace GLSLPT
         
         glUniform1i(glGetUniformLocation(shaderObject, "topBVHIndex"), scene->bvhTranslator.topLevelIndex);
         glUniform2f(glGetUniformLocation(shaderObject, "resolution"), float(renderSize.x), float(renderSize.y));
+        glUniform1i(glGetUniformLocation(shaderObject, "restirBoundsX"), restirXBound);
+        glUniform1i(glGetUniformLocation(shaderObject, "restirBoundsY"), restirYBound);
         glUniform2f(glGetUniformLocation(shaderObject, "invNumTiles"), invNumTiles.x, invNumTiles.y);
         glUniform1i(glGetUniformLocation(shaderObject, "numOfLights"), scene->lights.size());
         glUniform1i(glGetUniformLocation(shaderObject, "accumTexture"), 0);
@@ -788,7 +812,6 @@ namespace GLSLPT
                 glUniform1f(glGetUniformLocation(shaderObject, "envMapTotalSum"), scene->envMap->totalSum);
                 pathTraceShader->StopUsing();
 
-
                 shaderObject = initialSampleShader->getObject();
                 glUniform2f(glGetUniformLocation(shaderObject, "envMapRes"), (float)scene->envMap->width, (float)scene->envMap->height);
                 glUniform1f(glGetUniformLocation(shaderObject, "envMapTotalSum"), scene->envMap->totalSum);
@@ -848,6 +871,8 @@ namespace GLSLPT
             sampleCounter = 1;
             denoised = false;
             frameCounter = 1;
+            restirXBound = scene->renderOptions.restirXBounds;
+            restirYBound = scene->renderOptions.restirYBounds;
 
             // Clear out the accumulated texture for rendering a new image
             glBindFramebuffer(GL_FRAMEBUFFER, accumFBO);
@@ -876,11 +901,18 @@ namespace GLSLPT
 
         GLuint shaderObject;
 
+        
+
 
         initialSampleShader->Use();
         shaderObject = initialSampleShader->getObject();
         SetSampleUniforms(shaderObject);
         initialSampleShader->StopUsing();
+
+        spatialSampleShader->Use();
+        shaderObject = spatialSampleShader->getObject();
+        SetSampleUniforms(shaderObject);
+        spatialSampleShader->StopUsing();
 
         pathTraceShader->Use();
         shaderObject = pathTraceShader->getObject();
@@ -890,6 +922,7 @@ namespace GLSLPT
         pathTraceShaderLowRes->Use();
         shaderObject = pathTraceShaderLowRes->getObject();
         SetSampleUniforms(shaderObject);
+
         pathTraceShaderLowRes->StopUsing();
 
         tonemapShader->Use();
@@ -900,5 +933,9 @@ namespace GLSLPT
         glUniform1i(glGetUniformLocation(shaderObject, "simpleAcesFit"), scene->renderOptions.simpleAcesFit);
         glUniform3f(glGetUniformLocation(shaderObject, "backgroundCol"), scene->renderOptions.backgroundCol.x, scene->renderOptions.backgroundCol.y, scene->renderOptions.backgroundCol.z);
         tonemapShader->StopUsing();
+
+        outputShader->Use();
+        glUniform1i(glGetUniformLocation(outputShader->getObject(), "xcoord"), restirXBound);
+        outputShader->StopUsing();
     }
 }

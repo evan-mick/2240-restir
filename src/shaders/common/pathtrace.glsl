@@ -232,6 +232,8 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, bool restirSample
         float area = params.y;
         float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
 
+        //bool useRestir = gl_FragCoord.x > (restirBoundsX) && gl_FragCoord.y > (restirBoundsY);
+
         light = Light(position, emission, u, v, radius, area, type);
         if (!restirSample) {
             SampleOneLight(light, scatterPos, lightSample); // TODO: CONVERT THIS TO OPTIONALLY TAKE IN RESTIR RESERVOIRS
@@ -311,11 +313,8 @@ vec4 PathTraceFull(Ray r, bool resample, out LightSampleRec directLightSample)
 
     //state.restir = resample;
 
-    
-
     for (state.depth = 0; ; state.depth++)
     {
-
         if (resample && state.depth > 0) {
             resample = false;
         }
