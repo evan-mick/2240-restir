@@ -232,7 +232,7 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, bool restirSample
         float area = params.y;
         float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
 
-        bool useRestir = gl_FragCoord.x > (restirBounds);
+        bool useRestir = gl_FragCoord.x > (restirBoundsX) && gl_FragCoord.y > (restirBoundsY);
 
         light = Light(position, emission, u, v, radius, area, type);
         if (!useRestir) {
