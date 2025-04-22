@@ -51,8 +51,6 @@ LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
 
     Ray ray = Ray(camera.position + randomAperturePos, finalRayDir);
 
-    //vec4 accumColor = texture(accumTexture, coordsTile);
-
     LightSampleRec ret;
     //vec4 pixelColor = PathTraceFull(ray, true, ret);
     int index = int(rand() * float(numOfLights)) * 5;
@@ -74,21 +72,6 @@ LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
     vec3 scatterPos = state.fhp + state.normal*EPS;
     SampleOneLight(light, scatterPos, ret);
 
-    //vec4 pixelColor = PathTraceFull(ray, false, ret);
-    //ret.emission = vec3(500000000.0);
-    // Should we be doing a proper pathtrace? something like this but instead using the sample from there? might be better for compatibility too
-    //if (hit) {
-    //state.normal = vec3(0.0, 1.0, 0.0);
-    //ray.origin = state.fhp;
-    //DirectLightFull(ray, state, true, ret);
-    //}
-
-    //ret.emission = vec3(coordsTile.y, 100.0, 100);
-    //ret.normal = vec3(gl_FragCoord.x, gl_FragCoord.y, coordsTile.x);
-    //ret.pdf = 1.0f;
-    //ret.dist = 0.5f;
-    //ret.emission = vec3(1.0, 0.0, 0.0);
-    //ret.pdf = 2.0;
 
     return ret;
 }
