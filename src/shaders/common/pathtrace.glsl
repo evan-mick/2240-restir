@@ -155,7 +155,7 @@ vec3 EvalTransmittance(Ray r)
 }
 #endif
 
-vec3 DirectLightFull(in Ray r, in State state, bool isSurface, out LightSampleRec lightSample)
+vec3 DirectLightFull(in Ray r, in State state, bool isSurface, bool restirSample, out LightSampleRec lightSample)
 {
     vec3 Ld = vec3(0.0);
     vec3 Li = vec3(0.0);
@@ -219,27 +219,25 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, out LightSampleRe
         //LightSampleRec lightSample; // TODO: Is this what we store in the reservoir? Update: no, unless we don't care if it doesn't work with environment lights
         Light light;
 
-        if (!state.restir) {
-            //Pick a light to sample
-            int index = int(rand() * float(numOfLights)) * 5;
+        //Pick a light to sample
+        int index = int(rand() * float(numOfLights)) * 5;
 
-            // Fetch light Data
-            vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
-            vec3 emission = texelFetch(lightsTex, ivec2(index + 1, 0), 0).xyz;
-            vec3 u = texelFetch(lightsTex, ivec2(index + 2, 0), 0).xyz; // u vector for rect
-            vec3 v = texelFetch(lightsTex, ivec2(index + 3, 0), 0).xyz; // v vector for rect
-            vec3 params = texelFetch(lightsTex, ivec2(index + 4, 0), 0).xyz;
-            float radius = params.x;
-            float area = params.y;
-            float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
+        // Fetch light Data
+        vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
+        vec3 emission = texelFetch(lightsTex, ivec2(index + 1, 0), 0).xyz;
+        vec3 u = texelFetch(lightsTex, ivec2(index + 2, 0), 0).xyz; // u vector for rect
+        vec3 v = texelFetch(lightsTex, ivec2(index + 3, 0), 0).xyz; // v vector for rect
+        vec3 params = texelFetch(lightsTex, ivec2(index + 4, 0), 0).xyz;
+        float radius = params.x;
+        float area = params.y;
+        float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
 
-            light = Light(position, emission, u, v, radius, area, type);
+        light = Light(position, emission, u, v, radius, area, type);
+        if (!restirSample) {
             SampleOneLight(light, scatterPos, lightSample); // TODO: CONVERT THIS TO OPTIONALLY TAKE IN RESTIR RESERVOIRS
         }
         else {
             // Restir needs light hit (scatterpos), pdf, need to recheck shadow stuff
-            // TODO: Restir, get the reservoir sample, this shouldn't return
-            //return vec3(0.0);
             lightSample = GetReservoirFromPosition(ivec2(gl_FragCoord.xy)).picked;
         }
         Li = lightSample.emission;
@@ -292,7 +290,7 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, out LightSampleRe
 
 vec3 DirectLight(in Ray r, in State state, bool isSurface) {
     LightSampleRec outSample;
-    return DirectLightFull(r, state, isSurface, outSample);
+    return DirectLightFull(r, state, isSurface, true, outSample);
 }
 
 vec4 PathTraceFull(Ray r, bool resample, out LightSampleRec directLightSample)
@@ -415,7 +413,7 @@ vec4 PathTraceFull(Ray r, bool resample, out LightSampleRec directLightSample)
 
                     // Transmittance Evaluation
                     //radiance += DirectLight(r, state, false) * throughput;
-                    radiance += DirectLightFull(r, state, true, directLightSample) * throughput;
+                    radiance += DirectLightFull(r, state, true, false, directLightSample) * throughput;
 
                     // Pick a new direction based on the phase function
                     vec3 scatterDir = SampleHG(-r.direction, state.medium.anisotropy, rand(), rand());
@@ -444,7 +442,7 @@ vec4 PathTraceFull(Ray r, bool resample, out LightSampleRec directLightSample)
                 surfaceScatter = true;
 
                 // Next event estimation
-                radiance += DirectLightFull(r, state, true, directLightSample) * throughput;
+                radiance += DirectLightFull(r, state, true, true, directLightSample) * throughput;
 
                 // Sample BSDF for color and outgoing direction
                 scatterSample.f = DisneySample(state, -r.direction, state.ffnormal, scatterSample.L, scatterSample.pdf);
@@ -485,7 +483,8 @@ vec4 PathTraceFull(Ray r, bool resample, out LightSampleRec directLightSample)
             throughput /= q;
         }
         #endif
-        state.restir = false;
+        //state.restir = false;
+
         //if (!resample) {
         //            directLightSample.emission = vec3(5.0);
         break; // this is for debugging

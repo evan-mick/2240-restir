@@ -35,7 +35,8 @@ LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
     jitter.y = r2 < 1.0 ? sqrt(r2) - 1.0 : 1.0 - sqrt(2.0 - r2);
 
     jitter /= (resolution * 0.5);
-    vec2 d = TexCoords; //(coordsTile * 2.0 - 1.0) + jitter;
+    vec2 d = (TexCoords * 2.0 - 1.0) + jitter;
+    //vec2 d = TexCoords; //(coordsTile * 2.0 - 1.0) + jitter;
 
     float scale = tan(camera.fov * 0.5);
     d.y *= resolution.y / resolution.x * scale;
@@ -70,7 +71,7 @@ LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
     State state;
 
     bool hit = ClosestHit(ray, state, ret);
-    vec3 scatterPos = state.fhp;
+    vec3 scatterPos = state.fhp + state.normal*EPS;
     SampleOneLight(light, scatterPos, ret);
 
     //vec4 pixelColor = PathTraceFull(ray, false, ret);
@@ -104,6 +105,7 @@ void main(void)
         prevRev = UpdateReservoir(prevRev, sam);
     }
     SaveReservoir(prevRev);
+    //reservoirOut0 = vec4(ivec2(gl_FragCoord.xy), TexCoords.xy); //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
     //reservoirOut0 = vec4(gl_FragCoord.x, gl_FragCoord.y, 1.0, 1.0);
     //reservoirOut1 = vec4(1.0, 1.0, 1.0, 1.0);
     //reservoirOut2 = vec4(1.0, 1.0, 1.0, 1.0);

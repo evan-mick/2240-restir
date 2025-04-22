@@ -79,9 +79,9 @@ void main(void)
 
     color = pixelColor + accumColor;
 
-    reservoirOut0 = texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
-    reservoirOut1 = texelFetch(reservoirs1, ivec2(gl_FragCoord.xy), 0);
-    reservoirOut2 = texelFetch(reservoirs2, ivec2(gl_FragCoord.xy), 0);
+    //reservoirOut0 = texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
+    //reservoirOut1 = texelFetch(reservoirs1, ivec2(gl_FragCoord.xy), 0);
+    //reservoirOut2 = texelFetch(reservoirs2, ivec2(gl_FragCoord.xy), 0);
     //Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
     //vec3 col2 = prevRev.picked.emission.rgb;
     //color = vec4(col2.r, col2.g, col2.b, 1.0); //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);

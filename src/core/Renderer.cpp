@@ -575,15 +575,15 @@ namespace GLSLPT
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             SetReservoirFramebufferAttachments(true);
             quad->Draw(initialSampleShader);
+            
             DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3]);
             DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 1]);
             DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 2]);
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3]);
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 1]);
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 2]);
+            std::cout << std::endl;
             
-            //std::cout << data[4] << " " << data[5] << " "<< data[6] << " "<< data[7] << " " << std::endl;
-            //std::cout << data[8] << " " << data[9] << " "<< data[10] << " "<< data[11] << " " << std::endl;
-
-
-
             // Renders to pathTraceTexture while using previously accumulated samples from accumTexture
             // Rendering is done a tile per frame, so if a 500x500 image is rendered with a tileWidth and tileHeight of 250 then, all tiles (for a single sample) 
             // get rendered after 4 frames
@@ -595,10 +595,10 @@ namespace GLSLPT
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             SetReservoirFramebufferAttachments(false);
             quad->Draw(pathTraceShader);
-
-
-
             
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3]);
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 1]);
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 2]);
 
             // pathTraceTexture is copied to accumTexture and re-used as input for the first step.
             glBindFramebuffer(GL_FRAMEBUFFER, accumFBO);
@@ -616,11 +616,7 @@ namespace GLSLPT
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             quad->Draw(tonemapShader);
-
-
-            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, accumTexture);
-            
-            
+            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, accumTexture);
         }
     }
 
@@ -855,6 +851,30 @@ namespace GLSLPT
         // Update uniforms
 
         GLuint shaderObject;
+
+
+        initialSampleShader->Use();
+        shaderObject = initialSampleShader->getObject();
+        glUniform3f(glGetUniformLocation(shaderObject, "camera.position"), scene->camera->position.x, scene->camera->position.y, scene->camera->position.z);
+        glUniform3f(glGetUniformLocation(shaderObject, "camera.right"), scene->camera->right.x, scene->camera->right.y, scene->camera->right.z);
+        glUniform3f(glGetUniformLocation(shaderObject, "camera.up"), scene->camera->up.x, scene->camera->up.y, scene->camera->up.z);
+        glUniform3f(glGetUniformLocation(shaderObject, "camera.forward"), scene->camera->forward.x, scene->camera->forward.y, scene->camera->forward.z);
+        glUniform1f(glGetUniformLocation(shaderObject, "camera.fov"), scene->camera->fov);
+        glUniform1f(glGetUniformLocation(shaderObject, "camera.focalDist"), scene->camera->focalDist);
+        glUniform1f(glGetUniformLocation(shaderObject, "camera.aperture"), scene->camera->aperture);
+        glUniform1i(glGetUniformLocation(shaderObject, "enableEnvMap"), scene->envMap == nullptr ? false : scene->renderOptions.enableEnvMap);
+        glUniform1f(glGetUniformLocation(shaderObject, "envMapIntensity"), scene->renderOptions.envMapIntensity);
+        glUniform1f(glGetUniformLocation(shaderObject, "envMapRot"), scene->renderOptions.envMapRot / 360.0f);
+        glUniform1i(glGetUniformLocation(shaderObject, "maxDepth"), scene->renderOptions.maxDepth);
+        glUniform2f(glGetUniformLocation(shaderObject, "tileOffset"), (float)tile.x * invNumTiles.x, (float)tile.y * invNumTiles.y);
+        glUniform3f(glGetUniformLocation(shaderObject, "uniformLightCol"), scene->renderOptions.uniformLightCol.x, scene->renderOptions.uniformLightCol.y, scene->renderOptions.uniformLightCol.z);
+        glUniform1f(glGetUniformLocation(shaderObject, "roughnessMollificationAmt"), scene->renderOptions.roughnessMollificationAmt);
+        glUniform1i(glGetUniformLocation(shaderObject, "frameNum"), frameCounter);   
+        initialSampleShader->StopUsing();
+
+
+
+
         pathTraceShader->Use();
         shaderObject = pathTraceShader->getObject();
         glUniform3f(glGetUniformLocation(shaderObject, "camera.position"), scene->camera->position.x, scene->camera->position.y, scene->camera->position.z);
