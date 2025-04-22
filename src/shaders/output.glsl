@@ -28,7 +28,7 @@ out vec4 color;
 in vec2 TexCoords;
 
 uniform sampler2D imgTex;
-uniform int xcoord;
+uniform int restir_border;
 
 void main()
 {

@@ -540,7 +540,7 @@ namespace GLSLPT
         pathTraceShaderLowRes->StopUsing();
 
         outputShader->Use();
-        glUniform1i(glGetUniformLocation(outputShader->getObject(), "xcoord"), restirXBound);
+        glUniform1i(glGetUniformLocation(outputShader->getObject(), "restir_border"), restirXBound);
         pathTraceShaderLowRes->StopUsing();
         
 
@@ -941,7 +941,7 @@ namespace GLSLPT
         tonemapShader->StopUsing();
 
         outputShader->Use();
-        glUniform1i(glGetUniformLocation(outputShader->getObject(), "xcoord"), restirXBound);
+        glUniform1i(glGetUniformLocation(outputShader->getObject(), "restir_border"), restirXBound);
         tonemapShader->StopUsing();
     }
 }
