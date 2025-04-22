@@ -21,8 +21,11 @@ in vec2 TexCoords;
 
 LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
     // This code for getting a ray is just stolen from tile.glsl
-    vec2 coordsTile = mix(tileOffset, tileOffset + invNumTiles, TexCoords);
-    InitRNG(pos, frameNum);
+    //    InitRNG(pos, frameNum);
+
+    //vec2 coordsTile = (TexCoords / 2.0) + 1.0; //mix(tileOffset, tileOffset + invNumTiles, TexCoords);
+
+    InitRNG(gl_FragCoord.xy, frameNum);
 
     float r1 = 2.0 * rand();
     float r2 = 2.0 * rand();
@@ -32,7 +35,8 @@ LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
     jitter.y = r2 < 1.0 ? sqrt(r2) - 1.0 : 1.0 - sqrt(2.0 - r2);
 
     jitter /= (resolution * 0.5);
-    vec2 d = (coordsTile * 2.0 - 1.0) + jitter;
+    vec2 d = (TexCoords * 2.0 - 1.0) + jitter;
+    //vec2 d = TexCoords; //(coordsTile * 2.0 - 1.0) + jitter;
 
     float scale = tan(camera.fov * 0.5);
     d.y *= resolution.y / resolution.x * scale;
@@ -47,28 +51,27 @@ LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
 
     Ray ray = Ray(camera.position + randomAperturePos, finalRayDir);
 
-    //    vec3 DirectLight(in Ray r, in State state, bool isSurface) {
-    //    LightSampleRec outSample;
-    //    return DirectLightFull(r, state, isSurface, outSample);
-
-    State state;
-    state.restir = false;
     LightSampleRec ret;
+    //vec4 pixelColor = PathTraceFull(ray, true, ret);
+    int index = int(rand() * float(numOfLights)) * 5;
+
+    //// Fetch light Data
+    vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
+    vec3 emission = texelFetch(lightsTex, ivec2(index + 1, 0), 0).xyz;
+    vec3 u = texelFetch(lightsTex, ivec2(index + 2, 0), 0).xyz; // u vector for rect
+    vec3 v = texelFetch(lightsTex, ivec2(index + 3, 0), 0).xyz; // v vector for rect
+    vec3 params = texelFetch(lightsTex, ivec2(index + 4, 0), 0).xyz;
+    float radius = params.x;
+    float area = params.y;
+    float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
+
+    Light light = Light(position, emission, u, v, radius, area, type);
+    State state;
 
     bool hit = ClosestHit(ray, state, ret);
+    vec3 scatterPos = state.fhp + state.normal*EPS;
+    SampleOneLight(light, scatterPos, ret);
 
-    // Should we be doing a proper pathtrace? something like this but instead using the sample from there? might be better for compatibility too
-    if (hit) {
-        state.normal = vec3(0.0, 1.0, 0.0);
-        //ray.origin = state.fhp;
-        DirectLightFull(ray, state, true, ret);
-    }
-
-    //ret.emission = vec3(100.0);
-    //ret.normal = vec3(0.0, 1.0, 0.0);
-    //ret.pdf = 1.0f;
-    //ret.dist = 1.0f;
-    ret.emission = vec3(1.0, 0.0, 0.0);
 
     return ret;
 }
@@ -85,7 +88,8 @@ void main(void)
         prevRev = UpdateReservoir(prevRev, sam);
     }
     SaveReservoir(prevRev);
-    //reservoirOut0 = vec4(1.0, 1.0, 1.0, 1.0);
+    //reservoirOut0 = vec4(ivec2(gl_FragCoord.xy), TexCoords.xy); //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
+    //reservoirOut0 = vec4(gl_FragCoord.x, gl_FragCoord.y, 1.0, 1.0);
     //reservoirOut1 = vec4(1.0, 1.0, 1.0, 1.0);
     //reservoirOut2 = vec4(1.0, 1.0, 1.0, 1.0);
     //color = vec4(1.0);

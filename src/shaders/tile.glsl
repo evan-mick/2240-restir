@@ -45,7 +45,7 @@ in vec2 TexCoords;
 
 void main(void)
 {
-    vec2 coordsTile = mix(tileOffset, tileOffset + invNumTiles, TexCoords);
+    vec2 coordsTile = TexCoords; //gl_FragCoord.xy; //mix(tileOffset, tileOffset + invNumTiles, TexCoords);
 
     InitRNG(gl_FragCoord.xy, frameNum);
 
@@ -74,9 +74,14 @@ void main(void)
 
     vec4 accumColor = texture(accumTexture, coordsTile);
 
+    LightSampleRec rec;
     vec4 pixelColor = PathTrace(ray);
 
     color = pixelColor + accumColor;
+
+    reservoirOut0 = texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
+    reservoirOut1 = texelFetch(reservoirs1, ivec2(gl_FragCoord.xy), 0);
+    reservoirOut2 = texelFetch(reservoirs2, ivec2(gl_FragCoord.xy), 0);
     //Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
     //vec3 col2 = prevRev.picked.emission.rgb;
     //color = vec4(col2.r, col2.g, col2.b, 1.0); //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);

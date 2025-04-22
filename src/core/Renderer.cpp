@@ -24,6 +24,7 @@
 
 #include "Config.h"
 #include "Renderer.h"
+#include "GL/gl3w.h"
 #include "GL/glcorearb.h"
 #include "ShaderIncludes.h"
 #include "Scene.h"
@@ -300,11 +301,11 @@ namespace GLSLPT
         tileWidth = scene->renderOptions.tileWidth;
         tileHeight = scene->renderOptions.tileHeight;
 
-        invNumTiles.x = (float)tileWidth / renderSize.x;
-        invNumTiles.y = (float)tileHeight / renderSize.y;
+        invNumTiles.x = 1;//(float)tileWidth / renderSize.x;
+        invNumTiles.y = 1;//(float)tileHeight / renderSize.y;
 
-        numTiles.x = ceil((float)renderSize.x / tileWidth);
-        numTiles.y = ceil((float)renderSize.y / tileHeight);
+        numTiles.x = 1;//ceil((float)renderSize.x / tileWidth);
+        numTiles.y = 1;//ceil((float)renderSize.y / tileHeight);
 
         tile.x = -1;
         tile.y = numTiles.y - 1;
@@ -318,7 +319,8 @@ namespace GLSLPT
         // Create Texture for FBO
         glGenTextures(1, &pathTraceTexture);
         glBindTexture(GL_TEXTURE_2D, pathTraceTexture);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, tileWidth, tileHeight, 0, GL_RGBA, GL_FLOAT, 0);
+        //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, tileWidth, tileHeight, 0, GL_RGBA, GL_FLOAT, 0);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, renderSize.x, renderSize.y, 0, GL_RGBA, GL_FLOAT, 0);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glBindTexture(GL_TEXTURE_2D, 0);
@@ -328,11 +330,11 @@ namespace GLSLPT
         for (int i = 0; i < reservoirTextureNum; i++) { 
             glGenTextures(1, &reservoirTextures[i]);
             glBindTexture(GL_TEXTURE_2D, reservoirTextures[i]);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, renderSize.x, renderSize.y, 0, GL_RGBA, GL_FLOAT, 0);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, renderSize.x, renderSize.y, 0, GL_RGBA, GL_FLOAT, 0);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glBindTexture(GL_TEXTURE_2D, 0);
         }
+        glBindTexture(GL_TEXTURE_2D, 0);
 
         SetReservoirFramebufferAttachments(false);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pathTraceTexture, 0);
@@ -567,49 +569,46 @@ namespace GLSLPT
             GLenum drawBuffers[4] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
 
             glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);
-            glViewport(0, 0, tileWidth, tileHeight);
+            glViewport(0, 0, renderSize.x, renderSize.y);
             glDrawBuffers(4, drawBuffers);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             SetReservoirFramebufferAttachments(true);
             quad->Draw(initialSampleShader);
-
-            float* data = new float[renderSize.x * renderSize.y * 4];
-
-            //
-            glBindTexture(GL_TEXTURE_2D, reservoirTextures[(currentBuffer)*3]);
-            glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
-
-
-            //std::cout << data[0] << " " << data[1] << " "<< data[2] << " "<< data[3] << " " << std::endl;
-            //std::cout << data[4] << " " << data[5] << " "<< data[6] << " "<< data[7] << " " << std::endl;
-            //std::cout << data[8] << " " << data[9] << " "<< data[10] << " "<< data[11] << " " << std::endl;
-
-
-
+            
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3]);
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 1]);
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 2]);
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3]);
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 1]);
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 2]);
+            std::cout << std::endl;
+            
             // Renders to pathTraceTexture while using previously accumulated samples from accumTexture
             // Rendering is done a tile per frame, so if a 500x500 image is rendered with a tileWidth and tileHeight of 250 then, all tiles (for a single sample) 
             // get rendered after 4 frames
             glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);
-            glViewport(0, 0, tileWidth, tileHeight);
+            glViewport(0, 0, renderSize.x, renderSize.y);
+            //glViewport(0, 0, tileWidth, tileHeight);
             glDrawBuffers(4, drawBuffers);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             SetReservoirFramebufferAttachments(false);
             quad->Draw(pathTraceShader);
-
-
-
             
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3]);
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 1]);
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 2]);
 
             // pathTraceTexture is copied to accumTexture and re-used as input for the first step.
             glBindFramebuffer(GL_FRAMEBUFFER, accumFBO);
-            glViewport(tileWidth * tile.x, tileHeight * tile.y, tileWidth, tileHeight);
+            //glViewport(tileWidth * tile.x, tileHeight * tile.y, tileWidth, tileHeight);
+            glViewport(0, 0, renderSize.x, renderSize.y);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, pathTraceTexture);
             quad->Draw(outputShader);
 
-            // Here we render to tileOutputTexture[currentBuffer] but display tileOutputTexture[1-currentBuffer] until all tiles are done rendering
+                // Here we render to tileOutputTexture[currentBuffer] but display tileOutputTexture[1-currentBuffer] until all tiles are done rendering
             // When all tiles are rendered, we flip the bound texture and start rendering to the other one
             glBindFramebuffer(GL_FRAMEBUFFER, outputFBO);
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tileOutputTexture[currentBuffer], 0);
@@ -617,7 +616,17 @@ namespace GLSLPT
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             quad->Draw(tonemapShader);
+            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, accumTexture);
         }
+    }
+
+    void Renderer::DumpTexDataAtPoint(int x, int y, GLuint tex) {
+        float* data = new float[renderSize.x * renderSize.y * 4];
+        int coord = 4*(x + (y * renderSize.x));
+        glBindTexture(GL_TEXTURE_2D, tex);
+        glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
+        std::cout << "tex: " << tex << " coord: " << coord << " " << data[coord + 0] << " " << data[coord + 1] << " "<< data[coord + 2] << " "<< data[coord + 3] << " " << std::endl;;
+        delete data;
     }
 
     void Renderer::SetUniforms(GLuint shaderObject) {
@@ -842,6 +851,30 @@ namespace GLSLPT
         // Update uniforms
 
         GLuint shaderObject;
+
+
+        initialSampleShader->Use();
+        shaderObject = initialSampleShader->getObject();
+        glUniform3f(glGetUniformLocation(shaderObject, "camera.position"), scene->camera->position.x, scene->camera->position.y, scene->camera->position.z);
+        glUniform3f(glGetUniformLocation(shaderObject, "camera.right"), scene->camera->right.x, scene->camera->right.y, scene->camera->right.z);
+        glUniform3f(glGetUniformLocation(shaderObject, "camera.up"), scene->camera->up.x, scene->camera->up.y, scene->camera->up.z);
+        glUniform3f(glGetUniformLocation(shaderObject, "camera.forward"), scene->camera->forward.x, scene->camera->forward.y, scene->camera->forward.z);
+        glUniform1f(glGetUniformLocation(shaderObject, "camera.fov"), scene->camera->fov);
+        glUniform1f(glGetUniformLocation(shaderObject, "camera.focalDist"), scene->camera->focalDist);
+        glUniform1f(glGetUniformLocation(shaderObject, "camera.aperture"), scene->camera->aperture);
+        glUniform1i(glGetUniformLocation(shaderObject, "enableEnvMap"), scene->envMap == nullptr ? false : scene->renderOptions.enableEnvMap);
+        glUniform1f(glGetUniformLocation(shaderObject, "envMapIntensity"), scene->renderOptions.envMapIntensity);
+        glUniform1f(glGetUniformLocation(shaderObject, "envMapRot"), scene->renderOptions.envMapRot / 360.0f);
+        glUniform1i(glGetUniformLocation(shaderObject, "maxDepth"), scene->renderOptions.maxDepth);
+        glUniform2f(glGetUniformLocation(shaderObject, "tileOffset"), (float)tile.x * invNumTiles.x, (float)tile.y * invNumTiles.y);
+        glUniform3f(glGetUniformLocation(shaderObject, "uniformLightCol"), scene->renderOptions.uniformLightCol.x, scene->renderOptions.uniformLightCol.y, scene->renderOptions.uniformLightCol.z);
+        glUniform1f(glGetUniformLocation(shaderObject, "roughnessMollificationAmt"), scene->renderOptions.roughnessMollificationAmt);
+        glUniform1i(glGetUniformLocation(shaderObject, "frameNum"), frameCounter);   
+        initialSampleShader->StopUsing();
+
+
+
+
         pathTraceShader->Use();
         shaderObject = pathTraceShader->getObject();
         glUniform3f(glGetUniformLocation(shaderObject, "camera.position"), scene->camera->position.x, scene->camera->position.y, scene->camera->position.z);
