@@ -145,6 +145,7 @@ namespace GLSLPT
 
         // Shaders for ReSTIR
         Program* initialSampleShader;
+        Program* spatioTemporalSampleShader;
 
         // Render textures
         GLuint pathTraceTextureLowRes;
@@ -197,7 +198,8 @@ namespace GLSLPT
         void InitShaders();
 
         void SetReservoirFramebufferAttachments(bool inv);
-        void SetUniforms(GLuint shaderObject);
+        void SetTextureUniforms(GLuint shaderObject);
+        void SetSampleUniforms(GLuint shaderObject);
 
         void DumpTexDataAtPoint(int x, int y, GLuint tex);
     };

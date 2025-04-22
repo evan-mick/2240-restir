@@ -50,8 +50,13 @@ Reservoir UpdateReservoir(Reservoir r, LightSampleRec s)
 {
     float weight = s.pdf; // NEED TO LOOK INTO THIS
     r.sumWeights += weight;
-    //if (rand() < weight / r.sumWeights) {
-    r.picked = s;
-    //}
+    if (rand() < weight / r.sumWeights) {
+        r.picked = s;
+    }
     return r;
+}
+
+Reservoir CombineReservoirs(Reservoir main, Reservoir new)
+{
+    return main;
 }

@@ -69,9 +69,8 @@ LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
     State state;
 
     bool hit = ClosestHit(ray, state, ret);
-    vec3 scatterPos = state.fhp + state.normal*EPS;
+    vec3 scatterPos = state.fhp + state.normal * EPS;
     SampleOneLight(light, scatterPos, ret);
-
 
     return ret;
 }
@@ -82,12 +81,17 @@ void main(void)
     // Should shoot ray, generate light sample from place where hit, and return that
     // A simpler pathtrace function
     // Can use the same FBO as tile?
-    Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
+    Reservoir cur;
     for (int i = 0; i < 4; i++) {
         LightSampleRec sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
-        prevRev = UpdateReservoir(prevRev, sam);
+        cur = UpdateReservoir(cur, sam);
     }
-    SaveReservoir(prevRev);
+
+    // Temporal reuse
+    Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
+    cur = UpdateReservoir(cur, sam);
+
+    SaveReservoir(cur);
     //reservoirOut0 = vec4(ivec2(gl_FragCoord.xy), TexCoords.xy); //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
     //reservoirOut0 = vec4(gl_FragCoord.x, gl_FragCoord.y, 1.0, 1.0);
     //reservoirOut1 = vec4(1.0, 1.0, 1.0, 1.0);
