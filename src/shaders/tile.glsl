@@ -75,7 +75,8 @@ void main(void)
     vec4 accumColor = texture(accumTexture, coordsTile);
 
     LightSampleRec rec;
-    vec4 pixelColor = PathTrace(ray);
+    vec4 pixelColor = PathTraceFull(ray, true, rec);
+    //vec4 pixelColor = PathTrace(ray);
 
     color = pixelColor + accumColor;
 

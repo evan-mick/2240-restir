@@ -20,5 +20,17 @@ in vec2 TexCoords;
 
 void main(void)
 {
-    SaveReservoir(GetReservoirFromPosition(ivec2(gl_FragCoord.xy)));
+    Reservoir cur = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
+
+    cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(-1, -1)));
+    cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(-1, 0)));
+    cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(-1, 1)));
+    cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(0, -1)));
+    cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(0, 0)));
+    cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(0, 1)));
+    cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(1, -1)));
+    cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(1, 0)));
+    cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(1, 1)));
+
+    SaveReservoir(cur);
 }
