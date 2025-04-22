@@ -25,6 +25,7 @@
 uniform bool isCameraMoving;
 uniform vec3 randomVector;
 uniform vec2 resolution;
+uniform int restirBounds;
 uniform vec2 tileOffset;
 uniform vec2 invNumTiles;
 

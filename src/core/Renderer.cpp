@@ -297,6 +297,7 @@ namespace GLSLPT
 
         renderSize = scene->renderOptions.renderResolution;
         windowSize = scene->renderOptions.windowResolution;
+        restirXBound = scene->renderOptions.restirXBounds;
 
         tileWidth = scene->renderOptions.tileWidth;
         tileHeight = scene->renderOptions.tileHeight;
@@ -638,6 +639,7 @@ namespace GLSLPT
         
         glUniform1i(glGetUniformLocation(shaderObject, "topBVHIndex"), scene->bvhTranslator.topLevelIndex);
         glUniform2f(glGetUniformLocation(shaderObject, "resolution"), float(renderSize.x), float(renderSize.y));
+        glUniform1i(glGetUniformLocation(shaderObject, "restirBounds"), restirXBound);
         glUniform2f(glGetUniformLocation(shaderObject, "invNumTiles"), invNumTiles.x, invNumTiles.y);
         glUniform1i(glGetUniformLocation(shaderObject, "numOfLights"), scene->lights.size());
         glUniform1i(glGetUniformLocation(shaderObject, "accumTexture"), 0);
@@ -852,6 +854,8 @@ namespace GLSLPT
 
         GLuint shaderObject;
 
+        restirXBound = scene->renderOptions.restirXBounds;
+
 
         initialSampleShader->Use();
         shaderObject = initialSampleShader->getObject();
@@ -863,6 +867,7 @@ namespace GLSLPT
         glUniform1f(glGetUniformLocation(shaderObject, "camera.focalDist"), scene->camera->focalDist);
         glUniform1f(glGetUniformLocation(shaderObject, "camera.aperture"), scene->camera->aperture);
         glUniform1i(glGetUniformLocation(shaderObject, "enableEnvMap"), scene->envMap == nullptr ? false : scene->renderOptions.enableEnvMap);
+        glUniform1i(glGetUniformLocation(shaderObject, "restirBounds"), restirXBound);
         glUniform1f(glGetUniformLocation(shaderObject, "envMapIntensity"), scene->renderOptions.envMapIntensity);
         glUniform1f(glGetUniformLocation(shaderObject, "envMapRot"), scene->renderOptions.envMapRot / 360.0f);
         glUniform1i(glGetUniformLocation(shaderObject, "maxDepth"), scene->renderOptions.maxDepth);
@@ -885,6 +890,7 @@ namespace GLSLPT
         glUniform1f(glGetUniformLocation(shaderObject, "camera.focalDist"), scene->camera->focalDist);
         glUniform1f(glGetUniformLocation(shaderObject, "camera.aperture"), scene->camera->aperture);
         glUniform1i(glGetUniformLocation(shaderObject, "enableEnvMap"), scene->envMap == nullptr ? false : scene->renderOptions.enableEnvMap);
+        glUniform1i(glGetUniformLocation(shaderObject, "restirBounds"), restirXBound);
         glUniform1f(glGetUniformLocation(shaderObject, "envMapIntensity"), scene->renderOptions.envMapIntensity);
         glUniform1f(glGetUniformLocation(shaderObject, "envMapRot"), scene->renderOptions.envMapRot / 360.0f);
         glUniform1i(glGetUniformLocation(shaderObject, "maxDepth"), scene->renderOptions.maxDepth);
@@ -903,6 +909,7 @@ namespace GLSLPT
         glUniform1f(glGetUniformLocation(shaderObject, "camera.fov"), scene->camera->fov);
         glUniform1f(glGetUniformLocation(shaderObject, "camera.focalDist"), scene->camera->focalDist);
         glUniform1f(glGetUniformLocation(shaderObject, "camera.aperture"), scene->camera->aperture);
+        //glUniform1i(glGetUniformLocation(shaderObject, "restirBounds"), restirXBound);
         glUniform1i(glGetUniformLocation(shaderObject, "enableEnvMap"), scene->envMap == nullptr ? false : scene->renderOptions.enableEnvMap);
         glUniform1f(glGetUniformLocation(shaderObject, "envMapIntensity"), scene->renderOptions.envMapIntensity);
         glUniform1f(glGetUniformLocation(shaderObject, "envMapRot"), scene->renderOptions.envMapRot / 360.0f);

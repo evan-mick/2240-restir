@@ -232,8 +232,10 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, bool restirSample
         float area = params.y;
         float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
 
+        bool useRestir = gl_FragCoord.x > (restirBounds);
+
         light = Light(position, emission, u, v, radius, area, type);
-        if (!restirSample) {
+        if (!useRestir) {
             SampleOneLight(light, scatterPos, lightSample); // TODO: CONVERT THIS TO OPTIONALLY TAKE IN RESTIR RESERVOIRS
         }
         else {

@@ -353,6 +353,8 @@ void MainLoop(void* arg)
         {
             optionsChanged |= ImGui::SliderInt("Max Spp", &renderOptions.maxSpp, -1, 256);
             optionsChanged |= ImGui::SliderInt("Max Depth", &renderOptions.maxDepth, 1, 10);
+            optionsChanged |= ImGui::SliderInt("Restir Bounds", &renderOptions.restirXBounds, 0, renderOptions.renderResolution.x);
+
 
             reloadShaders |= ImGui::Checkbox("Enable Russian Roulette", &renderOptions.enableRR);
             reloadShaders |= ImGui::SliderInt("Russian Roulette Depth", &renderOptions.RRDepth, 1, 10);
