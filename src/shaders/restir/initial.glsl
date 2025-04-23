@@ -19,7 +19,7 @@ in vec2 TexCoords;
 #include /../common/restir.glsl
 #include /../common/pathtrace.glsl
 
-LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
+ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     // This code for getting a ray is just stolen from tile.glsl
     //    InitRNG(pos, frameNum);
 
@@ -51,7 +51,6 @@ LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
 
     Ray ray = Ray(camera.position + randomAperturePos, finalRayDir);
 
-    LightSampleRec ret;
     //vec4 pixelColor = PathTraceFull(ray, true, ret);
     int index = int(rand() * float(numOfLights)) * 5;
 
@@ -68,19 +67,19 @@ LightSampleRec GetNewSampleAtPixel(ivec2 pos) {
     Light light = Light(position, emission, u, v, radius, area, type);
     State state;
 
-    /*
-            scatterSample.f = DisneyEval(state, -r.direction, state.ffnormal, lightSample.direction, scatterSample.pdf);
+    ReservoirSample ret;
 
-            float misWeight = 1.0;
-                if (light.area > 0.0) // No MIS for distant light
-                    misWeight = PowerHeuristic(lightSample.pdf, scatterSample.pdf);
-
-                if (scatterSample.pdf > 0.0)
-                    Ld += misWeight * Li * scatterSample.f / lightSample.pdf;*/
-
-    bool hit = ClosestHit(ray, state, ret);
+    LightSampleRec lightSample;
+    bool hit = ClosestHit(ray, state, lightSample);
     vec3 scatterPos = state.fhp + state.normal * EPS;
-    SampleOneLight(light, scatterPos, ret);
+    SampleOneLight(light, scatterPos, lightSample);
+
+    // NO MIS RN, this is not accurate to their code, too bad!
+    scatterSample.f = DisneyEval(state, -r.direction, state.ffnormal, lightSample.direction, scatterSample.pdf);
+    vec3 Ld = (scatterSample.f / lightSample.pdf) * lightSample.emission;
+
+    ret.radiance = Ld;
+    ret.direction = lightSample.direction;
 
     return ret;
 }
@@ -93,7 +92,7 @@ void main(void)
     // Can use the same FBO as tile?
     Reservoir cur;
     for (int i = 0; i < 4; i++) {
-        LightSampleRec sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
+        LightSample sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
         cur = UpdateReservoir(cur, sam);
     }
 

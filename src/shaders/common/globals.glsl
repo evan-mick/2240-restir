@@ -140,9 +140,24 @@ struct LightSampleRec
     float pdf;
 };
 
+//struct Reservoir {
+//    LightSampleRec picked;
+//    float sumWeights;
+//};
+
+struct ReservoirSample {
+    vec3 radiance; // unshadowed radiance
+    vec3 direction;
+    //float pdf; // per pixel? or per sample? can we remove this?
+};
+
 struct Reservoir {
-    LightSampleRec picked;
+    ReservoirSample sam;
+    float pdf;
     float sumWeights;
+    int numberOfWeights;
+
+    // big W (weight offset) = 1/radiance * (sumWeights / numberOfWeights)
 };
 
 uniform Camera camera;
