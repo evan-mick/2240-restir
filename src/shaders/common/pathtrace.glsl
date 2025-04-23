@@ -162,6 +162,7 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, bool restirSample
     vec3 scatterPos = state.fhp + state.normal * EPS;
 
     ScatterSampleRec scatterSample;
+    Light light;
 
     // Environment Light
     #ifdef OPT_ENVMAP
@@ -216,69 +217,70 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, bool restirSample
     // Analytic Lights
     #ifdef OPT_LIGHTS
     {
-        //LightSampleRec lightSample; // TODO: Is this what we store in the reservoir? Update: no, unless we don't care if it doesn't work with environment lights
-        Light light;
-
-        //Pick a light to sample
-        int index = int(rand() * float(numOfLights)) * 5;
-
-        // Fetch light Data
-        vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
-        vec3 emission = texelFetch(lightsTex, ivec2(index + 1, 0), 0).xyz;
-        vec3 u = texelFetch(lightsTex, ivec2(index + 2, 0), 0).xyz; // u vector for rect
-        vec3 v = texelFetch(lightsTex, ivec2(index + 3, 0), 0).xyz; // v vector for rect
-        vec3 params = texelFetch(lightsTex, ivec2(index + 4, 0), 0).xyz;
-        float radius = params.x;
-        float area = params.y;
-        float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
-
-        //bool useRestir = gl_FragCoord.x > (restirBoundsX) && gl_FragCoord.y > (restirBoundsY);
-
-        light = Light(position, emission, u, v, radius, area, type);
         if (!restirSample) {
-            SampleOneLight(light, scatterPos, lightSample); // TODO: CONVERT THIS TO OPTIONALLY TAKE IN RESTIR RESERVOIRS
+
+            //Pick a light to sample
+            int index = int(rand() * float(numOfLights)) * 5;
+
+            // Fetch light Data
+            vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
+            vec3 emission = texelFetch(lightsTex, ivec2(index + 1, 0), 0).xyz;
+            vec3 u = texelFetch(lightsTex, ivec2(index + 2, 0), 0).xyz; // u vector for rect
+            vec3 v = texelFetch(lightsTex, ivec2(index + 3, 0), 0).xyz; // v vector for rect
+            vec3 params = texelFetch(lightsTex, ivec2(index + 4, 0), 0).xyz;
+            float radius = params.x;
+            float area = params.y;
+            float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
+
+            //bool useRestir = gl_FragCoord.x > (restirBoundsX) && gl_FragCoord.y > (restirBoundsY);
+
+            light = Light(position, emission, u, v, radius, area, type);
+
+            SampleOneLight(light, scatterPos, lightSample);
+            Li = lightSample.emission;
+
+            if (dot(lightSample.direction, lightSample.normal) < 0.0) // Required for quad lights with single sided emission
+            {
+                Ray shadowRay = Ray(scatterPos, lightSample.direction);
+
+                // If there are volumes in the scene then evaluate transmittance rather than a binary anyhit test
+                #if defined(OPT_MEDIUM) && defined(OPT_VOL_MIS)
+                Li *= EvalTransmittance(shadowRay);
+
+                if (isSurface)
+                    scatterSample.f = DisneyEval(state, -r.direction, state.ffnormal, lightSample.direction, scatterSample.pdf);
+                else
+                {
+                    float p = PhaseHG(dot(-r.direction, lightSample.direction), state.medium.anisotropy);
+                    scatterSample.f = vec3(p);
+                    scatterSample.pdf = p;
+                }
+
+                #else
+                // If there are no volumes in the scene then use a simple binary hit test
+                bool inShadow = AnyHit(shadowRay, lightSample.dist - EPS);
+
+                scatterSample.f = DisneyEval(state, -r.direction, state.ffnormal, lightSample.direction, scatterSample.pdf);
+                if (inShadow)
+                {
+                    Li = vec3(0.0);
+                }
+                #endif
+
+                // Calculate radiance without shadow considerations
+                float misWeight = 1.0;
+                if (light.area > 0.0) // No MIS for distant light
+                    misWeight = PowerHeuristic(lightSample.pdf, scatterSample.pdf);
+
+                if (scatterSample.pdf > 0.0)
+                    Ld += (misWeight * scatterSample.f / lightSample.pdf) * Li;
+            }
         }
         else {
             // Restir needs light hit (scatterpos), pdf, need to recheck shadow stuff
-            lightSample = GetReservoirFromPosition(ivec2(gl_FragCoord.xy)).picked;
-        }
-        Li = lightSample.emission;
-
-        if (dot(lightSample.direction, lightSample.normal) < 0.0) // Required for quad lights with single sided emission
-        {
-            Ray shadowRay = Ray(scatterPos, lightSample.direction);
-
-            // If there are volumes in the scene then evaluate transmittance rather than a binary anyhit test
-            #if defined(OPT_MEDIUM) && defined(OPT_VOL_MIS)
-            Li *= EvalTransmittance(shadowRay);
-
-            if (isSurface)
-                scatterSample.f = DisneyEval(state, -r.direction, state.ffnormal, lightSample.direction, scatterSample.pdf);
-            else
-            {
-                float p = PhaseHG(dot(-r.direction, lightSample.direction), state.medium.anisotropy);
-                scatterSample.f = vec3(p);
-                scatterSample.pdf = p;
-            }
-
-            #else
-            // If there are no volumes in the scene then use a simple binary hit test
-            bool inShadow = AnyHit(shadowRay, lightSample.dist - EPS);
-
-            scatterSample.f = DisneyEval(state, -r.direction, state.ffnormal, lightSample.direction, scatterSample.pdf);
-            if (inShadow)
-            {
-                Li = vec3(0.0);
-            }
-            #endif
-
-            // Calculate radiance without shadow considerations
-            float misWeight = 1.0;
-            if (light.area > 0.0) // No MIS for distant light
-                misWeight = PowerHeuristic(lightSample.pdf, scatterSample.pdf);
-
-            if (scatterSample.pdf > 0.0)
-                Ld += (misWeight * scatterSample.f / lightSample.pdf) * Li;
+            Reservoir res = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
+            //Ray shadowRay = Ray(scatterPos, res.sam.direction);
+            Ld += res.sam.radiance;
         }
     }
     #endif

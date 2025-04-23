@@ -70,13 +70,16 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     ReservoirSample ret;
 
     LightSampleRec lightSample;
+
+    ScatterSampleRec scatterSample;
+
     bool hit = ClosestHit(ray, state, lightSample);
     vec3 scatterPos = state.fhp + state.normal * EPS;
     SampleOneLight(light, scatterPos, lightSample);
 
     // NO MIS RN, this is not accurate to their code, too bad!
-    scatterSample.f = DisneyEval(state, -r.direction, state.ffnormal, lightSample.direction, scatterSample.pdf);
-    vec3 Ld = (scatterSample.f / lightSample.pdf) * lightSample.emission;
+    vec3 brdf = DisneyEval(state, -ray.direction, state.ffnormal, lightSample.direction, scatterSample.pdf);
+    vec3 Ld = (brdf / lightSample.pdf) * lightSample.emission;
 
     ret.radiance = Ld;
     ret.direction = lightSample.direction;
@@ -92,13 +95,13 @@ void main(void)
     // Can use the same FBO as tile?
     Reservoir cur;
     for (int i = 0; i < 4; i++) {
-        LightSample sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
-        cur = UpdateReservoir(cur, sam);
+        ReservoirSample sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
+        cur = UpdateReservoir(cur, sam, 1.0f);
     }
 
     // Temporal reuse
-    Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
-    cur = CombineReservoirs(cur, prevRev);
+    //Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
+    //cur = CombineReservoirs(cur, prevRev);
 
     SaveReservoir(cur);
     //reservoirOut0 = vec4(ivec2(gl_FragCoord.xy), TexCoords.xy); //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
