@@ -77,11 +77,15 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     vec3 scatterPos = state.fhp + state.normal * EPS;
     SampleOneLight(light, scatterPos, lightSample);
 
+    GetMaterial(state, ray);
     // NO MIS RN, this is not accurate to their code, too bad!
-    vec3 brdf = DisneyEval(state, -ray.direction, state.ffnormal, lightSample.direction, scatterSample.pdf);
+    vec3 brdf = DisneySample(state, -ray.direction, state.ffnormal, lightSample.direction, scatterSample.pdf);
+
+    //if (scatterSample.pdf > 0.0) {
     vec3 Ld = (brdf / lightSample.pdf) * lightSample.emission;
 
-    ret.radiance = Ld;
+    ret.radiance = Ld; //lightSample.pdf;
+    //}
     ret.direction = lightSample.direction;
 
     return ret;
