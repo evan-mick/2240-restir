@@ -76,6 +76,12 @@ void main(void)
 
     LightSampleRec rec;
     vec4 pixelColor = PathTraceFull(ray, true, rec);
+
+    // Multiply by W for reservoir
+    Reservoir reser = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
+    vec3 W = CalculateW(reser);
+    //pixelColor.xyz *= W;
+
     //vec4 pixelColor = PathTrace(ray);
 
     color = pixelColor + accumColor;

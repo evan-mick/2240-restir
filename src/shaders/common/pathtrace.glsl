@@ -277,9 +277,8 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, bool restirSample
                 Reservoir res = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
                 //Ray shadowRay = Ray(scatterPos, res.sam.direction);
                 bool inShadow = AnyHit(shadowRay, lightSample.dist - EPS);
-                if (!inShadow) {
-                    Ld += res.sam.radiance;
-                }
+                if (!inShadow)
+                    Ld += res.sam.radiance; // res.sam.pdf;
             }
             else {
                 // Calculate radiance without shadow considerations

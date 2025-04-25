@@ -148,12 +148,13 @@ struct LightSampleRec
 struct ReservoirSample {
     vec3 radiance; // unshadowed radiance
     vec3 direction;
+    float pdf;
     //float pdf; // per pixel? or per sample? can we remove this?
 };
 
 struct Reservoir {
     ReservoirSample sam;
-    float pdf;
+    //float pdf;
     float sumWeights;
     int numberOfWeights;
 

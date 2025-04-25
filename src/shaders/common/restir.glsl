@@ -1,7 +1,7 @@
 
 void SaveReservoir(Reservoir res) {
     reservoirOut0 = vec4(res.sam.radiance, res.sam.direction.x);
-    reservoirOut1 = vec4(res.sam.direction.yz, res.sumWeights, res.pdf);
+    reservoirOut1 = vec4(res.sam.direction.yz, res.sumWeights, res.sam.pdf);
     reservoirOut2 = vec4(float(res.numberOfWeights), 0.0, 0.0, 0.0);
 }
 
@@ -15,7 +15,7 @@ Reservoir GetReservoirFromPosition(ivec2 pos) {
     res.sam.radiance = first.xyz;
     res.sam.direction = vec3(first.a, second.xy);
     res.sumWeights = second.z;
-    res.pdf = second.a;
+    res.sam.pdf = second.a;
     res.numberOfWeights = int(third.x);
 
     // Old
@@ -30,10 +30,16 @@ Reservoir GetReservoirFromPosition(ivec2 pos) {
 }
 
 Reservoir UpdateReservoir(Reservoir r, ReservoirSample sam, float weight) {
+    r.sumWeights += weight;
+    r.numberOfWeights += 1;
     //if (rand() < (weight / r.sumWeights)) {
     r.sam = sam;
     //}
     return r;
+}
+
+vec3 CalculateW(Reservoir res) {
+    return (1.0 / (res.sam.radiance)) * (res.sumWeights / float(res.numberOfWeights));
 }
 //Reservoir UpdateReservoir(Reservoir r, LightSampleRec s)
 //{

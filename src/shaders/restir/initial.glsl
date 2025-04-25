@@ -87,6 +87,7 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     ret.radiance = Ld; //lightSample.pdf;
     //}
     ret.direction = lightSample.direction;
+    ret.pdf = lightSample.pdf;
 
     return ret;
 }
@@ -100,7 +101,7 @@ void main(void)
     Reservoir cur;
     for (int i = 0; i < 4; i++) {
         ReservoirSample sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
-        cur = UpdateReservoir(cur, sam, 1.0f);
+        cur = UpdateReservoir(cur, sam, (sam.radiance.x + sam.radiance.y + sam.radiance.z) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
     }
 
     // Temporal reuse
