@@ -83,4 +83,5 @@ if __name__ == "__main__":
     lights = generate_lights(num_lights, pattern=pattern, bbox=bbox, emission=emission_color, xz_offset=x_z_offset)
     write_scene_with_lights(base_scene, lights, output_scene_path)
 
+    print("Testsiygssg")
     print(f"✅ Generated {num_lights} lights with '{pattern}' pattern and saved to '{output_scene_path}'")
