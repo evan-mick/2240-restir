@@ -279,12 +279,15 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, bool restirSample
                 bool inShadow = AnyHit(shadowRay, lightSample.dist - EPS);
                 if (!inShadow)
                     Ld += res.sam.radiance; // res.sam.pdf;
+                    
             }
             else {
                 // Calculate radiance without shadow considerations
 
                 if (scatterSample.pdf > 0.0)
                     Ld += (misWeight * scatterSample.f / lightSample.pdf) * Li;
+                
+                Ld = Li;
             }
         }
         //}

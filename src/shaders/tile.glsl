@@ -75,7 +75,8 @@ void main(void)
     vec4 accumColor = texture(accumTexture, coordsTile);
 
     LightSampleRec rec;
-    vec4 pixelColor = PathTraceFull(ray, true, rec);
+    bool use_restir = gl_FragCoord.x > resolution.x * (0.5);
+    vec4 pixelColor = PathTraceFull(ray, use_restir, rec);
 
     // Multiply by W for reservoir
     Reservoir reser = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));

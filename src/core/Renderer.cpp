@@ -582,6 +582,7 @@ namespace GLSLPT
             // can simply put another texture for the resovoirs there and be done
             //
 
+            //FIRST PASS, FILL RESERVOIRS
             GLenum drawBuffers[4] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
 
             glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);

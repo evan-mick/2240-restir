@@ -53,6 +53,8 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
 
     //vec4 pixelColor = PathTraceFull(ray, true, ret);
     int index = int(rand() * float(numOfLights)) * 5;
+    index = 0;
+    
 
     //// Fetch light Data
     vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
@@ -75,6 +77,8 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
 
     bool hit = ClosestHit(ray, state, lightSample);
     vec3 scatterPos = state.fhp + state.normal * EPS;
+
+    //this generates one sample from one light
     SampleOneLight(light, scatterPos, lightSample);
 
     GetMaterial(state, ray);
@@ -84,7 +88,7 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     //if (scatterSample.pdf > 0.0) {
     vec3 Ld = (brdf / lightSample.pdf) * lightSample.emission;
 
-    ret.radiance = Ld; //lightSample.pdf;
+    ret.radiance = lightSample.emission; //lightSample.pdf;
     //}
     ret.direction = lightSample.direction;
     ret.pdf = lightSample.pdf;
@@ -99,7 +103,7 @@ void main(void)
     // A simpler pathtrace function
     // Can use the same FBO as tile?
     Reservoir cur;
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 32; i++) {
         ReservoirSample sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
         cur = UpdateReservoir(cur, sam, (sam.radiance.x + sam.radiance.y + sam.radiance.z) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
     }
@@ -109,9 +113,5 @@ void main(void)
     //cur = CombineReservoirs(cur, prevRev);
 
     SaveReservoir(cur);
-    //reservoirOut0 = vec4(ivec2(gl_FragCoord.xy), TexCoords.xy); //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
-    //reservoirOut0 = vec4(gl_FragCoord.x, gl_FragCoord.y, 1.0, 1.0);
-    //reservoirOut1 = vec4(1.0, 1.0, 1.0, 1.0);
-    //reservoirOut2 = vec4(1.0, 1.0, 1.0, 1.0);
-    //color = vec4(1.0);
+    
 }
