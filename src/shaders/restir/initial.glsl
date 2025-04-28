@@ -105,6 +105,7 @@ void main(void)
         ReservoirSample sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
         cur = UpdateReservoir(cur, sam, sam.weight); //Luminance(sam.radiance) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
     }
+    cur.W = CalculateW(cur);
 
     // Temporal reuse
     //Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));

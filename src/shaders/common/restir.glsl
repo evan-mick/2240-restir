@@ -43,9 +43,10 @@ Reservoir UpdateReservoir(Reservoir r, ReservoirSample sam, float weight) {
     return r;
 }
 //
-//vec3 CalculateW(Reservoir res, vec3 radiance) {
-//    return (1.0 / (res.sam.radiance)) * (res.sumWeights / float(res.numberOfWeights));
-//}
+float CalculateW(Reservoir res) {
+    //return (1.0 / (res.sam.radiance)) * (res.sumWeights / float(res.numberOfWeights));
+    return (1.0 / float(res.sam.weight)) * (float(res.sumWeights) / float(res.numberOfWeights));
+}
 //Reservoir UpdateReservoir(Reservoir r, LightSampleRec s)
 //{
 //    float weight = s.pdf; // NEED TO LOOK INTO THIS
