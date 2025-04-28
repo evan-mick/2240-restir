@@ -287,7 +287,7 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, bool restirSample
                 if (scatterSample.pdf > 0.0)
                     Ld += (misWeight * scatterSample.f / lightSample.pdf) * Li;
                 
-                Ld = Li;
+                
             }
         }
         //}

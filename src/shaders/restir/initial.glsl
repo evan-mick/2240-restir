@@ -53,7 +53,7 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
 
     //vec4 pixelColor = PathTraceFull(ray, true, ret);
     int index = int(rand() * float(numOfLights)) * 5;
-    index = 0;
+    //index = 0;
     
 
     //// Fetch light Data
@@ -88,7 +88,7 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     //if (scatterSample.pdf > 0.0) {
     vec3 Ld = (brdf / lightSample.pdf) * lightSample.emission;
 
-    ret.radiance = lightSample.emission; //lightSample.pdf;
+    ret.radiance = Ld; //lightSample.pdf;
     //}
     ret.direction = lightSample.direction;
     ret.pdf = lightSample.pdf;
