@@ -101,7 +101,7 @@ void main(void)
     // A simpler pathtrace function
     // Can use the same FBO as tile?
     Reservoir cur;
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 32; i++) {
         ReservoirSample sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
         cur = UpdateReservoir(cur, sam, sam.weight / sam.pdf); //Luminance(sam.radiance) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
     }
