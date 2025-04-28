@@ -79,7 +79,7 @@ void main(void)
 
     // Multiply by W for reservoir
     Reservoir reser = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
-    vec3 W = CalculateW(reser);
+    float W = reser.W; //CalculateW(reser);
     //pixelColor.xyz *= W;
 
     //vec4 pixelColor = PathTrace(ray);

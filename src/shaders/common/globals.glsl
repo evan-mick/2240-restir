@@ -153,10 +153,11 @@ struct LightSampleRec
 //};
 
 struct ReservoirSample {
-    int lightIndex; // could potentially help this by doing cdf for light sampling
+    int index; // could potentially help this by doing cdf for light sampling
     // Could storing just the index mess up big W? won't the new radiance be off?
     float pdf;
-}
+    float weight;
+};
 
 struct Reservoir {
     ReservoirSample sam;

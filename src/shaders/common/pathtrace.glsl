@@ -219,8 +219,9 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, bool restirSample
     {
         //if (!restirSample) {
 
+        Reservoir res = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
         //Pick a light to sample
-        int index = int(rand() * float(numOfLights)) * 5;
+        int index = restirSample ? res.sam.index : (int(rand() * float(numOfLights)) * 5);
 
         // Fetch light Data
         vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
@@ -238,17 +239,17 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, bool restirSample
 
         SampleOneLight(light, scatterPos, lightSample);
         Li = lightSample.emission;
-        if (restirSample) {
+        //if (restirSample) {
 
-            // Restir needs light hit (scatterpos), pdf, need to recheck shadow stuff
-            Reservoir res = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
-            Ray shadowRay = Ray(scatterPos, res.sam.direction);
-            //Ray shadowRay = Ray(scatterPos, res.sam.direction);
-            bool inShadow = AnyHit(shadowRay, 100); // todo, actual distance stuff so things can not get blocked by light
-            if (!inShadow)
-                Ld += res.sam.radiance; // res.sam.pdf;
-        }
-        else if (dot(lightSample.direction, lightSample.normal) < 0.0) // Required for quad lights with single sided emission
+        //    // Restir needs light hit (scatterpos), pdf, need to recheck shadow stuff
+        //    Reservoir res = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
+        //    Ray shadowRay = Ray(scatterPos, res.sam.direction);
+        //    //Ray shadowRay = Ray(scatterPos, res.sam.direction);
+        //    bool inShadow = AnyHit(shadowRay, 100); // todo, actual distance stuff so things can not get blocked by light
+        //    if (!inShadow)
+        //        Ld += res.sam.radiance; // res.sam.pdf;
+        //}
+        if (dot(lightSample.direction, lightSample.normal) < 0.0) // Required for quad lights with single sided emission
         {
             Ray shadowRay = Ray(scatterPos, lightSample.direction);
 
