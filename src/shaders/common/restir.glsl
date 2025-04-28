@@ -45,7 +45,7 @@ Reservoir UpdateReservoir(Reservoir r, ReservoirSample sam, float weight) {
 //
 float CalculateW(Reservoir res) {
     //return (1.0 / (res.sam.radiance)) * (res.sumWeights / float(res.numberOfWeights));
-    return (1.0 / float(res.sam.weight)) * (float(res.sumWeights) / float(res.numberOfWeights));
+    return (float(res.sumWeights) / float(res.numberOfWeights)) / float(res.sam.pdf);
 }
 //Reservoir UpdateReservoir(Reservoir r, LightSampleRec s)
 //{

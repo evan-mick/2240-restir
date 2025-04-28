@@ -89,7 +89,7 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     //ret.direction = lightSample.direction;
     ret.index = index;
     ret.pdf = lightSample.pdf;
-    ret.weight = Luminance(Ld) / lightSample.pdf;
+    ret.weight = Luminance(Ld); // lightSample.pdf;
 
     return ret;
 }
@@ -103,7 +103,7 @@ void main(void)
     Reservoir cur;
     for (int i = 0; i < 4; i++) {
         ReservoirSample sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
-        cur = UpdateReservoir(cur, sam, sam.weight); //Luminance(sam.radiance) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
+        cur = UpdateReservoir(cur, sam, sam.weight / sam.pdf); //Luminance(sam.radiance) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
     }
     cur.W = CalculateW(cur);
 
