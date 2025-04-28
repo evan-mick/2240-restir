@@ -32,9 +32,9 @@ Reservoir GetReservoirFromPosition(ivec2 pos) {
 Reservoir UpdateReservoir(Reservoir r, ReservoirSample sam, float weight) {
     r.sumWeights += weight;
     r.numberOfWeights += 1;
-    //if (rand() < (weight / r.sumWeights)) {
-    r.sam = sam;
-    //}
+    if (rand() < (weight / r.sumWeights)) {
+        r.sam = sam;
+    }
     return r;
 }
 

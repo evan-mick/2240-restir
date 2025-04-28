@@ -145,18 +145,25 @@ struct LightSampleRec
 //    float sumWeights;
 //};
 
+//struct ReservoirSample {
+//    vec3 radiance; // unshadowed radiance
+//    vec3 direction;
+//    float pdf;
+//    //float pdf; // per pixel? or per sample? can we remove this?
+//};
+
 struct ReservoirSample {
-    vec3 radiance; // unshadowed radiance
-    vec3 direction;
+    int lightIndex; // could potentially help this by doing cdf for light sampling
+    // Could storing just the index mess up big W? won't the new radiance be off?
     float pdf;
-    //float pdf; // per pixel? or per sample? can we remove this?
-};
+}
 
 struct Reservoir {
     ReservoirSample sam;
     //float pdf;
     float sumWeights;
     int numberOfWeights;
+    float W;
 
     // big W (weight offset) = 1/radiance * (sumWeights / numberOfWeights)
 };
