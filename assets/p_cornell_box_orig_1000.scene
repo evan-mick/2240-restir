@@ -1,0 +1,8118 @@
+renderer
+{
+	resolution 800 800
+	maxdepth 2
+	tilewidth 200
+	tileheight 200
+	#envmap HDR/sunset.hdr
+	envmapintensity 2.0
+}
+
+camera
+{
+	position .276 .275 -.75
+	lookat .276 .275 .10
+	fov 40
+}
+
+material ceiling_white
+{
+	color 0.725 0.71 0.68
+}
+
+material back_wall_white
+{
+	color 0.725 0.71 0.68
+}
+
+material floor_white
+{
+	color 0.725 0.71 0.68
+}
+
+material small_box_white
+{
+	color 0.725 0.71 0.68
+}
+
+material large_box_white
+{
+	color 0.725 0.71 0.68
+}
+
+material red
+{
+	color 0.63 0.065 0.05
+}
+
+material green
+{
+	color 0.14 0.45 0.091
+}
+
+mesh
+{
+	file cornell_box/cbox_ceiling.obj
+	material ceiling_white
+	position .278 .5488 .27955
+	scale 0.01 0.01 0.01
+}
+
+mesh
+{
+	file cornell_box/cbox_floor.obj
+	material floor_white
+	position .2756 0 .2796
+	scale 0.01 0.01 0.01
+}
+
+mesh
+{
+	file cornell_box/cbox_back.obj
+	material back_wall_white
+	position .2764 .2744 .5592
+	scale 0.01 0.01 0.01
+}
+
+mesh
+{
+	file cornell_box/cbox_smallbox.obj
+	material small_box_white
+	position .1855 .0835 .169
+	scale 0.01 0.01 0.01
+}
+
+mesh
+{
+	file cornell_box/cbox_largebox.obj
+	material large_box_white
+	position .3685 .166 .35125
+	scale 0.01 0.01 0.01
+}
+
+mesh
+{
+	file cornell_box/cbox_greenwall.obj
+	material green
+	position 0 .2744 .2796
+	scale 0.01 0.01 0.01
+}
+
+mesh
+{
+	file cornell_box/cbox_redwall.obj
+	material red
+	position .5536 .2744 .2796
+	scale 0.01 0.01 0.01
+}
+
+light
+{
+	type quad
+	position  .34299999 .54779997 .22700010
+	v1 .34299999 .54779997 .33200008
+	v2 .21300001 .54779997 .22700010
+	emission 17 12 4
+}
+
+# Generated Lights
+light
+{
+	type quad
+	position 0.0 5.0 0.0
+	v1 0.0 5.0 0.05
+	v2 -0.05 5.0 0.0
+	emission 10 10 10
+}
+light
+{
+	type quad
+	position 1.0 5.0 0.0
+	v1 1.0 5.0 0.05
+	v2 0.95 5.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 5.0 0.0
+	v1 2.0 5.0 0.05
+	v2 1.95 5.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 5.0 0.0
+	v1 3.0 5.0 0.05
+	v2 2.95 5.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 5.0 0.0
+	v1 4.0 5.0 0.05
+	v2 3.95 5.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 5.0 0.0
+	v1 5.0 5.0 0.05
+	v2 4.95 5.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 5.0 0.0
+	v1 6.0 5.0 0.05
+	v2 5.95 5.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 5.0 0.0
+	v1 7.0 5.0 0.05
+	v2 6.95 5.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 5.0 0.0
+	v1 8.0 5.0 0.05
+	v2 7.95 5.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 5.0 0.0
+	v1 9.0 5.0 0.05
+	v2 8.95 5.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 6.0 0.0
+	v1 0.0 6.0 0.05
+	v2 -0.05 6.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 6.0 0.0
+	v1 1.0 6.0 0.05
+	v2 0.95 6.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 6.0 0.0
+	v1 2.0 6.0 0.05
+	v2 1.95 6.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 6.0 0.0
+	v1 3.0 6.0 0.05
+	v2 2.95 6.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 6.0 0.0
+	v1 4.0 6.0 0.05
+	v2 3.95 6.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 6.0 0.0
+	v1 5.0 6.0 0.05
+	v2 4.95 6.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 6.0 0.0
+	v1 6.0 6.0 0.05
+	v2 5.95 6.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 6.0 0.0
+	v1 7.0 6.0 0.05
+	v2 6.95 6.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 6.0 0.0
+	v1 8.0 6.0 0.05
+	v2 7.95 6.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 6.0 0.0
+	v1 9.0 6.0 0.05
+	v2 8.95 6.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 7.0 0.0
+	v1 0.0 7.0 0.05
+	v2 -0.05 7.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 7.0 0.0
+	v1 1.0 7.0 0.05
+	v2 0.95 7.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 7.0 0.0
+	v1 2.0 7.0 0.05
+	v2 1.95 7.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 7.0 0.0
+	v1 3.0 7.0 0.05
+	v2 2.95 7.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 7.0 0.0
+	v1 4.0 7.0 0.05
+	v2 3.95 7.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 7.0 0.0
+	v1 5.0 7.0 0.05
+	v2 4.95 7.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 7.0 0.0
+	v1 6.0 7.0 0.05
+	v2 5.95 7.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 7.0 0.0
+	v1 7.0 7.0 0.05
+	v2 6.95 7.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 7.0 0.0
+	v1 8.0 7.0 0.05
+	v2 7.95 7.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 7.0 0.0
+	v1 9.0 7.0 0.05
+	v2 8.95 7.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 8.0 0.0
+	v1 0.0 8.0 0.05
+	v2 -0.05 8.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 8.0 0.0
+	v1 1.0 8.0 0.05
+	v2 0.95 8.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 8.0 0.0
+	v1 2.0 8.0 0.05
+	v2 1.95 8.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 8.0 0.0
+	v1 3.0 8.0 0.05
+	v2 2.95 8.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 8.0 0.0
+	v1 4.0 8.0 0.05
+	v2 3.95 8.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 8.0 0.0
+	v1 5.0 8.0 0.05
+	v2 4.95 8.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 8.0 0.0
+	v1 6.0 8.0 0.05
+	v2 5.95 8.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 8.0 0.0
+	v1 7.0 8.0 0.05
+	v2 6.95 8.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 8.0 0.0
+	v1 8.0 8.0 0.05
+	v2 7.95 8.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 8.0 0.0
+	v1 9.0 8.0 0.05
+	v2 8.95 8.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 9.0 0.0
+	v1 0.0 9.0 0.05
+	v2 -0.05 9.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 9.0 0.0
+	v1 1.0 9.0 0.05
+	v2 0.95 9.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 9.0 0.0
+	v1 2.0 9.0 0.05
+	v2 1.95 9.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 9.0 0.0
+	v1 3.0 9.0 0.05
+	v2 2.95 9.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 9.0 0.0
+	v1 4.0 9.0 0.05
+	v2 3.95 9.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 9.0 0.0
+	v1 5.0 9.0 0.05
+	v2 4.95 9.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 9.0 0.0
+	v1 6.0 9.0 0.05
+	v2 5.95 9.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 9.0 0.0
+	v1 7.0 9.0 0.05
+	v2 6.95 9.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 9.0 0.0
+	v1 8.0 9.0 0.05
+	v2 7.95 9.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 9.0 0.0
+	v1 9.0 9.0 0.05
+	v2 8.95 9.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 10.0 0.0
+	v1 0.0 10.0 0.05
+	v2 -0.05 10.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 10.0 0.0
+	v1 1.0 10.0 0.05
+	v2 0.95 10.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 10.0 0.0
+	v1 2.0 10.0 0.05
+	v2 1.95 10.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 10.0 0.0
+	v1 3.0 10.0 0.05
+	v2 2.95 10.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 10.0 0.0
+	v1 4.0 10.0 0.05
+	v2 3.95 10.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 10.0 0.0
+	v1 5.0 10.0 0.05
+	v2 4.95 10.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 10.0 0.0
+	v1 6.0 10.0 0.05
+	v2 5.95 10.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 10.0 0.0
+	v1 7.0 10.0 0.05
+	v2 6.95 10.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 10.0 0.0
+	v1 8.0 10.0 0.05
+	v2 7.95 10.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 10.0 0.0
+	v1 9.0 10.0 0.05
+	v2 8.95 10.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 11.0 0.0
+	v1 0.0 11.0 0.05
+	v2 -0.05 11.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 11.0 0.0
+	v1 1.0 11.0 0.05
+	v2 0.95 11.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 11.0 0.0
+	v1 2.0 11.0 0.05
+	v2 1.95 11.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 11.0 0.0
+	v1 3.0 11.0 0.05
+	v2 2.95 11.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 11.0 0.0
+	v1 4.0 11.0 0.05
+	v2 3.95 11.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 11.0 0.0
+	v1 5.0 11.0 0.05
+	v2 4.95 11.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 11.0 0.0
+	v1 6.0 11.0 0.05
+	v2 5.95 11.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 11.0 0.0
+	v1 7.0 11.0 0.05
+	v2 6.95 11.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 11.0 0.0
+	v1 8.0 11.0 0.05
+	v2 7.95 11.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 11.0 0.0
+	v1 9.0 11.0 0.05
+	v2 8.95 11.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 12.0 0.0
+	v1 0.0 12.0 0.05
+	v2 -0.05 12.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 12.0 0.0
+	v1 1.0 12.0 0.05
+	v2 0.95 12.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 12.0 0.0
+	v1 2.0 12.0 0.05
+	v2 1.95 12.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 12.0 0.0
+	v1 3.0 12.0 0.05
+	v2 2.95 12.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 12.0 0.0
+	v1 4.0 12.0 0.05
+	v2 3.95 12.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 12.0 0.0
+	v1 5.0 12.0 0.05
+	v2 4.95 12.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 12.0 0.0
+	v1 6.0 12.0 0.05
+	v2 5.95 12.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 12.0 0.0
+	v1 7.0 12.0 0.05
+	v2 6.95 12.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 12.0 0.0
+	v1 8.0 12.0 0.05
+	v2 7.95 12.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 12.0 0.0
+	v1 9.0 12.0 0.05
+	v2 8.95 12.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 13.0 0.0
+	v1 0.0 13.0 0.05
+	v2 -0.05 13.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 13.0 0.0
+	v1 1.0 13.0 0.05
+	v2 0.95 13.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 13.0 0.0
+	v1 2.0 13.0 0.05
+	v2 1.95 13.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 13.0 0.0
+	v1 3.0 13.0 0.05
+	v2 2.95 13.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 13.0 0.0
+	v1 4.0 13.0 0.05
+	v2 3.95 13.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 13.0 0.0
+	v1 5.0 13.0 0.05
+	v2 4.95 13.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 13.0 0.0
+	v1 6.0 13.0 0.05
+	v2 5.95 13.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 13.0 0.0
+	v1 7.0 13.0 0.05
+	v2 6.95 13.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 13.0 0.0
+	v1 8.0 13.0 0.05
+	v2 7.95 13.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 13.0 0.0
+	v1 9.0 13.0 0.05
+	v2 8.95 13.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 14.0 0.0
+	v1 0.0 14.0 0.05
+	v2 -0.05 14.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 14.0 0.0
+	v1 1.0 14.0 0.05
+	v2 0.95 14.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 14.0 0.0
+	v1 2.0 14.0 0.05
+	v2 1.95 14.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 14.0 0.0
+	v1 3.0 14.0 0.05
+	v2 2.95 14.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 14.0 0.0
+	v1 4.0 14.0 0.05
+	v2 3.95 14.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 14.0 0.0
+	v1 5.0 14.0 0.05
+	v2 4.95 14.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 14.0 0.0
+	v1 6.0 14.0 0.05
+	v2 5.95 14.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 14.0 0.0
+	v1 7.0 14.0 0.05
+	v2 6.95 14.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 14.0 0.0
+	v1 8.0 14.0 0.05
+	v2 7.95 14.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 14.0 0.0
+	v1 9.0 14.0 0.05
+	v2 8.95 14.0 0.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 5.0 1.0
+	v1 0.0 5.0 1.05
+	v2 -0.05 5.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 5.0 1.0
+	v1 1.0 5.0 1.05
+	v2 0.95 5.0 1.0
+	emission 10 10 10
+}
+light
+{
+	type quad
+	position 2.0 5.0 1.0
+	v1 2.0 5.0 1.05
+	v2 1.95 5.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 5.0 1.0
+	v1 3.0 5.0 1.05
+	v2 2.95 5.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 5.0 1.0
+	v1 4.0 5.0 1.05
+	v2 3.95 5.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 5.0 1.0
+	v1 5.0 5.0 1.05
+	v2 4.95 5.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 5.0 1.0
+	v1 6.0 5.0 1.05
+	v2 5.95 5.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 5.0 1.0
+	v1 7.0 5.0 1.05
+	v2 6.95 5.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 5.0 1.0
+	v1 8.0 5.0 1.05
+	v2 7.95 5.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 5.0 1.0
+	v1 9.0 5.0 1.05
+	v2 8.95 5.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 6.0 1.0
+	v1 0.0 6.0 1.05
+	v2 -0.05 6.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 6.0 1.0
+	v1 1.0 6.0 1.05
+	v2 0.95 6.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 6.0 1.0
+	v1 2.0 6.0 1.05
+	v2 1.95 6.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 6.0 1.0
+	v1 3.0 6.0 1.05
+	v2 2.95 6.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 6.0 1.0
+	v1 4.0 6.0 1.05
+	v2 3.95 6.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 6.0 1.0
+	v1 5.0 6.0 1.05
+	v2 4.95 6.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 6.0 1.0
+	v1 6.0 6.0 1.05
+	v2 5.95 6.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 6.0 1.0
+	v1 7.0 6.0 1.05
+	v2 6.95 6.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 6.0 1.0
+	v1 8.0 6.0 1.05
+	v2 7.95 6.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 6.0 1.0
+	v1 9.0 6.0 1.05
+	v2 8.95 6.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 7.0 1.0
+	v1 0.0 7.0 1.05
+	v2 -0.05 7.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 7.0 1.0
+	v1 1.0 7.0 1.05
+	v2 0.95 7.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 7.0 1.0
+	v1 2.0 7.0 1.05
+	v2 1.95 7.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 7.0 1.0
+	v1 3.0 7.0 1.05
+	v2 2.95 7.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 7.0 1.0
+	v1 4.0 7.0 1.05
+	v2 3.95 7.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 7.0 1.0
+	v1 5.0 7.0 1.05
+	v2 4.95 7.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 7.0 1.0
+	v1 6.0 7.0 1.05
+	v2 5.95 7.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 7.0 1.0
+	v1 7.0 7.0 1.05
+	v2 6.95 7.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 7.0 1.0
+	v1 8.0 7.0 1.05
+	v2 7.95 7.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 7.0 1.0
+	v1 9.0 7.0 1.05
+	v2 8.95 7.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 8.0 1.0
+	v1 0.0 8.0 1.05
+	v2 -0.05 8.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 8.0 1.0
+	v1 1.0 8.0 1.05
+	v2 0.95 8.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 8.0 1.0
+	v1 2.0 8.0 1.05
+	v2 1.95 8.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 8.0 1.0
+	v1 3.0 8.0 1.05
+	v2 2.95 8.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 8.0 1.0
+	v1 4.0 8.0 1.05
+	v2 3.95 8.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 8.0 1.0
+	v1 5.0 8.0 1.05
+	v2 4.95 8.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 8.0 1.0
+	v1 6.0 8.0 1.05
+	v2 5.95 8.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 8.0 1.0
+	v1 7.0 8.0 1.05
+	v2 6.95 8.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 8.0 1.0
+	v1 8.0 8.0 1.05
+	v2 7.95 8.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 8.0 1.0
+	v1 9.0 8.0 1.05
+	v2 8.95 8.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 9.0 1.0
+	v1 0.0 9.0 1.05
+	v2 -0.05 9.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 9.0 1.0
+	v1 1.0 9.0 1.05
+	v2 0.95 9.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 9.0 1.0
+	v1 2.0 9.0 1.05
+	v2 1.95 9.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 9.0 1.0
+	v1 3.0 9.0 1.05
+	v2 2.95 9.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 9.0 1.0
+	v1 4.0 9.0 1.05
+	v2 3.95 9.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 9.0 1.0
+	v1 5.0 9.0 1.05
+	v2 4.95 9.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 9.0 1.0
+	v1 6.0 9.0 1.05
+	v2 5.95 9.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 9.0 1.0
+	v1 7.0 9.0 1.05
+	v2 6.95 9.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 9.0 1.0
+	v1 8.0 9.0 1.05
+	v2 7.95 9.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 9.0 1.0
+	v1 9.0 9.0 1.05
+	v2 8.95 9.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 10.0 1.0
+	v1 0.0 10.0 1.05
+	v2 -0.05 10.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 10.0 1.0
+	v1 1.0 10.0 1.05
+	v2 0.95 10.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 10.0 1.0
+	v1 2.0 10.0 1.05
+	v2 1.95 10.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 10.0 1.0
+	v1 3.0 10.0 1.05
+	v2 2.95 10.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 10.0 1.0
+	v1 4.0 10.0 1.05
+	v2 3.95 10.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 10.0 1.0
+	v1 5.0 10.0 1.05
+	v2 4.95 10.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 10.0 1.0
+	v1 6.0 10.0 1.05
+	v2 5.95 10.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 10.0 1.0
+	v1 7.0 10.0 1.05
+	v2 6.95 10.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 10.0 1.0
+	v1 8.0 10.0 1.05
+	v2 7.95 10.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 10.0 1.0
+	v1 9.0 10.0 1.05
+	v2 8.95 10.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 11.0 1.0
+	v1 0.0 11.0 1.05
+	v2 -0.05 11.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 11.0 1.0
+	v1 1.0 11.0 1.05
+	v2 0.95 11.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 11.0 1.0
+	v1 2.0 11.0 1.05
+	v2 1.95 11.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 11.0 1.0
+	v1 3.0 11.0 1.05
+	v2 2.95 11.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 11.0 1.0
+	v1 4.0 11.0 1.05
+	v2 3.95 11.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 11.0 1.0
+	v1 5.0 11.0 1.05
+	v2 4.95 11.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 11.0 1.0
+	v1 6.0 11.0 1.05
+	v2 5.95 11.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 11.0 1.0
+	v1 7.0 11.0 1.05
+	v2 6.95 11.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 11.0 1.0
+	v1 8.0 11.0 1.05
+	v2 7.95 11.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 11.0 1.0
+	v1 9.0 11.0 1.05
+	v2 8.95 11.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 12.0 1.0
+	v1 0.0 12.0 1.05
+	v2 -0.05 12.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 12.0 1.0
+	v1 1.0 12.0 1.05
+	v2 0.95 12.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 12.0 1.0
+	v1 2.0 12.0 1.05
+	v2 1.95 12.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 12.0 1.0
+	v1 3.0 12.0 1.05
+	v2 2.95 12.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 12.0 1.0
+	v1 4.0 12.0 1.05
+	v2 3.95 12.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 12.0 1.0
+	v1 5.0 12.0 1.05
+	v2 4.95 12.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 12.0 1.0
+	v1 6.0 12.0 1.05
+	v2 5.95 12.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 12.0 1.0
+	v1 7.0 12.0 1.05
+	v2 6.95 12.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 12.0 1.0
+	v1 8.0 12.0 1.05
+	v2 7.95 12.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 12.0 1.0
+	v1 9.0 12.0 1.05
+	v2 8.95 12.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 13.0 1.0
+	v1 0.0 13.0 1.05
+	v2 -0.05 13.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 13.0 1.0
+	v1 1.0 13.0 1.05
+	v2 0.95 13.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 13.0 1.0
+	v1 2.0 13.0 1.05
+	v2 1.95 13.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 13.0 1.0
+	v1 3.0 13.0 1.05
+	v2 2.95 13.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 13.0 1.0
+	v1 4.0 13.0 1.05
+	v2 3.95 13.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 13.0 1.0
+	v1 5.0 13.0 1.05
+	v2 4.95 13.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 13.0 1.0
+	v1 6.0 13.0 1.05
+	v2 5.95 13.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 13.0 1.0
+	v1 7.0 13.0 1.05
+	v2 6.95 13.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 13.0 1.0
+	v1 8.0 13.0 1.05
+	v2 7.95 13.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 13.0 1.0
+	v1 9.0 13.0 1.05
+	v2 8.95 13.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 14.0 1.0
+	v1 0.0 14.0 1.05
+	v2 -0.05 14.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 14.0 1.0
+	v1 1.0 14.0 1.05
+	v2 0.95 14.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 14.0 1.0
+	v1 2.0 14.0 1.05
+	v2 1.95 14.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 14.0 1.0
+	v1 3.0 14.0 1.05
+	v2 2.95 14.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 14.0 1.0
+	v1 4.0 14.0 1.05
+	v2 3.95 14.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 14.0 1.0
+	v1 5.0 14.0 1.05
+	v2 4.95 14.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 14.0 1.0
+	v1 6.0 14.0 1.05
+	v2 5.95 14.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 14.0 1.0
+	v1 7.0 14.0 1.05
+	v2 6.95 14.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 14.0 1.0
+	v1 8.0 14.0 1.05
+	v2 7.95 14.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 14.0 1.0
+	v1 9.0 14.0 1.05
+	v2 8.95 14.0 1.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 5.0 2.0
+	v1 0.0 5.0 2.05
+	v2 -0.05 5.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 5.0 2.0
+	v1 1.0 5.0 2.05
+	v2 0.95 5.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 5.0 2.0
+	v1 2.0 5.0 2.05
+	v2 1.95 5.0 2.0
+	emission 10 10 10
+}
+light
+{
+	type quad
+	position 3.0 5.0 2.0
+	v1 3.0 5.0 2.05
+	v2 2.95 5.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 5.0 2.0
+	v1 4.0 5.0 2.05
+	v2 3.95 5.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 5.0 2.0
+	v1 5.0 5.0 2.05
+	v2 4.95 5.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 5.0 2.0
+	v1 6.0 5.0 2.05
+	v2 5.95 5.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 5.0 2.0
+	v1 7.0 5.0 2.05
+	v2 6.95 5.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 5.0 2.0
+	v1 8.0 5.0 2.05
+	v2 7.95 5.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 5.0 2.0
+	v1 9.0 5.0 2.05
+	v2 8.95 5.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 6.0 2.0
+	v1 0.0 6.0 2.05
+	v2 -0.05 6.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 6.0 2.0
+	v1 1.0 6.0 2.05
+	v2 0.95 6.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 6.0 2.0
+	v1 2.0 6.0 2.05
+	v2 1.95 6.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 6.0 2.0
+	v1 3.0 6.0 2.05
+	v2 2.95 6.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 6.0 2.0
+	v1 4.0 6.0 2.05
+	v2 3.95 6.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 6.0 2.0
+	v1 5.0 6.0 2.05
+	v2 4.95 6.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 6.0 2.0
+	v1 6.0 6.0 2.05
+	v2 5.95 6.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 6.0 2.0
+	v1 7.0 6.0 2.05
+	v2 6.95 6.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 6.0 2.0
+	v1 8.0 6.0 2.05
+	v2 7.95 6.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 6.0 2.0
+	v1 9.0 6.0 2.05
+	v2 8.95 6.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 7.0 2.0
+	v1 0.0 7.0 2.05
+	v2 -0.05 7.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 7.0 2.0
+	v1 1.0 7.0 2.05
+	v2 0.95 7.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 7.0 2.0
+	v1 2.0 7.0 2.05
+	v2 1.95 7.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 7.0 2.0
+	v1 3.0 7.0 2.05
+	v2 2.95 7.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 7.0 2.0
+	v1 4.0 7.0 2.05
+	v2 3.95 7.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 7.0 2.0
+	v1 5.0 7.0 2.05
+	v2 4.95 7.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 7.0 2.0
+	v1 6.0 7.0 2.05
+	v2 5.95 7.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 7.0 2.0
+	v1 7.0 7.0 2.05
+	v2 6.95 7.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 7.0 2.0
+	v1 8.0 7.0 2.05
+	v2 7.95 7.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 7.0 2.0
+	v1 9.0 7.0 2.05
+	v2 8.95 7.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 8.0 2.0
+	v1 0.0 8.0 2.05
+	v2 -0.05 8.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 8.0 2.0
+	v1 1.0 8.0 2.05
+	v2 0.95 8.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 8.0 2.0
+	v1 2.0 8.0 2.05
+	v2 1.95 8.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 8.0 2.0
+	v1 3.0 8.0 2.05
+	v2 2.95 8.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 8.0 2.0
+	v1 4.0 8.0 2.05
+	v2 3.95 8.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 8.0 2.0
+	v1 5.0 8.0 2.05
+	v2 4.95 8.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 8.0 2.0
+	v1 6.0 8.0 2.05
+	v2 5.95 8.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 8.0 2.0
+	v1 7.0 8.0 2.05
+	v2 6.95 8.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 8.0 2.0
+	v1 8.0 8.0 2.05
+	v2 7.95 8.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 8.0 2.0
+	v1 9.0 8.0 2.05
+	v2 8.95 8.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 9.0 2.0
+	v1 0.0 9.0 2.05
+	v2 -0.05 9.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 9.0 2.0
+	v1 1.0 9.0 2.05
+	v2 0.95 9.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 9.0 2.0
+	v1 2.0 9.0 2.05
+	v2 1.95 9.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 9.0 2.0
+	v1 3.0 9.0 2.05
+	v2 2.95 9.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 9.0 2.0
+	v1 4.0 9.0 2.05
+	v2 3.95 9.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 9.0 2.0
+	v1 5.0 9.0 2.05
+	v2 4.95 9.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 9.0 2.0
+	v1 6.0 9.0 2.05
+	v2 5.95 9.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 9.0 2.0
+	v1 7.0 9.0 2.05
+	v2 6.95 9.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 9.0 2.0
+	v1 8.0 9.0 2.05
+	v2 7.95 9.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 9.0 2.0
+	v1 9.0 9.0 2.05
+	v2 8.95 9.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 10.0 2.0
+	v1 0.0 10.0 2.05
+	v2 -0.05 10.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 10.0 2.0
+	v1 1.0 10.0 2.05
+	v2 0.95 10.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 10.0 2.0
+	v1 2.0 10.0 2.05
+	v2 1.95 10.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 10.0 2.0
+	v1 3.0 10.0 2.05
+	v2 2.95 10.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 10.0 2.0
+	v1 4.0 10.0 2.05
+	v2 3.95 10.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 10.0 2.0
+	v1 5.0 10.0 2.05
+	v2 4.95 10.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 10.0 2.0
+	v1 6.0 10.0 2.05
+	v2 5.95 10.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 10.0 2.0
+	v1 7.0 10.0 2.05
+	v2 6.95 10.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 10.0 2.0
+	v1 8.0 10.0 2.05
+	v2 7.95 10.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 10.0 2.0
+	v1 9.0 10.0 2.05
+	v2 8.95 10.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 11.0 2.0
+	v1 0.0 11.0 2.05
+	v2 -0.05 11.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 11.0 2.0
+	v1 1.0 11.0 2.05
+	v2 0.95 11.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 11.0 2.0
+	v1 2.0 11.0 2.05
+	v2 1.95 11.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 11.0 2.0
+	v1 3.0 11.0 2.05
+	v2 2.95 11.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 11.0 2.0
+	v1 4.0 11.0 2.05
+	v2 3.95 11.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 11.0 2.0
+	v1 5.0 11.0 2.05
+	v2 4.95 11.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 11.0 2.0
+	v1 6.0 11.0 2.05
+	v2 5.95 11.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 11.0 2.0
+	v1 7.0 11.0 2.05
+	v2 6.95 11.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 11.0 2.0
+	v1 8.0 11.0 2.05
+	v2 7.95 11.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 11.0 2.0
+	v1 9.0 11.0 2.05
+	v2 8.95 11.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 12.0 2.0
+	v1 0.0 12.0 2.05
+	v2 -0.05 12.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 12.0 2.0
+	v1 1.0 12.0 2.05
+	v2 0.95 12.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 12.0 2.0
+	v1 2.0 12.0 2.05
+	v2 1.95 12.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 12.0 2.0
+	v1 3.0 12.0 2.05
+	v2 2.95 12.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 12.0 2.0
+	v1 4.0 12.0 2.05
+	v2 3.95 12.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 12.0 2.0
+	v1 5.0 12.0 2.05
+	v2 4.95 12.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 12.0 2.0
+	v1 6.0 12.0 2.05
+	v2 5.95 12.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 12.0 2.0
+	v1 7.0 12.0 2.05
+	v2 6.95 12.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 12.0 2.0
+	v1 8.0 12.0 2.05
+	v2 7.95 12.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 12.0 2.0
+	v1 9.0 12.0 2.05
+	v2 8.95 12.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 13.0 2.0
+	v1 0.0 13.0 2.05
+	v2 -0.05 13.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 13.0 2.0
+	v1 1.0 13.0 2.05
+	v2 0.95 13.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 13.0 2.0
+	v1 2.0 13.0 2.05
+	v2 1.95 13.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 13.0 2.0
+	v1 3.0 13.0 2.05
+	v2 2.95 13.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 13.0 2.0
+	v1 4.0 13.0 2.05
+	v2 3.95 13.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 13.0 2.0
+	v1 5.0 13.0 2.05
+	v2 4.95 13.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 13.0 2.0
+	v1 6.0 13.0 2.05
+	v2 5.95 13.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 13.0 2.0
+	v1 7.0 13.0 2.05
+	v2 6.95 13.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 13.0 2.0
+	v1 8.0 13.0 2.05
+	v2 7.95 13.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 13.0 2.0
+	v1 9.0 13.0 2.05
+	v2 8.95 13.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 14.0 2.0
+	v1 0.0 14.0 2.05
+	v2 -0.05 14.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 14.0 2.0
+	v1 1.0 14.0 2.05
+	v2 0.95 14.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 14.0 2.0
+	v1 2.0 14.0 2.05
+	v2 1.95 14.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 14.0 2.0
+	v1 3.0 14.0 2.05
+	v2 2.95 14.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 14.0 2.0
+	v1 4.0 14.0 2.05
+	v2 3.95 14.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 14.0 2.0
+	v1 5.0 14.0 2.05
+	v2 4.95 14.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 14.0 2.0
+	v1 6.0 14.0 2.05
+	v2 5.95 14.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 14.0 2.0
+	v1 7.0 14.0 2.05
+	v2 6.95 14.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 14.0 2.0
+	v1 8.0 14.0 2.05
+	v2 7.95 14.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 14.0 2.0
+	v1 9.0 14.0 2.05
+	v2 8.95 14.0 2.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 5.0 3.0
+	v1 0.0 5.0 3.05
+	v2 -0.05 5.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 5.0 3.0
+	v1 1.0 5.0 3.05
+	v2 0.95 5.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 5.0 3.0
+	v1 2.0 5.0 3.05
+	v2 1.95 5.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 5.0 3.0
+	v1 3.0 5.0 3.05
+	v2 2.95 5.0 3.0
+	emission 10 10 10
+}
+light
+{
+	type quad
+	position 4.0 5.0 3.0
+	v1 4.0 5.0 3.05
+	v2 3.95 5.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 5.0 3.0
+	v1 5.0 5.0 3.05
+	v2 4.95 5.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 5.0 3.0
+	v1 6.0 5.0 3.05
+	v2 5.95 5.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 5.0 3.0
+	v1 7.0 5.0 3.05
+	v2 6.95 5.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 5.0 3.0
+	v1 8.0 5.0 3.05
+	v2 7.95 5.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 5.0 3.0
+	v1 9.0 5.0 3.05
+	v2 8.95 5.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 6.0 3.0
+	v1 0.0 6.0 3.05
+	v2 -0.05 6.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 6.0 3.0
+	v1 1.0 6.0 3.05
+	v2 0.95 6.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 6.0 3.0
+	v1 2.0 6.0 3.05
+	v2 1.95 6.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 6.0 3.0
+	v1 3.0 6.0 3.05
+	v2 2.95 6.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 6.0 3.0
+	v1 4.0 6.0 3.05
+	v2 3.95 6.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 6.0 3.0
+	v1 5.0 6.0 3.05
+	v2 4.95 6.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 6.0 3.0
+	v1 6.0 6.0 3.05
+	v2 5.95 6.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 6.0 3.0
+	v1 7.0 6.0 3.05
+	v2 6.95 6.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 6.0 3.0
+	v1 8.0 6.0 3.05
+	v2 7.95 6.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 6.0 3.0
+	v1 9.0 6.0 3.05
+	v2 8.95 6.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 7.0 3.0
+	v1 0.0 7.0 3.05
+	v2 -0.05 7.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 7.0 3.0
+	v1 1.0 7.0 3.05
+	v2 0.95 7.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 7.0 3.0
+	v1 2.0 7.0 3.05
+	v2 1.95 7.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 7.0 3.0
+	v1 3.0 7.0 3.05
+	v2 2.95 7.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 7.0 3.0
+	v1 4.0 7.0 3.05
+	v2 3.95 7.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 7.0 3.0
+	v1 5.0 7.0 3.05
+	v2 4.95 7.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 7.0 3.0
+	v1 6.0 7.0 3.05
+	v2 5.95 7.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 7.0 3.0
+	v1 7.0 7.0 3.05
+	v2 6.95 7.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 7.0 3.0
+	v1 8.0 7.0 3.05
+	v2 7.95 7.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 7.0 3.0
+	v1 9.0 7.0 3.05
+	v2 8.95 7.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 8.0 3.0
+	v1 0.0 8.0 3.05
+	v2 -0.05 8.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 8.0 3.0
+	v1 1.0 8.0 3.05
+	v2 0.95 8.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 8.0 3.0
+	v1 2.0 8.0 3.05
+	v2 1.95 8.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 8.0 3.0
+	v1 3.0 8.0 3.05
+	v2 2.95 8.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 8.0 3.0
+	v1 4.0 8.0 3.05
+	v2 3.95 8.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 8.0 3.0
+	v1 5.0 8.0 3.05
+	v2 4.95 8.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 8.0 3.0
+	v1 6.0 8.0 3.05
+	v2 5.95 8.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 8.0 3.0
+	v1 7.0 8.0 3.05
+	v2 6.95 8.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 8.0 3.0
+	v1 8.0 8.0 3.05
+	v2 7.95 8.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 8.0 3.0
+	v1 9.0 8.0 3.05
+	v2 8.95 8.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 9.0 3.0
+	v1 0.0 9.0 3.05
+	v2 -0.05 9.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 9.0 3.0
+	v1 1.0 9.0 3.05
+	v2 0.95 9.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 9.0 3.0
+	v1 2.0 9.0 3.05
+	v2 1.95 9.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 9.0 3.0
+	v1 3.0 9.0 3.05
+	v2 2.95 9.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 9.0 3.0
+	v1 4.0 9.0 3.05
+	v2 3.95 9.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 9.0 3.0
+	v1 5.0 9.0 3.05
+	v2 4.95 9.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 9.0 3.0
+	v1 6.0 9.0 3.05
+	v2 5.95 9.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 9.0 3.0
+	v1 7.0 9.0 3.05
+	v2 6.95 9.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 9.0 3.0
+	v1 8.0 9.0 3.05
+	v2 7.95 9.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 9.0 3.0
+	v1 9.0 9.0 3.05
+	v2 8.95 9.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 10.0 3.0
+	v1 0.0 10.0 3.05
+	v2 -0.05 10.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 10.0 3.0
+	v1 1.0 10.0 3.05
+	v2 0.95 10.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 10.0 3.0
+	v1 2.0 10.0 3.05
+	v2 1.95 10.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 10.0 3.0
+	v1 3.0 10.0 3.05
+	v2 2.95 10.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 10.0 3.0
+	v1 4.0 10.0 3.05
+	v2 3.95 10.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 10.0 3.0
+	v1 5.0 10.0 3.05
+	v2 4.95 10.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 10.0 3.0
+	v1 6.0 10.0 3.05
+	v2 5.95 10.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 10.0 3.0
+	v1 7.0 10.0 3.05
+	v2 6.95 10.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 10.0 3.0
+	v1 8.0 10.0 3.05
+	v2 7.95 10.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 10.0 3.0
+	v1 9.0 10.0 3.05
+	v2 8.95 10.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 11.0 3.0
+	v1 0.0 11.0 3.05
+	v2 -0.05 11.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 11.0 3.0
+	v1 1.0 11.0 3.05
+	v2 0.95 11.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 11.0 3.0
+	v1 2.0 11.0 3.05
+	v2 1.95 11.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 11.0 3.0
+	v1 3.0 11.0 3.05
+	v2 2.95 11.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 11.0 3.0
+	v1 4.0 11.0 3.05
+	v2 3.95 11.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 11.0 3.0
+	v1 5.0 11.0 3.05
+	v2 4.95 11.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 11.0 3.0
+	v1 6.0 11.0 3.05
+	v2 5.95 11.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 11.0 3.0
+	v1 7.0 11.0 3.05
+	v2 6.95 11.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 11.0 3.0
+	v1 8.0 11.0 3.05
+	v2 7.95 11.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 11.0 3.0
+	v1 9.0 11.0 3.05
+	v2 8.95 11.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 12.0 3.0
+	v1 0.0 12.0 3.05
+	v2 -0.05 12.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 12.0 3.0
+	v1 1.0 12.0 3.05
+	v2 0.95 12.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 12.0 3.0
+	v1 2.0 12.0 3.05
+	v2 1.95 12.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 12.0 3.0
+	v1 3.0 12.0 3.05
+	v2 2.95 12.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 12.0 3.0
+	v1 4.0 12.0 3.05
+	v2 3.95 12.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 12.0 3.0
+	v1 5.0 12.0 3.05
+	v2 4.95 12.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 12.0 3.0
+	v1 6.0 12.0 3.05
+	v2 5.95 12.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 12.0 3.0
+	v1 7.0 12.0 3.05
+	v2 6.95 12.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 12.0 3.0
+	v1 8.0 12.0 3.05
+	v2 7.95 12.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 12.0 3.0
+	v1 9.0 12.0 3.05
+	v2 8.95 12.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 13.0 3.0
+	v1 0.0 13.0 3.05
+	v2 -0.05 13.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 13.0 3.0
+	v1 1.0 13.0 3.05
+	v2 0.95 13.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 13.0 3.0
+	v1 2.0 13.0 3.05
+	v2 1.95 13.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 13.0 3.0
+	v1 3.0 13.0 3.05
+	v2 2.95 13.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 13.0 3.0
+	v1 4.0 13.0 3.05
+	v2 3.95 13.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 13.0 3.0
+	v1 5.0 13.0 3.05
+	v2 4.95 13.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 13.0 3.0
+	v1 6.0 13.0 3.05
+	v2 5.95 13.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 13.0 3.0
+	v1 7.0 13.0 3.05
+	v2 6.95 13.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 13.0 3.0
+	v1 8.0 13.0 3.05
+	v2 7.95 13.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 13.0 3.0
+	v1 9.0 13.0 3.05
+	v2 8.95 13.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 14.0 3.0
+	v1 0.0 14.0 3.05
+	v2 -0.05 14.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 14.0 3.0
+	v1 1.0 14.0 3.05
+	v2 0.95 14.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 14.0 3.0
+	v1 2.0 14.0 3.05
+	v2 1.95 14.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 14.0 3.0
+	v1 3.0 14.0 3.05
+	v2 2.95 14.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 14.0 3.0
+	v1 4.0 14.0 3.05
+	v2 3.95 14.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 14.0 3.0
+	v1 5.0 14.0 3.05
+	v2 4.95 14.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 14.0 3.0
+	v1 6.0 14.0 3.05
+	v2 5.95 14.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 14.0 3.0
+	v1 7.0 14.0 3.05
+	v2 6.95 14.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 14.0 3.0
+	v1 8.0 14.0 3.05
+	v2 7.95 14.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 14.0 3.0
+	v1 9.0 14.0 3.05
+	v2 8.95 14.0 3.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 5.0 4.0
+	v1 0.0 5.0 4.05
+	v2 -0.05 5.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 5.0 4.0
+	v1 1.0 5.0 4.05
+	v2 0.95 5.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 5.0 4.0
+	v1 2.0 5.0 4.05
+	v2 1.95 5.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 5.0 4.0
+	v1 3.0 5.0 4.05
+	v2 2.95 5.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 5.0 4.0
+	v1 4.0 5.0 4.05
+	v2 3.95 5.0 4.0
+	emission 10 10 10
+}
+light
+{
+	type quad
+	position 5.0 5.0 4.0
+	v1 5.0 5.0 4.05
+	v2 4.95 5.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 5.0 4.0
+	v1 6.0 5.0 4.05
+	v2 5.95 5.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 5.0 4.0
+	v1 7.0 5.0 4.05
+	v2 6.95 5.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 5.0 4.0
+	v1 8.0 5.0 4.05
+	v2 7.95 5.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 5.0 4.0
+	v1 9.0 5.0 4.05
+	v2 8.95 5.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 6.0 4.0
+	v1 0.0 6.0 4.05
+	v2 -0.05 6.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 6.0 4.0
+	v1 1.0 6.0 4.05
+	v2 0.95 6.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 6.0 4.0
+	v1 2.0 6.0 4.05
+	v2 1.95 6.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 6.0 4.0
+	v1 3.0 6.0 4.05
+	v2 2.95 6.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 6.0 4.0
+	v1 4.0 6.0 4.05
+	v2 3.95 6.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 6.0 4.0
+	v1 5.0 6.0 4.05
+	v2 4.95 6.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 6.0 4.0
+	v1 6.0 6.0 4.05
+	v2 5.95 6.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 6.0 4.0
+	v1 7.0 6.0 4.05
+	v2 6.95 6.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 6.0 4.0
+	v1 8.0 6.0 4.05
+	v2 7.95 6.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 6.0 4.0
+	v1 9.0 6.0 4.05
+	v2 8.95 6.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 7.0 4.0
+	v1 0.0 7.0 4.05
+	v2 -0.05 7.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 7.0 4.0
+	v1 1.0 7.0 4.05
+	v2 0.95 7.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 7.0 4.0
+	v1 2.0 7.0 4.05
+	v2 1.95 7.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 7.0 4.0
+	v1 3.0 7.0 4.05
+	v2 2.95 7.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 7.0 4.0
+	v1 4.0 7.0 4.05
+	v2 3.95 7.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 7.0 4.0
+	v1 5.0 7.0 4.05
+	v2 4.95 7.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 7.0 4.0
+	v1 6.0 7.0 4.05
+	v2 5.95 7.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 7.0 4.0
+	v1 7.0 7.0 4.05
+	v2 6.95 7.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 7.0 4.0
+	v1 8.0 7.0 4.05
+	v2 7.95 7.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 7.0 4.0
+	v1 9.0 7.0 4.05
+	v2 8.95 7.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 8.0 4.0
+	v1 0.0 8.0 4.05
+	v2 -0.05 8.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 8.0 4.0
+	v1 1.0 8.0 4.05
+	v2 0.95 8.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 8.0 4.0
+	v1 2.0 8.0 4.05
+	v2 1.95 8.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 8.0 4.0
+	v1 3.0 8.0 4.05
+	v2 2.95 8.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 8.0 4.0
+	v1 4.0 8.0 4.05
+	v2 3.95 8.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 8.0 4.0
+	v1 5.0 8.0 4.05
+	v2 4.95 8.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 8.0 4.0
+	v1 6.0 8.0 4.05
+	v2 5.95 8.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 8.0 4.0
+	v1 7.0 8.0 4.05
+	v2 6.95 8.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 8.0 4.0
+	v1 8.0 8.0 4.05
+	v2 7.95 8.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 8.0 4.0
+	v1 9.0 8.0 4.05
+	v2 8.95 8.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 9.0 4.0
+	v1 0.0 9.0 4.05
+	v2 -0.05 9.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 9.0 4.0
+	v1 1.0 9.0 4.05
+	v2 0.95 9.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 9.0 4.0
+	v1 2.0 9.0 4.05
+	v2 1.95 9.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 9.0 4.0
+	v1 3.0 9.0 4.05
+	v2 2.95 9.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 9.0 4.0
+	v1 4.0 9.0 4.05
+	v2 3.95 9.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 9.0 4.0
+	v1 5.0 9.0 4.05
+	v2 4.95 9.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 9.0 4.0
+	v1 6.0 9.0 4.05
+	v2 5.95 9.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 9.0 4.0
+	v1 7.0 9.0 4.05
+	v2 6.95 9.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 9.0 4.0
+	v1 8.0 9.0 4.05
+	v2 7.95 9.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 9.0 4.0
+	v1 9.0 9.0 4.05
+	v2 8.95 9.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 10.0 4.0
+	v1 0.0 10.0 4.05
+	v2 -0.05 10.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 10.0 4.0
+	v1 1.0 10.0 4.05
+	v2 0.95 10.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 10.0 4.0
+	v1 2.0 10.0 4.05
+	v2 1.95 10.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 10.0 4.0
+	v1 3.0 10.0 4.05
+	v2 2.95 10.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 10.0 4.0
+	v1 4.0 10.0 4.05
+	v2 3.95 10.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 10.0 4.0
+	v1 5.0 10.0 4.05
+	v2 4.95 10.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 10.0 4.0
+	v1 6.0 10.0 4.05
+	v2 5.95 10.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 10.0 4.0
+	v1 7.0 10.0 4.05
+	v2 6.95 10.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 10.0 4.0
+	v1 8.0 10.0 4.05
+	v2 7.95 10.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 10.0 4.0
+	v1 9.0 10.0 4.05
+	v2 8.95 10.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 11.0 4.0
+	v1 0.0 11.0 4.05
+	v2 -0.05 11.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 11.0 4.0
+	v1 1.0 11.0 4.05
+	v2 0.95 11.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 11.0 4.0
+	v1 2.0 11.0 4.05
+	v2 1.95 11.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 11.0 4.0
+	v1 3.0 11.0 4.05
+	v2 2.95 11.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 11.0 4.0
+	v1 4.0 11.0 4.05
+	v2 3.95 11.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 11.0 4.0
+	v1 5.0 11.0 4.05
+	v2 4.95 11.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 11.0 4.0
+	v1 6.0 11.0 4.05
+	v2 5.95 11.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 11.0 4.0
+	v1 7.0 11.0 4.05
+	v2 6.95 11.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 11.0 4.0
+	v1 8.0 11.0 4.05
+	v2 7.95 11.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 11.0 4.0
+	v1 9.0 11.0 4.05
+	v2 8.95 11.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 12.0 4.0
+	v1 0.0 12.0 4.05
+	v2 -0.05 12.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 12.0 4.0
+	v1 1.0 12.0 4.05
+	v2 0.95 12.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 12.0 4.0
+	v1 2.0 12.0 4.05
+	v2 1.95 12.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 12.0 4.0
+	v1 3.0 12.0 4.05
+	v2 2.95 12.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 12.0 4.0
+	v1 4.0 12.0 4.05
+	v2 3.95 12.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 12.0 4.0
+	v1 5.0 12.0 4.05
+	v2 4.95 12.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 12.0 4.0
+	v1 6.0 12.0 4.05
+	v2 5.95 12.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 12.0 4.0
+	v1 7.0 12.0 4.05
+	v2 6.95 12.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 12.0 4.0
+	v1 8.0 12.0 4.05
+	v2 7.95 12.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 12.0 4.0
+	v1 9.0 12.0 4.05
+	v2 8.95 12.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 13.0 4.0
+	v1 0.0 13.0 4.05
+	v2 -0.05 13.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 13.0 4.0
+	v1 1.0 13.0 4.05
+	v2 0.95 13.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 13.0 4.0
+	v1 2.0 13.0 4.05
+	v2 1.95 13.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 13.0 4.0
+	v1 3.0 13.0 4.05
+	v2 2.95 13.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 13.0 4.0
+	v1 4.0 13.0 4.05
+	v2 3.95 13.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 13.0 4.0
+	v1 5.0 13.0 4.05
+	v2 4.95 13.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 13.0 4.0
+	v1 6.0 13.0 4.05
+	v2 5.95 13.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 13.0 4.0
+	v1 7.0 13.0 4.05
+	v2 6.95 13.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 13.0 4.0
+	v1 8.0 13.0 4.05
+	v2 7.95 13.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 13.0 4.0
+	v1 9.0 13.0 4.05
+	v2 8.95 13.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 14.0 4.0
+	v1 0.0 14.0 4.05
+	v2 -0.05 14.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 14.0 4.0
+	v1 1.0 14.0 4.05
+	v2 0.95 14.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 14.0 4.0
+	v1 2.0 14.0 4.05
+	v2 1.95 14.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 14.0 4.0
+	v1 3.0 14.0 4.05
+	v2 2.95 14.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 14.0 4.0
+	v1 4.0 14.0 4.05
+	v2 3.95 14.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 14.0 4.0
+	v1 5.0 14.0 4.05
+	v2 4.95 14.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 14.0 4.0
+	v1 6.0 14.0 4.05
+	v2 5.95 14.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 14.0 4.0
+	v1 7.0 14.0 4.05
+	v2 6.95 14.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 14.0 4.0
+	v1 8.0 14.0 4.05
+	v2 7.95 14.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 14.0 4.0
+	v1 9.0 14.0 4.05
+	v2 8.95 14.0 4.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 5.0 5.0
+	v1 0.0 5.0 5.05
+	v2 -0.05 5.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 5.0 5.0
+	v1 1.0 5.0 5.05
+	v2 0.95 5.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 5.0 5.0
+	v1 2.0 5.0 5.05
+	v2 1.95 5.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 5.0 5.0
+	v1 3.0 5.0 5.05
+	v2 2.95 5.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 5.0 5.0
+	v1 4.0 5.0 5.05
+	v2 3.95 5.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 5.0 5.0
+	v1 5.0 5.0 5.05
+	v2 4.95 5.0 5.0
+	emission 10 10 10
+}
+light
+{
+	type quad
+	position 6.0 5.0 5.0
+	v1 6.0 5.0 5.05
+	v2 5.95 5.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 5.0 5.0
+	v1 7.0 5.0 5.05
+	v2 6.95 5.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 5.0 5.0
+	v1 8.0 5.0 5.05
+	v2 7.95 5.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 5.0 5.0
+	v1 9.0 5.0 5.05
+	v2 8.95 5.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 6.0 5.0
+	v1 0.0 6.0 5.05
+	v2 -0.05 6.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 6.0 5.0
+	v1 1.0 6.0 5.05
+	v2 0.95 6.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 6.0 5.0
+	v1 2.0 6.0 5.05
+	v2 1.95 6.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 6.0 5.0
+	v1 3.0 6.0 5.05
+	v2 2.95 6.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 6.0 5.0
+	v1 4.0 6.0 5.05
+	v2 3.95 6.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 6.0 5.0
+	v1 5.0 6.0 5.05
+	v2 4.95 6.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 6.0 5.0
+	v1 6.0 6.0 5.05
+	v2 5.95 6.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 6.0 5.0
+	v1 7.0 6.0 5.05
+	v2 6.95 6.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 6.0 5.0
+	v1 8.0 6.0 5.05
+	v2 7.95 6.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 6.0 5.0
+	v1 9.0 6.0 5.05
+	v2 8.95 6.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 7.0 5.0
+	v1 0.0 7.0 5.05
+	v2 -0.05 7.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 7.0 5.0
+	v1 1.0 7.0 5.05
+	v2 0.95 7.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 7.0 5.0
+	v1 2.0 7.0 5.05
+	v2 1.95 7.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 7.0 5.0
+	v1 3.0 7.0 5.05
+	v2 2.95 7.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 7.0 5.0
+	v1 4.0 7.0 5.05
+	v2 3.95 7.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 7.0 5.0
+	v1 5.0 7.0 5.05
+	v2 4.95 7.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 7.0 5.0
+	v1 6.0 7.0 5.05
+	v2 5.95 7.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 7.0 5.0
+	v1 7.0 7.0 5.05
+	v2 6.95 7.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 7.0 5.0
+	v1 8.0 7.0 5.05
+	v2 7.95 7.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 7.0 5.0
+	v1 9.0 7.0 5.05
+	v2 8.95 7.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 8.0 5.0
+	v1 0.0 8.0 5.05
+	v2 -0.05 8.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 8.0 5.0
+	v1 1.0 8.0 5.05
+	v2 0.95 8.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 8.0 5.0
+	v1 2.0 8.0 5.05
+	v2 1.95 8.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 8.0 5.0
+	v1 3.0 8.0 5.05
+	v2 2.95 8.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 8.0 5.0
+	v1 4.0 8.0 5.05
+	v2 3.95 8.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 8.0 5.0
+	v1 5.0 8.0 5.05
+	v2 4.95 8.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 8.0 5.0
+	v1 6.0 8.0 5.05
+	v2 5.95 8.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 8.0 5.0
+	v1 7.0 8.0 5.05
+	v2 6.95 8.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 8.0 5.0
+	v1 8.0 8.0 5.05
+	v2 7.95 8.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 8.0 5.0
+	v1 9.0 8.0 5.05
+	v2 8.95 8.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 9.0 5.0
+	v1 0.0 9.0 5.05
+	v2 -0.05 9.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 9.0 5.0
+	v1 1.0 9.0 5.05
+	v2 0.95 9.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 9.0 5.0
+	v1 2.0 9.0 5.05
+	v2 1.95 9.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 9.0 5.0
+	v1 3.0 9.0 5.05
+	v2 2.95 9.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 9.0 5.0
+	v1 4.0 9.0 5.05
+	v2 3.95 9.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 9.0 5.0
+	v1 5.0 9.0 5.05
+	v2 4.95 9.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 9.0 5.0
+	v1 6.0 9.0 5.05
+	v2 5.95 9.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 9.0 5.0
+	v1 7.0 9.0 5.05
+	v2 6.95 9.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 9.0 5.0
+	v1 8.0 9.0 5.05
+	v2 7.95 9.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 9.0 5.0
+	v1 9.0 9.0 5.05
+	v2 8.95 9.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 10.0 5.0
+	v1 0.0 10.0 5.05
+	v2 -0.05 10.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 10.0 5.0
+	v1 1.0 10.0 5.05
+	v2 0.95 10.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 10.0 5.0
+	v1 2.0 10.0 5.05
+	v2 1.95 10.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 10.0 5.0
+	v1 3.0 10.0 5.05
+	v2 2.95 10.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 10.0 5.0
+	v1 4.0 10.0 5.05
+	v2 3.95 10.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 10.0 5.0
+	v1 5.0 10.0 5.05
+	v2 4.95 10.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 10.0 5.0
+	v1 6.0 10.0 5.05
+	v2 5.95 10.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 10.0 5.0
+	v1 7.0 10.0 5.05
+	v2 6.95 10.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 10.0 5.0
+	v1 8.0 10.0 5.05
+	v2 7.95 10.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 10.0 5.0
+	v1 9.0 10.0 5.05
+	v2 8.95 10.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 11.0 5.0
+	v1 0.0 11.0 5.05
+	v2 -0.05 11.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 11.0 5.0
+	v1 1.0 11.0 5.05
+	v2 0.95 11.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 11.0 5.0
+	v1 2.0 11.0 5.05
+	v2 1.95 11.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 11.0 5.0
+	v1 3.0 11.0 5.05
+	v2 2.95 11.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 11.0 5.0
+	v1 4.0 11.0 5.05
+	v2 3.95 11.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 11.0 5.0
+	v1 5.0 11.0 5.05
+	v2 4.95 11.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 11.0 5.0
+	v1 6.0 11.0 5.05
+	v2 5.95 11.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 11.0 5.0
+	v1 7.0 11.0 5.05
+	v2 6.95 11.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 11.0 5.0
+	v1 8.0 11.0 5.05
+	v2 7.95 11.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 11.0 5.0
+	v1 9.0 11.0 5.05
+	v2 8.95 11.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 12.0 5.0
+	v1 0.0 12.0 5.05
+	v2 -0.05 12.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 12.0 5.0
+	v1 1.0 12.0 5.05
+	v2 0.95 12.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 12.0 5.0
+	v1 2.0 12.0 5.05
+	v2 1.95 12.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 12.0 5.0
+	v1 3.0 12.0 5.05
+	v2 2.95 12.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 12.0 5.0
+	v1 4.0 12.0 5.05
+	v2 3.95 12.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 12.0 5.0
+	v1 5.0 12.0 5.05
+	v2 4.95 12.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 12.0 5.0
+	v1 6.0 12.0 5.05
+	v2 5.95 12.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 12.0 5.0
+	v1 7.0 12.0 5.05
+	v2 6.95 12.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 12.0 5.0
+	v1 8.0 12.0 5.05
+	v2 7.95 12.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 12.0 5.0
+	v1 9.0 12.0 5.05
+	v2 8.95 12.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 13.0 5.0
+	v1 0.0 13.0 5.05
+	v2 -0.05 13.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 13.0 5.0
+	v1 1.0 13.0 5.05
+	v2 0.95 13.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 13.0 5.0
+	v1 2.0 13.0 5.05
+	v2 1.95 13.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 13.0 5.0
+	v1 3.0 13.0 5.05
+	v2 2.95 13.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 13.0 5.0
+	v1 4.0 13.0 5.05
+	v2 3.95 13.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 13.0 5.0
+	v1 5.0 13.0 5.05
+	v2 4.95 13.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 13.0 5.0
+	v1 6.0 13.0 5.05
+	v2 5.95 13.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 13.0 5.0
+	v1 7.0 13.0 5.05
+	v2 6.95 13.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 13.0 5.0
+	v1 8.0 13.0 5.05
+	v2 7.95 13.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 13.0 5.0
+	v1 9.0 13.0 5.05
+	v2 8.95 13.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 14.0 5.0
+	v1 0.0 14.0 5.05
+	v2 -0.05 14.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 14.0 5.0
+	v1 1.0 14.0 5.05
+	v2 0.95 14.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 14.0 5.0
+	v1 2.0 14.0 5.05
+	v2 1.95 14.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 14.0 5.0
+	v1 3.0 14.0 5.05
+	v2 2.95 14.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 14.0 5.0
+	v1 4.0 14.0 5.05
+	v2 3.95 14.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 14.0 5.0
+	v1 5.0 14.0 5.05
+	v2 4.95 14.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 14.0 5.0
+	v1 6.0 14.0 5.05
+	v2 5.95 14.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 14.0 5.0
+	v1 7.0 14.0 5.05
+	v2 6.95 14.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 14.0 5.0
+	v1 8.0 14.0 5.05
+	v2 7.95 14.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 14.0 5.0
+	v1 9.0 14.0 5.05
+	v2 8.95 14.0 5.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 5.0 6.0
+	v1 0.0 5.0 6.05
+	v2 -0.05 5.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 5.0 6.0
+	v1 1.0 5.0 6.05
+	v2 0.95 5.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 5.0 6.0
+	v1 2.0 5.0 6.05
+	v2 1.95 5.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 5.0 6.0
+	v1 3.0 5.0 6.05
+	v2 2.95 5.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 5.0 6.0
+	v1 4.0 5.0 6.05
+	v2 3.95 5.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 5.0 6.0
+	v1 5.0 5.0 6.05
+	v2 4.95 5.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 5.0 6.0
+	v1 6.0 5.0 6.05
+	v2 5.95 5.0 6.0
+	emission 10 10 10
+}
+light
+{
+	type quad
+	position 7.0 5.0 6.0
+	v1 7.0 5.0 6.05
+	v2 6.95 5.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 5.0 6.0
+	v1 8.0 5.0 6.05
+	v2 7.95 5.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 5.0 6.0
+	v1 9.0 5.0 6.05
+	v2 8.95 5.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 6.0 6.0
+	v1 0.0 6.0 6.05
+	v2 -0.05 6.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 6.0 6.0
+	v1 1.0 6.0 6.05
+	v2 0.95 6.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 6.0 6.0
+	v1 2.0 6.0 6.05
+	v2 1.95 6.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 6.0 6.0
+	v1 3.0 6.0 6.05
+	v2 2.95 6.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 6.0 6.0
+	v1 4.0 6.0 6.05
+	v2 3.95 6.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 6.0 6.0
+	v1 5.0 6.0 6.05
+	v2 4.95 6.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 6.0 6.0
+	v1 6.0 6.0 6.05
+	v2 5.95 6.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 6.0 6.0
+	v1 7.0 6.0 6.05
+	v2 6.95 6.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 6.0 6.0
+	v1 8.0 6.0 6.05
+	v2 7.95 6.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 6.0 6.0
+	v1 9.0 6.0 6.05
+	v2 8.95 6.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 7.0 6.0
+	v1 0.0 7.0 6.05
+	v2 -0.05 7.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 7.0 6.0
+	v1 1.0 7.0 6.05
+	v2 0.95 7.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 7.0 6.0
+	v1 2.0 7.0 6.05
+	v2 1.95 7.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 7.0 6.0
+	v1 3.0 7.0 6.05
+	v2 2.95 7.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 7.0 6.0
+	v1 4.0 7.0 6.05
+	v2 3.95 7.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 7.0 6.0
+	v1 5.0 7.0 6.05
+	v2 4.95 7.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 7.0 6.0
+	v1 6.0 7.0 6.05
+	v2 5.95 7.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 7.0 6.0
+	v1 7.0 7.0 6.05
+	v2 6.95 7.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 7.0 6.0
+	v1 8.0 7.0 6.05
+	v2 7.95 7.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 7.0 6.0
+	v1 9.0 7.0 6.05
+	v2 8.95 7.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 8.0 6.0
+	v1 0.0 8.0 6.05
+	v2 -0.05 8.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 8.0 6.0
+	v1 1.0 8.0 6.05
+	v2 0.95 8.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 8.0 6.0
+	v1 2.0 8.0 6.05
+	v2 1.95 8.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 8.0 6.0
+	v1 3.0 8.0 6.05
+	v2 2.95 8.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 8.0 6.0
+	v1 4.0 8.0 6.05
+	v2 3.95 8.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 8.0 6.0
+	v1 5.0 8.0 6.05
+	v2 4.95 8.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 8.0 6.0
+	v1 6.0 8.0 6.05
+	v2 5.95 8.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 8.0 6.0
+	v1 7.0 8.0 6.05
+	v2 6.95 8.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 8.0 6.0
+	v1 8.0 8.0 6.05
+	v2 7.95 8.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 8.0 6.0
+	v1 9.0 8.0 6.05
+	v2 8.95 8.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 9.0 6.0
+	v1 0.0 9.0 6.05
+	v2 -0.05 9.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 9.0 6.0
+	v1 1.0 9.0 6.05
+	v2 0.95 9.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 9.0 6.0
+	v1 2.0 9.0 6.05
+	v2 1.95 9.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 9.0 6.0
+	v1 3.0 9.0 6.05
+	v2 2.95 9.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 9.0 6.0
+	v1 4.0 9.0 6.05
+	v2 3.95 9.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 9.0 6.0
+	v1 5.0 9.0 6.05
+	v2 4.95 9.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 9.0 6.0
+	v1 6.0 9.0 6.05
+	v2 5.95 9.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 9.0 6.0
+	v1 7.0 9.0 6.05
+	v2 6.95 9.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 9.0 6.0
+	v1 8.0 9.0 6.05
+	v2 7.95 9.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 9.0 6.0
+	v1 9.0 9.0 6.05
+	v2 8.95 9.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 10.0 6.0
+	v1 0.0 10.0 6.05
+	v2 -0.05 10.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 10.0 6.0
+	v1 1.0 10.0 6.05
+	v2 0.95 10.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 10.0 6.0
+	v1 2.0 10.0 6.05
+	v2 1.95 10.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 10.0 6.0
+	v1 3.0 10.0 6.05
+	v2 2.95 10.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 10.0 6.0
+	v1 4.0 10.0 6.05
+	v2 3.95 10.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 10.0 6.0
+	v1 5.0 10.0 6.05
+	v2 4.95 10.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 10.0 6.0
+	v1 6.0 10.0 6.05
+	v2 5.95 10.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 10.0 6.0
+	v1 7.0 10.0 6.05
+	v2 6.95 10.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 10.0 6.0
+	v1 8.0 10.0 6.05
+	v2 7.95 10.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 10.0 6.0
+	v1 9.0 10.0 6.05
+	v2 8.95 10.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 11.0 6.0
+	v1 0.0 11.0 6.05
+	v2 -0.05 11.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 11.0 6.0
+	v1 1.0 11.0 6.05
+	v2 0.95 11.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 11.0 6.0
+	v1 2.0 11.0 6.05
+	v2 1.95 11.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 11.0 6.0
+	v1 3.0 11.0 6.05
+	v2 2.95 11.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 11.0 6.0
+	v1 4.0 11.0 6.05
+	v2 3.95 11.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 11.0 6.0
+	v1 5.0 11.0 6.05
+	v2 4.95 11.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 11.0 6.0
+	v1 6.0 11.0 6.05
+	v2 5.95 11.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 11.0 6.0
+	v1 7.0 11.0 6.05
+	v2 6.95 11.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 11.0 6.0
+	v1 8.0 11.0 6.05
+	v2 7.95 11.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 11.0 6.0
+	v1 9.0 11.0 6.05
+	v2 8.95 11.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 12.0 6.0
+	v1 0.0 12.0 6.05
+	v2 -0.05 12.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 12.0 6.0
+	v1 1.0 12.0 6.05
+	v2 0.95 12.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 12.0 6.0
+	v1 2.0 12.0 6.05
+	v2 1.95 12.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 12.0 6.0
+	v1 3.0 12.0 6.05
+	v2 2.95 12.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 12.0 6.0
+	v1 4.0 12.0 6.05
+	v2 3.95 12.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 12.0 6.0
+	v1 5.0 12.0 6.05
+	v2 4.95 12.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 12.0 6.0
+	v1 6.0 12.0 6.05
+	v2 5.95 12.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 12.0 6.0
+	v1 7.0 12.0 6.05
+	v2 6.95 12.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 12.0 6.0
+	v1 8.0 12.0 6.05
+	v2 7.95 12.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 12.0 6.0
+	v1 9.0 12.0 6.05
+	v2 8.95 12.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 13.0 6.0
+	v1 0.0 13.0 6.05
+	v2 -0.05 13.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 13.0 6.0
+	v1 1.0 13.0 6.05
+	v2 0.95 13.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 13.0 6.0
+	v1 2.0 13.0 6.05
+	v2 1.95 13.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 13.0 6.0
+	v1 3.0 13.0 6.05
+	v2 2.95 13.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 13.0 6.0
+	v1 4.0 13.0 6.05
+	v2 3.95 13.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 13.0 6.0
+	v1 5.0 13.0 6.05
+	v2 4.95 13.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 13.0 6.0
+	v1 6.0 13.0 6.05
+	v2 5.95 13.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 13.0 6.0
+	v1 7.0 13.0 6.05
+	v2 6.95 13.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 13.0 6.0
+	v1 8.0 13.0 6.05
+	v2 7.95 13.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 13.0 6.0
+	v1 9.0 13.0 6.05
+	v2 8.95 13.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 14.0 6.0
+	v1 0.0 14.0 6.05
+	v2 -0.05 14.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 14.0 6.0
+	v1 1.0 14.0 6.05
+	v2 0.95 14.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 14.0 6.0
+	v1 2.0 14.0 6.05
+	v2 1.95 14.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 14.0 6.0
+	v1 3.0 14.0 6.05
+	v2 2.95 14.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 14.0 6.0
+	v1 4.0 14.0 6.05
+	v2 3.95 14.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 14.0 6.0
+	v1 5.0 14.0 6.05
+	v2 4.95 14.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 14.0 6.0
+	v1 6.0 14.0 6.05
+	v2 5.95 14.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 14.0 6.0
+	v1 7.0 14.0 6.05
+	v2 6.95 14.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 14.0 6.0
+	v1 8.0 14.0 6.05
+	v2 7.95 14.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 14.0 6.0
+	v1 9.0 14.0 6.05
+	v2 8.95 14.0 6.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 5.0 7.0
+	v1 0.0 5.0 7.05
+	v2 -0.05 5.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 5.0 7.0
+	v1 1.0 5.0 7.05
+	v2 0.95 5.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 5.0 7.0
+	v1 2.0 5.0 7.05
+	v2 1.95 5.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 5.0 7.0
+	v1 3.0 5.0 7.05
+	v2 2.95 5.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 5.0 7.0
+	v1 4.0 5.0 7.05
+	v2 3.95 5.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 5.0 7.0
+	v1 5.0 5.0 7.05
+	v2 4.95 5.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 5.0 7.0
+	v1 6.0 5.0 7.05
+	v2 5.95 5.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 5.0 7.0
+	v1 7.0 5.0 7.05
+	v2 6.95 5.0 7.0
+	emission 10 10 10
+}
+light
+{
+	type quad
+	position 8.0 5.0 7.0
+	v1 8.0 5.0 7.05
+	v2 7.95 5.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 5.0 7.0
+	v1 9.0 5.0 7.05
+	v2 8.95 5.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 6.0 7.0
+	v1 0.0 6.0 7.05
+	v2 -0.05 6.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 6.0 7.0
+	v1 1.0 6.0 7.05
+	v2 0.95 6.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 6.0 7.0
+	v1 2.0 6.0 7.05
+	v2 1.95 6.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 6.0 7.0
+	v1 3.0 6.0 7.05
+	v2 2.95 6.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 6.0 7.0
+	v1 4.0 6.0 7.05
+	v2 3.95 6.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 6.0 7.0
+	v1 5.0 6.0 7.05
+	v2 4.95 6.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 6.0 7.0
+	v1 6.0 6.0 7.05
+	v2 5.95 6.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 6.0 7.0
+	v1 7.0 6.0 7.05
+	v2 6.95 6.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 6.0 7.0
+	v1 8.0 6.0 7.05
+	v2 7.95 6.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 6.0 7.0
+	v1 9.0 6.0 7.05
+	v2 8.95 6.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 7.0 7.0
+	v1 0.0 7.0 7.05
+	v2 -0.05 7.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 7.0 7.0
+	v1 1.0 7.0 7.05
+	v2 0.95 7.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 7.0 7.0
+	v1 2.0 7.0 7.05
+	v2 1.95 7.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 7.0 7.0
+	v1 3.0 7.0 7.05
+	v2 2.95 7.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 7.0 7.0
+	v1 4.0 7.0 7.05
+	v2 3.95 7.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 7.0 7.0
+	v1 5.0 7.0 7.05
+	v2 4.95 7.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 7.0 7.0
+	v1 6.0 7.0 7.05
+	v2 5.95 7.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 7.0 7.0
+	v1 7.0 7.0 7.05
+	v2 6.95 7.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 7.0 7.0
+	v1 8.0 7.0 7.05
+	v2 7.95 7.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 7.0 7.0
+	v1 9.0 7.0 7.05
+	v2 8.95 7.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 8.0 7.0
+	v1 0.0 8.0 7.05
+	v2 -0.05 8.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 8.0 7.0
+	v1 1.0 8.0 7.05
+	v2 0.95 8.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 8.0 7.0
+	v1 2.0 8.0 7.05
+	v2 1.95 8.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 8.0 7.0
+	v1 3.0 8.0 7.05
+	v2 2.95 8.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 8.0 7.0
+	v1 4.0 8.0 7.05
+	v2 3.95 8.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 8.0 7.0
+	v1 5.0 8.0 7.05
+	v2 4.95 8.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 8.0 7.0
+	v1 6.0 8.0 7.05
+	v2 5.95 8.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 8.0 7.0
+	v1 7.0 8.0 7.05
+	v2 6.95 8.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 8.0 7.0
+	v1 8.0 8.0 7.05
+	v2 7.95 8.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 8.0 7.0
+	v1 9.0 8.0 7.05
+	v2 8.95 8.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 9.0 7.0
+	v1 0.0 9.0 7.05
+	v2 -0.05 9.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 9.0 7.0
+	v1 1.0 9.0 7.05
+	v2 0.95 9.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 9.0 7.0
+	v1 2.0 9.0 7.05
+	v2 1.95 9.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 9.0 7.0
+	v1 3.0 9.0 7.05
+	v2 2.95 9.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 9.0 7.0
+	v1 4.0 9.0 7.05
+	v2 3.95 9.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 9.0 7.0
+	v1 5.0 9.0 7.05
+	v2 4.95 9.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 9.0 7.0
+	v1 6.0 9.0 7.05
+	v2 5.95 9.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 9.0 7.0
+	v1 7.0 9.0 7.05
+	v2 6.95 9.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 9.0 7.0
+	v1 8.0 9.0 7.05
+	v2 7.95 9.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 9.0 7.0
+	v1 9.0 9.0 7.05
+	v2 8.95 9.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 10.0 7.0
+	v1 0.0 10.0 7.05
+	v2 -0.05 10.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 10.0 7.0
+	v1 1.0 10.0 7.05
+	v2 0.95 10.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 10.0 7.0
+	v1 2.0 10.0 7.05
+	v2 1.95 10.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 10.0 7.0
+	v1 3.0 10.0 7.05
+	v2 2.95 10.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 10.0 7.0
+	v1 4.0 10.0 7.05
+	v2 3.95 10.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 10.0 7.0
+	v1 5.0 10.0 7.05
+	v2 4.95 10.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 10.0 7.0
+	v1 6.0 10.0 7.05
+	v2 5.95 10.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 10.0 7.0
+	v1 7.0 10.0 7.05
+	v2 6.95 10.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 10.0 7.0
+	v1 8.0 10.0 7.05
+	v2 7.95 10.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 10.0 7.0
+	v1 9.0 10.0 7.05
+	v2 8.95 10.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 11.0 7.0
+	v1 0.0 11.0 7.05
+	v2 -0.05 11.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 11.0 7.0
+	v1 1.0 11.0 7.05
+	v2 0.95 11.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 11.0 7.0
+	v1 2.0 11.0 7.05
+	v2 1.95 11.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 11.0 7.0
+	v1 3.0 11.0 7.05
+	v2 2.95 11.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 11.0 7.0
+	v1 4.0 11.0 7.05
+	v2 3.95 11.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 11.0 7.0
+	v1 5.0 11.0 7.05
+	v2 4.95 11.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 11.0 7.0
+	v1 6.0 11.0 7.05
+	v2 5.95 11.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 11.0 7.0
+	v1 7.0 11.0 7.05
+	v2 6.95 11.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 11.0 7.0
+	v1 8.0 11.0 7.05
+	v2 7.95 11.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 11.0 7.0
+	v1 9.0 11.0 7.05
+	v2 8.95 11.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 12.0 7.0
+	v1 0.0 12.0 7.05
+	v2 -0.05 12.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 12.0 7.0
+	v1 1.0 12.0 7.05
+	v2 0.95 12.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 12.0 7.0
+	v1 2.0 12.0 7.05
+	v2 1.95 12.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 12.0 7.0
+	v1 3.0 12.0 7.05
+	v2 2.95 12.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 12.0 7.0
+	v1 4.0 12.0 7.05
+	v2 3.95 12.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 12.0 7.0
+	v1 5.0 12.0 7.05
+	v2 4.95 12.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 12.0 7.0
+	v1 6.0 12.0 7.05
+	v2 5.95 12.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 12.0 7.0
+	v1 7.0 12.0 7.05
+	v2 6.95 12.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 12.0 7.0
+	v1 8.0 12.0 7.05
+	v2 7.95 12.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 12.0 7.0
+	v1 9.0 12.0 7.05
+	v2 8.95 12.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 13.0 7.0
+	v1 0.0 13.0 7.05
+	v2 -0.05 13.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 13.0 7.0
+	v1 1.0 13.0 7.05
+	v2 0.95 13.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 13.0 7.0
+	v1 2.0 13.0 7.05
+	v2 1.95 13.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 13.0 7.0
+	v1 3.0 13.0 7.05
+	v2 2.95 13.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 13.0 7.0
+	v1 4.0 13.0 7.05
+	v2 3.95 13.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 13.0 7.0
+	v1 5.0 13.0 7.05
+	v2 4.95 13.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 13.0 7.0
+	v1 6.0 13.0 7.05
+	v2 5.95 13.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 13.0 7.0
+	v1 7.0 13.0 7.05
+	v2 6.95 13.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 13.0 7.0
+	v1 8.0 13.0 7.05
+	v2 7.95 13.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 13.0 7.0
+	v1 9.0 13.0 7.05
+	v2 8.95 13.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 14.0 7.0
+	v1 0.0 14.0 7.05
+	v2 -0.05 14.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 14.0 7.0
+	v1 1.0 14.0 7.05
+	v2 0.95 14.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 14.0 7.0
+	v1 2.0 14.0 7.05
+	v2 1.95 14.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 14.0 7.0
+	v1 3.0 14.0 7.05
+	v2 2.95 14.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 14.0 7.0
+	v1 4.0 14.0 7.05
+	v2 3.95 14.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 14.0 7.0
+	v1 5.0 14.0 7.05
+	v2 4.95 14.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 14.0 7.0
+	v1 6.0 14.0 7.05
+	v2 5.95 14.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 14.0 7.0
+	v1 7.0 14.0 7.05
+	v2 6.95 14.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 14.0 7.0
+	v1 8.0 14.0 7.05
+	v2 7.95 14.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 14.0 7.0
+	v1 9.0 14.0 7.05
+	v2 8.95 14.0 7.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 5.0 8.0
+	v1 0.0 5.0 8.05
+	v2 -0.05 5.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 5.0 8.0
+	v1 1.0 5.0 8.05
+	v2 0.95 5.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 5.0 8.0
+	v1 2.0 5.0 8.05
+	v2 1.95 5.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 5.0 8.0
+	v1 3.0 5.0 8.05
+	v2 2.95 5.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 5.0 8.0
+	v1 4.0 5.0 8.05
+	v2 3.95 5.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 5.0 8.0
+	v1 5.0 5.0 8.05
+	v2 4.95 5.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 5.0 8.0
+	v1 6.0 5.0 8.05
+	v2 5.95 5.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 5.0 8.0
+	v1 7.0 5.0 8.05
+	v2 6.95 5.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 5.0 8.0
+	v1 8.0 5.0 8.05
+	v2 7.95 5.0 8.0
+	emission 10 10 10
+}
+light
+{
+	type quad
+	position 9.0 5.0 8.0
+	v1 9.0 5.0 8.05
+	v2 8.95 5.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 6.0 8.0
+	v1 0.0 6.0 8.05
+	v2 -0.05 6.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 6.0 8.0
+	v1 1.0 6.0 8.05
+	v2 0.95 6.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 6.0 8.0
+	v1 2.0 6.0 8.05
+	v2 1.95 6.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 6.0 8.0
+	v1 3.0 6.0 8.05
+	v2 2.95 6.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 6.0 8.0
+	v1 4.0 6.0 8.05
+	v2 3.95 6.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 6.0 8.0
+	v1 5.0 6.0 8.05
+	v2 4.95 6.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 6.0 8.0
+	v1 6.0 6.0 8.05
+	v2 5.95 6.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 6.0 8.0
+	v1 7.0 6.0 8.05
+	v2 6.95 6.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 6.0 8.0
+	v1 8.0 6.0 8.05
+	v2 7.95 6.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 6.0 8.0
+	v1 9.0 6.0 8.05
+	v2 8.95 6.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 7.0 8.0
+	v1 0.0 7.0 8.05
+	v2 -0.05 7.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 7.0 8.0
+	v1 1.0 7.0 8.05
+	v2 0.95 7.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 7.0 8.0
+	v1 2.0 7.0 8.05
+	v2 1.95 7.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 7.0 8.0
+	v1 3.0 7.0 8.05
+	v2 2.95 7.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 7.0 8.0
+	v1 4.0 7.0 8.05
+	v2 3.95 7.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 7.0 8.0
+	v1 5.0 7.0 8.05
+	v2 4.95 7.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 7.0 8.0
+	v1 6.0 7.0 8.05
+	v2 5.95 7.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 7.0 8.0
+	v1 7.0 7.0 8.05
+	v2 6.95 7.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 7.0 8.0
+	v1 8.0 7.0 8.05
+	v2 7.95 7.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 7.0 8.0
+	v1 9.0 7.0 8.05
+	v2 8.95 7.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 8.0 8.0
+	v1 0.0 8.0 8.05
+	v2 -0.05 8.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 8.0 8.0
+	v1 1.0 8.0 8.05
+	v2 0.95 8.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 8.0 8.0
+	v1 2.0 8.0 8.05
+	v2 1.95 8.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 8.0 8.0
+	v1 3.0 8.0 8.05
+	v2 2.95 8.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 8.0 8.0
+	v1 4.0 8.0 8.05
+	v2 3.95 8.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 8.0 8.0
+	v1 5.0 8.0 8.05
+	v2 4.95 8.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 8.0 8.0
+	v1 6.0 8.0 8.05
+	v2 5.95 8.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 8.0 8.0
+	v1 7.0 8.0 8.05
+	v2 6.95 8.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 8.0 8.0
+	v1 8.0 8.0 8.05
+	v2 7.95 8.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 8.0 8.0
+	v1 9.0 8.0 8.05
+	v2 8.95 8.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 9.0 8.0
+	v1 0.0 9.0 8.05
+	v2 -0.05 9.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 9.0 8.0
+	v1 1.0 9.0 8.05
+	v2 0.95 9.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 9.0 8.0
+	v1 2.0 9.0 8.05
+	v2 1.95 9.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 9.0 8.0
+	v1 3.0 9.0 8.05
+	v2 2.95 9.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 9.0 8.0
+	v1 4.0 9.0 8.05
+	v2 3.95 9.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 9.0 8.0
+	v1 5.0 9.0 8.05
+	v2 4.95 9.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 9.0 8.0
+	v1 6.0 9.0 8.05
+	v2 5.95 9.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 9.0 8.0
+	v1 7.0 9.0 8.05
+	v2 6.95 9.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 9.0 8.0
+	v1 8.0 9.0 8.05
+	v2 7.95 9.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 9.0 8.0
+	v1 9.0 9.0 8.05
+	v2 8.95 9.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 10.0 8.0
+	v1 0.0 10.0 8.05
+	v2 -0.05 10.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 10.0 8.0
+	v1 1.0 10.0 8.05
+	v2 0.95 10.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 10.0 8.0
+	v1 2.0 10.0 8.05
+	v2 1.95 10.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 10.0 8.0
+	v1 3.0 10.0 8.05
+	v2 2.95 10.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 10.0 8.0
+	v1 4.0 10.0 8.05
+	v2 3.95 10.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 10.0 8.0
+	v1 5.0 10.0 8.05
+	v2 4.95 10.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 10.0 8.0
+	v1 6.0 10.0 8.05
+	v2 5.95 10.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 10.0 8.0
+	v1 7.0 10.0 8.05
+	v2 6.95 10.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 10.0 8.0
+	v1 8.0 10.0 8.05
+	v2 7.95 10.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 10.0 8.0
+	v1 9.0 10.0 8.05
+	v2 8.95 10.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 11.0 8.0
+	v1 0.0 11.0 8.05
+	v2 -0.05 11.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 11.0 8.0
+	v1 1.0 11.0 8.05
+	v2 0.95 11.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 11.0 8.0
+	v1 2.0 11.0 8.05
+	v2 1.95 11.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 11.0 8.0
+	v1 3.0 11.0 8.05
+	v2 2.95 11.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 11.0 8.0
+	v1 4.0 11.0 8.05
+	v2 3.95 11.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 11.0 8.0
+	v1 5.0 11.0 8.05
+	v2 4.95 11.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 11.0 8.0
+	v1 6.0 11.0 8.05
+	v2 5.95 11.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 11.0 8.0
+	v1 7.0 11.0 8.05
+	v2 6.95 11.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 11.0 8.0
+	v1 8.0 11.0 8.05
+	v2 7.95 11.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 11.0 8.0
+	v1 9.0 11.0 8.05
+	v2 8.95 11.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 12.0 8.0
+	v1 0.0 12.0 8.05
+	v2 -0.05 12.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 12.0 8.0
+	v1 1.0 12.0 8.05
+	v2 0.95 12.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 12.0 8.0
+	v1 2.0 12.0 8.05
+	v2 1.95 12.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 12.0 8.0
+	v1 3.0 12.0 8.05
+	v2 2.95 12.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 12.0 8.0
+	v1 4.0 12.0 8.05
+	v2 3.95 12.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 12.0 8.0
+	v1 5.0 12.0 8.05
+	v2 4.95 12.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 12.0 8.0
+	v1 6.0 12.0 8.05
+	v2 5.95 12.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 12.0 8.0
+	v1 7.0 12.0 8.05
+	v2 6.95 12.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 12.0 8.0
+	v1 8.0 12.0 8.05
+	v2 7.95 12.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 12.0 8.0
+	v1 9.0 12.0 8.05
+	v2 8.95 12.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 13.0 8.0
+	v1 0.0 13.0 8.05
+	v2 -0.05 13.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 13.0 8.0
+	v1 1.0 13.0 8.05
+	v2 0.95 13.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 13.0 8.0
+	v1 2.0 13.0 8.05
+	v2 1.95 13.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 13.0 8.0
+	v1 3.0 13.0 8.05
+	v2 2.95 13.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 13.0 8.0
+	v1 4.0 13.0 8.05
+	v2 3.95 13.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 13.0 8.0
+	v1 5.0 13.0 8.05
+	v2 4.95 13.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 13.0 8.0
+	v1 6.0 13.0 8.05
+	v2 5.95 13.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 13.0 8.0
+	v1 7.0 13.0 8.05
+	v2 6.95 13.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 13.0 8.0
+	v1 8.0 13.0 8.05
+	v2 7.95 13.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 13.0 8.0
+	v1 9.0 13.0 8.05
+	v2 8.95 13.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 14.0 8.0
+	v1 0.0 14.0 8.05
+	v2 -0.05 14.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 14.0 8.0
+	v1 1.0 14.0 8.05
+	v2 0.95 14.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 14.0 8.0
+	v1 2.0 14.0 8.05
+	v2 1.95 14.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 14.0 8.0
+	v1 3.0 14.0 8.05
+	v2 2.95 14.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 14.0 8.0
+	v1 4.0 14.0 8.05
+	v2 3.95 14.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 14.0 8.0
+	v1 5.0 14.0 8.05
+	v2 4.95 14.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 14.0 8.0
+	v1 6.0 14.0 8.05
+	v2 5.95 14.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 14.0 8.0
+	v1 7.0 14.0 8.05
+	v2 6.95 14.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 14.0 8.0
+	v1 8.0 14.0 8.05
+	v2 7.95 14.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 14.0 8.0
+	v1 9.0 14.0 8.05
+	v2 8.95 14.0 8.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 5.0 9.0
+	v1 0.0 5.0 9.05
+	v2 -0.05 5.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 5.0 9.0
+	v1 1.0 5.0 9.05
+	v2 0.95 5.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 5.0 9.0
+	v1 2.0 5.0 9.05
+	v2 1.95 5.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 5.0 9.0
+	v1 3.0 5.0 9.05
+	v2 2.95 5.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 5.0 9.0
+	v1 4.0 5.0 9.05
+	v2 3.95 5.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 5.0 9.0
+	v1 5.0 5.0 9.05
+	v2 4.95 5.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 5.0 9.0
+	v1 6.0 5.0 9.05
+	v2 5.95 5.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 5.0 9.0
+	v1 7.0 5.0 9.05
+	v2 6.95 5.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 5.0 9.0
+	v1 8.0 5.0 9.05
+	v2 7.95 5.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 5.0 9.0
+	v1 9.0 5.0 9.05
+	v2 8.95 5.0 9.0
+	emission 10 10 10
+}
+light
+{
+	type quad
+	position 0.0 6.0 9.0
+	v1 0.0 6.0 9.05
+	v2 -0.05 6.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 6.0 9.0
+	v1 1.0 6.0 9.05
+	v2 0.95 6.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 6.0 9.0
+	v1 2.0 6.0 9.05
+	v2 1.95 6.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 6.0 9.0
+	v1 3.0 6.0 9.05
+	v2 2.95 6.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 6.0 9.0
+	v1 4.0 6.0 9.05
+	v2 3.95 6.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 6.0 9.0
+	v1 5.0 6.0 9.05
+	v2 4.95 6.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 6.0 9.0
+	v1 6.0 6.0 9.05
+	v2 5.95 6.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 6.0 9.0
+	v1 7.0 6.0 9.05
+	v2 6.95 6.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 6.0 9.0
+	v1 8.0 6.0 9.05
+	v2 7.95 6.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 6.0 9.0
+	v1 9.0 6.0 9.05
+	v2 8.95 6.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 7.0 9.0
+	v1 0.0 7.0 9.05
+	v2 -0.05 7.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 7.0 9.0
+	v1 1.0 7.0 9.05
+	v2 0.95 7.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 7.0 9.0
+	v1 2.0 7.0 9.05
+	v2 1.95 7.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 7.0 9.0
+	v1 3.0 7.0 9.05
+	v2 2.95 7.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 7.0 9.0
+	v1 4.0 7.0 9.05
+	v2 3.95 7.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 7.0 9.0
+	v1 5.0 7.0 9.05
+	v2 4.95 7.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 7.0 9.0
+	v1 6.0 7.0 9.05
+	v2 5.95 7.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 7.0 9.0
+	v1 7.0 7.0 9.05
+	v2 6.95 7.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 7.0 9.0
+	v1 8.0 7.0 9.05
+	v2 7.95 7.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 7.0 9.0
+	v1 9.0 7.0 9.05
+	v2 8.95 7.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 8.0 9.0
+	v1 0.0 8.0 9.05
+	v2 -0.05 8.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 8.0 9.0
+	v1 1.0 8.0 9.05
+	v2 0.95 8.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 8.0 9.0
+	v1 2.0 8.0 9.05
+	v2 1.95 8.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 8.0 9.0
+	v1 3.0 8.0 9.05
+	v2 2.95 8.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 8.0 9.0
+	v1 4.0 8.0 9.05
+	v2 3.95 8.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 8.0 9.0
+	v1 5.0 8.0 9.05
+	v2 4.95 8.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 8.0 9.0
+	v1 6.0 8.0 9.05
+	v2 5.95 8.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 8.0 9.0
+	v1 7.0 8.0 9.05
+	v2 6.95 8.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 8.0 9.0
+	v1 8.0 8.0 9.05
+	v2 7.95 8.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 8.0 9.0
+	v1 9.0 8.0 9.05
+	v2 8.95 8.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 9.0 9.0
+	v1 0.0 9.0 9.05
+	v2 -0.05 9.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 9.0 9.0
+	v1 1.0 9.0 9.05
+	v2 0.95 9.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 9.0 9.0
+	v1 2.0 9.0 9.05
+	v2 1.95 9.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 9.0 9.0
+	v1 3.0 9.0 9.05
+	v2 2.95 9.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 9.0 9.0
+	v1 4.0 9.0 9.05
+	v2 3.95 9.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 9.0 9.0
+	v1 5.0 9.0 9.05
+	v2 4.95 9.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 9.0 9.0
+	v1 6.0 9.0 9.05
+	v2 5.95 9.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 9.0 9.0
+	v1 7.0 9.0 9.05
+	v2 6.95 9.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 9.0 9.0
+	v1 8.0 9.0 9.05
+	v2 7.95 9.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 9.0 9.0
+	v1 9.0 9.0 9.05
+	v2 8.95 9.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 10.0 9.0
+	v1 0.0 10.0 9.05
+	v2 -0.05 10.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 10.0 9.0
+	v1 1.0 10.0 9.05
+	v2 0.95 10.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 10.0 9.0
+	v1 2.0 10.0 9.05
+	v2 1.95 10.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 10.0 9.0
+	v1 3.0 10.0 9.05
+	v2 2.95 10.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 10.0 9.0
+	v1 4.0 10.0 9.05
+	v2 3.95 10.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 10.0 9.0
+	v1 5.0 10.0 9.05
+	v2 4.95 10.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 10.0 9.0
+	v1 6.0 10.0 9.05
+	v2 5.95 10.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 10.0 9.0
+	v1 7.0 10.0 9.05
+	v2 6.95 10.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 10.0 9.0
+	v1 8.0 10.0 9.05
+	v2 7.95 10.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 10.0 9.0
+	v1 9.0 10.0 9.05
+	v2 8.95 10.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 11.0 9.0
+	v1 0.0 11.0 9.05
+	v2 -0.05 11.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 11.0 9.0
+	v1 1.0 11.0 9.05
+	v2 0.95 11.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 11.0 9.0
+	v1 2.0 11.0 9.05
+	v2 1.95 11.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 11.0 9.0
+	v1 3.0 11.0 9.05
+	v2 2.95 11.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 11.0 9.0
+	v1 4.0 11.0 9.05
+	v2 3.95 11.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 11.0 9.0
+	v1 5.0 11.0 9.05
+	v2 4.95 11.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 11.0 9.0
+	v1 6.0 11.0 9.05
+	v2 5.95 11.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 11.0 9.0
+	v1 7.0 11.0 9.05
+	v2 6.95 11.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 11.0 9.0
+	v1 8.0 11.0 9.05
+	v2 7.95 11.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 11.0 9.0
+	v1 9.0 11.0 9.05
+	v2 8.95 11.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 12.0 9.0
+	v1 0.0 12.0 9.05
+	v2 -0.05 12.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 12.0 9.0
+	v1 1.0 12.0 9.05
+	v2 0.95 12.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 12.0 9.0
+	v1 2.0 12.0 9.05
+	v2 1.95 12.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 12.0 9.0
+	v1 3.0 12.0 9.05
+	v2 2.95 12.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 12.0 9.0
+	v1 4.0 12.0 9.05
+	v2 3.95 12.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 12.0 9.0
+	v1 5.0 12.0 9.05
+	v2 4.95 12.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 12.0 9.0
+	v1 6.0 12.0 9.05
+	v2 5.95 12.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 12.0 9.0
+	v1 7.0 12.0 9.05
+	v2 6.95 12.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 12.0 9.0
+	v1 8.0 12.0 9.05
+	v2 7.95 12.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 12.0 9.0
+	v1 9.0 12.0 9.05
+	v2 8.95 12.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 13.0 9.0
+	v1 0.0 13.0 9.05
+	v2 -0.05 13.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 13.0 9.0
+	v1 1.0 13.0 9.05
+	v2 0.95 13.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 13.0 9.0
+	v1 2.0 13.0 9.05
+	v2 1.95 13.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 13.0 9.0
+	v1 3.0 13.0 9.05
+	v2 2.95 13.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 13.0 9.0
+	v1 4.0 13.0 9.05
+	v2 3.95 13.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 13.0 9.0
+	v1 5.0 13.0 9.05
+	v2 4.95 13.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 13.0 9.0
+	v1 6.0 13.0 9.05
+	v2 5.95 13.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 13.0 9.0
+	v1 7.0 13.0 9.05
+	v2 6.95 13.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 13.0 9.0
+	v1 8.0 13.0 9.05
+	v2 7.95 13.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 13.0 9.0
+	v1 9.0 13.0 9.05
+	v2 8.95 13.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 0.0 14.0 9.0
+	v1 0.0 14.0 9.05
+	v2 -0.05 14.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 1.0 14.0 9.0
+	v1 1.0 14.0 9.05
+	v2 0.95 14.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 2.0 14.0 9.0
+	v1 2.0 14.0 9.05
+	v2 1.95 14.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 3.0 14.0 9.0
+	v1 3.0 14.0 9.05
+	v2 2.95 14.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 4.0 14.0 9.0
+	v1 4.0 14.0 9.05
+	v2 3.95 14.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 5.0 14.0 9.0
+	v1 5.0 14.0 9.05
+	v2 4.95 14.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 6.0 14.0 9.0
+	v1 6.0 14.0 9.05
+	v2 5.95 14.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 7.0 14.0 9.0
+	v1 7.0 14.0 9.05
+	v2 6.95 14.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 8.0 14.0 9.0
+	v1 8.0 14.0 9.05
+	v2 7.95 14.0 9.0
+	emission 0 0 0
+}
+light
+{
+	type quad
+	position 9.0 14.0 9.0
+	v1 9.0 14.0 9.05
+	v2 8.95 14.0 9.0
+	emission 0 0 0
+}

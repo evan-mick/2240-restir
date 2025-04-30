@@ -58,7 +58,7 @@ if __name__ == "__main__":
    
 
     # Light generation parameters
-    num_lights = 100
+    num_lights = 1000
     pattern = "uniform"  # or "uniform"
     bbox = (-10, 5, -10, 10, 10, 10)  # Only used for random
     emission_color = (10, 0, 2)

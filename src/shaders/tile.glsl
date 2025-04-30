@@ -76,7 +76,7 @@ void main(void)
 
     LightSampleRec rec;
 
-    bool useRestir = (TexCoords.x > 0.5);
+    bool useRestir = (gl_FragCoord.x < (resolution.x *0.5));
     vec4 pixelColor = PathTraceFull(ray, useRestir, rec);
 
     // Multiply by W for reservoir
@@ -86,7 +86,7 @@ void main(void)
 
     //vec4 pixelColor = PathTrace(ray);
 
-    color = pixelColor; // + accumColor;
+    color = pixelColor;
 
     reservoirOut0 = texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
     reservoirOut1 = texelFetch(reservoirs1, ivec2(gl_FragCoord.xy), 0);

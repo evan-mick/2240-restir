@@ -297,7 +297,7 @@ namespace GLSLPT
 
         renderSize = scene->renderOptions.renderResolution;
         windowSize = scene->renderOptions.windowResolution;
-        restirXBound = scene->renderOptions.restirXBounds;
+        restirXBound = scene->renderOptions.windowResolution.x;
         restirYBound = scene->renderOptions.restirYBounds;
 
         tileWidth = scene->renderOptions.tileWidth;
@@ -871,7 +871,7 @@ namespace GLSLPT
             sampleCounter = 1;
             denoised = false;
             frameCounter = 1;
-            restirXBound = scene->renderOptions.restirXBounds;
+            restirXBound = scene->renderOptions.windowResolution.x;
             restirYBound = scene->renderOptions.restirYBounds;
 
             // Clear out the accumulated texture for rendering a new image
