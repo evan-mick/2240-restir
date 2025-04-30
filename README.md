@@ -8,9 +8,17 @@ Seems like we're doing stuff for "Analytic lights" in "DirectLight" in pathtrace
 
 TODO:
 
-the texture needs to be of arbitrary sizing to store the reservoirs across textures
-We need to figure out what needs to be stored in the reservoirs (light samples) and then edit how much the texture and how its accessed in GLSL
+- Get a large scene file
+- re-examine sampling strategy
+    - \omega_o or add a position to the light
+- W werid values
 
 
+
+- Per pixel jitter
+    - have randomization from pixel level, or same ray shot, but bounce different for different samples
 
 Ran into a bug where the reservoirs weren't working creating weird offsets, after much search and logical lookups, it was that we hadn't passed in the uniforms for the camera leading to weird intersections and thus weird samples. 
+
+
+

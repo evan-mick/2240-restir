@@ -275,4 +275,3 @@ float PhaseHG(float cosTheta, float g)
     float denom = 1 + g * g + 2 * g * cosTheta;
     return INV_4_PI * (1 - g * g) / (denom * sqrt(denom));
 }
-

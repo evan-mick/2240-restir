@@ -87,7 +87,13 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     //ret.direction = lightSample.direction;
     ret.index = index;
     ret.pdf = lightSample.pdf;
-    ret.weight = Luminance(Ld); // lightSample.pdf;
+    ret.weight = (Luminance(Ld) / lightSample.pdf) * (1 / lightSample.dist) / 20; // lightSample.pdf;
+
+    Ray shadowRay = Ray(scatterPos, lightSample.direction);
+    bool inShadow = AnyHit(shadowRay, lightSample.dist - EPS);
+
+    if (inShadow)
+        ret.weight = 0;
 
     return ret;
 }
@@ -105,10 +111,10 @@ void main(void)
     cur.numberOfWeights = 0;
 
     ReservoirSample sam;
-    for (int i = 0; i < 64; i++) {
+    for (int i = 0; i < 32; i++) {
         //cur.sam = sam;
         sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
-        cur = UpdateReservoir(cur, sam, sam.weight / sam.pdf); //Luminance(sam.radiance) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
+        cur = UpdateReservoir(cur, sam, sam.weight); //Luminance(sam.radiance) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
     }
     cur.W = CalculateW(cur); // -nan right now
 
@@ -117,7 +123,8 @@ void main(void)
     cur = CombineReservoirs(cur, prevRev);
 
     SaveReservoir(cur);
-    //reservoirOut0 = vec4(ivec2(gl_FragCoord.xy), TexCoords.xy); //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
+    reservoirOut0.z = cur.sam.weight; //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
+    reservoirOut0.a = reservoirOut0.z / cur.sumWeights;
     //reservoirOut1 = vec4(1.0, 1.0, 1.0, 1.0);
     //reservoirOut2 = vec4(1.0, 1.0, 1.0, 1.0);
     //color = vec4(1.0);

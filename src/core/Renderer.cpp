@@ -131,6 +131,8 @@ namespace GLSLPT
         delete pathTraceShaderLowRes;
         delete outputShader;
         delete tonemapShader;
+        delete initialSampleShader;
+        delete spatialSampleShader;
 
         // Delete denoiser data
         delete[] denoiserInputFramePtr;
@@ -284,6 +286,8 @@ namespace GLSLPT
         delete pathTraceShaderLowRes;
         delete outputShader;
         delete tonemapShader;
+        delete initialSampleShader;
+        delete spatialSampleShader;
 
         InitFBOs();
         InitShaders();
@@ -414,6 +418,8 @@ namespace GLSLPT
         delete pathTraceShaderLowRes;
         delete outputShader;
         delete tonemapShader;
+        delete initialSampleShader;
+        delete spatialSampleShader;
 
         InitShaders();
     }
@@ -594,12 +600,12 @@ namespace GLSLPT
             
             std::cout << "post initial" << std::endl;
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3]);
-            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 0]);
-            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 1]);
+            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 0]);
+            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 1]);
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 2]);
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3]);
-            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 0]);
-            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 1]);
+            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 0]);
+            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 1]);
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 2]);
             std::cout << std::endl;
 
@@ -614,10 +620,10 @@ namespace GLSLPT
 
             std::cout << "post spatial" << std::endl;
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3]);
-            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 0]);
-            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 1]);
-            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 0]);
-            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 1]);
+            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 0]);
+            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 1]);
+            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 0]);
+            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 1]);
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 2]);
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3]);
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 2]);

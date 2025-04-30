@@ -1,6 +1,7 @@
 
 void SaveReservoir(Reservoir res) {
     reservoirOut0 = vec4(float(res.sam.index), res.sam.weight, 0, 0); //vec4(res.sam.radiance, res.sam.direction.x);
+    // DID ADDITIONAL TEST HERE PUTTING INDEX IN DIRECTLY, it works with that so
     reservoirOut1 = vec4(float(res.numberOfWeights), res.W, res.sumWeights, res.sam.pdf); // res.sam.direction.yz,
     reservoirOut2 = vec4(0, 0, 0.0, 0.0);
 }
@@ -35,9 +36,10 @@ Reservoir GetReservoirFromPosition(ivec2 pos) {
 }
 
 Reservoir UpdateReservoir(Reservoir r, ReservoirSample sam, float weight) {
-    r.sumWeights += weight / 10;
+    r.sumWeights += weight;
     r.numberOfWeights += 1;
-    if (rand() < ((weight / 10) / r.sumWeights)) {
+    float weightDiv = weight / r.sumWeights;
+    if (rand() < (weightDiv)) {
         r.sam = sam;
     }
     return r;
