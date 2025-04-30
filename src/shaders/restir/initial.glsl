@@ -25,8 +25,6 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
 
     //vec2 coordsTile = (TexCoords / 2.0) + 1.0; //mix(tileOffset, tileOffset + invNumTiles, TexCoords);
 
-    InitRNG(gl_FragCoord.xy, frameNum);
-
     float r1 = 2.0 * rand();
     float r2 = 2.0 * rand();
 
@@ -96,24 +94,27 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
 
 void main(void)
 {
+    InitRNG(gl_FragCoord.xy, frameNum);
     // TODO: Generate sample function
     // Should shoot ray, generate light sample from place where hit, and return that
     // A simpler pathtrace function
     // Can use the same FBO as tile?
     Reservoir cur;
-    for (int i = 0; i < 32; i++) {
-        ReservoirSample sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
+    ReservoirSample sam;
+    for (int i = 0; i < 1; i++) {
+        //cur.sam = sam;
+        sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
         cur = UpdateReservoir(cur, sam, sam.weight / sam.pdf); //Luminance(sam.radiance) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
     }
-    cur.W = CalculateW(cur);
+    cur.W = CalculateW(cur); // -nan right now
 
     // Temporal reuse
-    //Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
-    //cur = CombineReservoirs(cur, prevRev);
+    Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
+    cur = CombineReservoirs(cur, prevRev);
 
     SaveReservoir(cur);
     //reservoirOut0 = vec4(ivec2(gl_FragCoord.xy), TexCoords.xy); //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
-    //reservoirOut0 = vec4(gl_FragCoord.x, gl_FragCoord.y, 1.0, 1.0);
+    //reservoirOut0 = vec4(100, 100, cur.W, 100);
     //reservoirOut1 = vec4(1.0, 1.0, 1.0, 1.0);
     //reservoirOut2 = vec4(1.0, 1.0, 1.0, 1.0);
     //color = vec4(1.0);

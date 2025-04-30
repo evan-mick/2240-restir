@@ -16,10 +16,11 @@ Reservoir GetReservoirFromPosition(ivec2 pos) {
     //res.sam.direction = vec3(first.a, second.xy);
 
     res.sam.index = int(first.x);
-    res.sam.pdf = second.a;
     res.sam.weight = first.y;
 
     res.sumWeights = second.z;
+    res.sam.pdf = second.a;
+
     res.numberOfWeights = int(third.x);
     res.W = third.y;
 
@@ -59,5 +60,9 @@ float CalculateW(Reservoir res) {
 
 Reservoir CombineReservoirs(Reservoir main, Reservoir new)
 {
+    UpdateReservoir(main, new.sam, float(new.W) * float(new.numberOfWeights) * float(new.sam.weight));
+    main.numberOfWeights += new.numberOfWeights;
+    main.sumWeights += new.sumWeights;
+    main.W = CalculateW(main);
     return main;
 }

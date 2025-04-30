@@ -281,14 +281,9 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, bool restirSample
             if (light.area > 0.0) // No MIS for distant light
                 misWeight = PowerHeuristic(lightSample.pdf, scatterSample.pdf);
 
-            // Calculate radiance without shadow considerations
-
             if (scatterSample.pdf > 0.0)
                 Ld += (misWeight * scatterSample.f / lightSample.pdf) * Li;
         }
-        //}
-        //   else {
-        //  }
     }
     #endif
 
