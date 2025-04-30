@@ -598,7 +598,7 @@ namespace GLSLPT
             SetReservoirFramebufferAttachments(true);
             quad->Draw(initialSampleShader);
             
-            std::cout << "post initial" << std::endl;
+            //std::cout << "post initial" << std::endl;
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3]);
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 0]);
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 1]);
@@ -607,7 +607,7 @@ namespace GLSLPT
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 0]);
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 1]);
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 2]);
-            std::cout << std::endl;
+            //std::cout << std::endl;
 
             glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);
             glViewport(0, 0, renderSize.x, renderSize.y);
@@ -618,7 +618,7 @@ namespace GLSLPT
             quad->Draw(spatialSampleShader);
 
 
-            std::cout << "post spatial" << std::endl;
+            //std::cout << "post spatial" << std::endl;
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3]);
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 0]);
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 1]);
@@ -639,7 +639,7 @@ namespace GLSLPT
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             SetReservoirFramebufferAttachments(true);
             quad->Draw(pathTraceShader);
-            std::cout << std::endl;
+            //std::cout << std::endl;
             
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3]);
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 1]);
