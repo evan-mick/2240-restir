@@ -101,28 +101,75 @@ void main(void)
     // A simpler pathtrace function
     // Can use the same FBO as tile?
     Reservoir cur;
+    ivec2 pos = ivec2(gl_FragCoord.xy);
+    InitRNG(gl_FragCoord.xy, frameNum);
+
+    float r1 = 2.0 * rand();
+    float r2 = 2.0 * rand();
+
+    vec2 jitter;
+    jitter.x = r1 < 1.0 ? sqrt(r1) - 1.0 : 1.0 - sqrt(2.0 - r1);
+    jitter.y = r2 < 1.0 ? sqrt(r2) - 1.0 : 1.0 - sqrt(2.0 - r2);
+
+    jitter /= (resolution * 0.5);
+    vec2 d = (TexCoords * 2.0 - 1.0) + jitter;
+    //vec2 d = TexCoords; //(coordsTile * 2.0 - 1.0) + jitter;
+
+    float scale = tan(camera.fov * 0.5);
+    d.y *= resolution.y / resolution.x * scale;
+    d.x *= scale;
+    vec3 rayDir = normalize(d.x * camera.right + d.y * camera.up + camera.forward);
+
+    vec3 focalPoint = camera.focalDist * rayDir;
+    float cam_r1 = rand() * TWO_PI;
+    float cam_r2 = rand() * camera.aperture;
+    vec3 randomAperturePos = (cos(cam_r1) * camera.right + sin(cam_r1) * camera.up) * sqrt(cam_r2);
+    vec3 finalRayDir = normalize(focalPoint - randomAperturePos);
+
+    Ray ray = Ray(camera.position + randomAperturePos, finalRayDir);
+
+    State state;
+
+    LightSampleRec lightSample;
+
+    bool hit = ClosestHit(ray, state, lightSample);
+    vec3 scatterPos = state.fhp + state.normal * EPS;
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////RIS///////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //Generating 32 candidates (should be better)
-    // for (int i = 0; i < 32; i++) {
-    //     ReservoirSample sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
-    //     cur = UpdateReservoir(cur, sam, sam.weight / sam.pdf); //Luminance(sam.radiance) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
-    // }
+    for (int i = 0; i < 32; i++) {
+    //ReservoirSample sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
+    //cur = UpdateReservoir(cur, sam, sam.weight / sam.pdf); //Luminance(sam.radiance) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
+    
+    ReservoirSample ret;
+    int index = int(rand() * float(numOfLights)) * 5;
 
-    //Generating just one candidate (should be worse)
-    ReservoirSample sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
-    cur = UpdateReservoir(cur, sam, sam.weight / sam.pdf); //Luminance(sam.radiance) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
+    //// Fetch light Data
+    vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
+    vec3 emission = texelFetch(lightsTex, ivec2(index + 1, 0), 0).xyz;
+    vec3 u = texelFetch(lightsTex, ivec2(index + 2, 0), 0).xyz; // u vector for rect
+    vec3 v = texelFetch(lightsTex, ivec2(index + 3, 0), 0).xyz; // v vector for rect
+    vec3 params = texelFetch(lightsTex, ivec2(index + 4, 0), 0).xyz;
+    float radius = params.x;
+    float area = params.y;
+    float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
 
+    Light light = Light(position, emission, u, v, radius, area, type);
+    //LightSampleRec lightSample_res;
+    //its okay cause light sample gets overwritten
+    SampleOneLight(light, scatterPos, lightSample);
+    
+    }
+
+    
     cur.W = CalculateW(cur);
+    cur.sam.weight = 0.0;
 
-    // Temporal reuse
-    //Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
-    //cur = CombineReservoirs(cur, prevRev);
 
     SaveReservoir(cur);
-    //reservoirOut0 = vec4(ivec2(gl_FragCoord.xy), TexCoords.xy); //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
-    //reservoirOut0 = vec4(gl_FragCoord.x, gl_FragCoord.y, 1.0, 1.0);
-    //reservoirOut1 = vec4(1.0, 1.0, 1.0, 1.0);
-    //reservoirOut2 = vec4(1.0, 1.0, 1.0, 1.0);
-    //color = vec4(1.0);
-    //print test
+    
 }
