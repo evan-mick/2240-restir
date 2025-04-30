@@ -1,8 +1,8 @@
 
 void SaveReservoir(Reservoir res) {
     reservoirOut0 = vec4(float(res.sam.index), res.sam.weight, 0, 0); //vec4(res.sam.radiance, res.sam.direction.x);
-    reservoirOut1 = vec4(0, 0, res.sumWeights, res.sam.pdf); // res.sam.direction.yz,
-    reservoirOut2 = vec4(float(res.numberOfWeights), res.W, 0.0, 0.0);
+    reservoirOut1 = vec4(float(res.numberOfWeights), res.W, res.sumWeights, res.sam.pdf); // res.sam.direction.yz,
+    reservoirOut2 = vec4(0, 0, 0.0, 0.0);
 }
 
 Reservoir GetReservoirFromPosition(ivec2 pos) {
@@ -18,11 +18,10 @@ Reservoir GetReservoirFromPosition(ivec2 pos) {
     res.sam.index = int(first.x);
     res.sam.weight = first.y;
 
+    res.numberOfWeights = int(second.x);
+    res.W = second.y;
     res.sumWeights = second.z;
     res.sam.pdf = second.a;
-
-    res.numberOfWeights = int(third.x);
-    res.W = third.y;
 
     // Old
     //res.picked.normal = first.xyz;
@@ -36,9 +35,9 @@ Reservoir GetReservoirFromPosition(ivec2 pos) {
 }
 
 Reservoir UpdateReservoir(Reservoir r, ReservoirSample sam, float weight) {
-    r.sumWeights += weight;
+    r.sumWeights += weight / 10;
     r.numberOfWeights += 1;
-    if (rand() < (weight / r.sumWeights)) {
+    if (rand() < ((weight / 10) / r.sumWeights)) {
         r.sam = sam;
     }
     return r;

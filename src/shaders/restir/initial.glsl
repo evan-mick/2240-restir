@@ -99,9 +99,13 @@ void main(void)
     // Should shoot ray, generate light sample from place where hit, and return that
     // A simpler pathtrace function
     // Can use the same FBO as tile?
+    //Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
     Reservoir cur;
+    cur.sumWeights = 0;
+    cur.numberOfWeights = 0;
+
     ReservoirSample sam;
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 32; i++) {
         //cur.sam = sam;
         sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
         cur = UpdateReservoir(cur, sam, sam.weight / sam.pdf); //Luminance(sam.radiance) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
@@ -114,7 +118,6 @@ void main(void)
 
     SaveReservoir(cur);
     //reservoirOut0 = vec4(ivec2(gl_FragCoord.xy), TexCoords.xy); //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
-    //reservoirOut0 = vec4(100, 100, cur.W, 100);
     //reservoirOut1 = vec4(1.0, 1.0, 1.0, 1.0);
     //reservoirOut2 = vec4(1.0, 1.0, 1.0, 1.0);
     //color = vec4(1.0);
