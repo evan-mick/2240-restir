@@ -18,20 +18,18 @@ in vec2 TexCoords;
 #include /../common/globals.glsl
 #include /../common/restir.glsl
 
+const int sampleRange = 16;
+
 void main(void)
 {
     Reservoir cur = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
 
     if (TexCoords.x > 0.5) {
-        cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(-1, -1)));
-        cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(-1, 0)));
-        cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(-1, 1)));
-        cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(0, -1)));
-        cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(0, 0)));
-        cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(0, 1)));
-        cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(1, -1)));
-        cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(1, 0)));
-        cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(1, 1)));
+        for (int x = -sampleRange; x < sampleRange; x++) {
+            for (int y = -sampleRange; y < sampleRange; x++) {
+                cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(x, y)));
+            }
+        }
     }
 
     SaveReservoir(cur);

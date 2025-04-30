@@ -105,7 +105,7 @@ void main(void)
     cur.numberOfWeights = 0;
 
     ReservoirSample sam;
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < 64; i++) {
         //cur.sam = sam;
         sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
         cur = UpdateReservoir(cur, sam, sam.weight / sam.pdf); //Luminance(sam.radiance) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
