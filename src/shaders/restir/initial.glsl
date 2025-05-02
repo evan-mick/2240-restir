@@ -87,7 +87,9 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     //ret.direction = lightSample.direction;
     ret.index = index;
     ret.pdf = lightSample.pdf;
-    ret.weight = (Luminance(Ld) / lightSample.pdf) * (1 / lightSample.dist) / 20; // lightSample.pdf;
+
+    float add = (Ld.x + Ld.y + Ld.z) / 3;
+    ret.weight = (add / lightSample.pdf) / 20; // lightSample.pdf;
 
     Ray shadowRay = Ray(scatterPos, lightSample.direction);
     bool inShadow = AnyHit(shadowRay, lightSample.dist - EPS);

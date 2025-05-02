@@ -24,7 +24,7 @@ void main(void)
 {
     Reservoir cur = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
 
-    if (TexCoords.x > 0.5) {
+    if (TexCoords.x < 0.5) {
         for (int x = -sampleRange; x < sampleRange; x++) {
             for (int y = -sampleRange; y < sampleRange; x++) {
                 cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(x, y)));

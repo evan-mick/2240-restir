@@ -84,13 +84,16 @@ void main(void)
 
     // Multiply by W for reservoir
     Reservoir reser = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
-    //float W = CalculateW(reser); // TODO: Figure this stuff out
-    pixelColor.xyz /= 8;
-    //pixelColor.xyz *= reser.W * 20;
+    float W = useRestir ? 1.0 : 1.0; // TODO: Figure this stuff out
+    //pixelColor.xyz /= 2;
+    pixelColor /= 8;
+
+    //if (useRestir)
+    //    pixelColor.xyz *= reser.W * 20;
 
     //vec4 pixelColor = PathTrace(ray);
 
-    color = pixelColor + accumColor;
+    color = pixelColor; // + accumColor;
     //reservoirOut0 = vec4(W);
 
     reservoirOut0 = texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
