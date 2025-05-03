@@ -84,7 +84,7 @@ void main(void)
 
     // Multiply by W for reservoir
     Reservoir reser = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
-    float W = useRestir ? 1.0 : 1.0; // TODO: Figure this stuff out
+    float W = useRestir ? CalculateW(reser) : 1.0; // TODO: Figure this stuff out
     //pixelColor.xyz /= 2;
     pixelColor /= 4;
 

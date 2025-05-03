@@ -33,15 +33,15 @@ Reservoir GetReservoirFromPosition(ivec2 pos) {
     /*
 
 
-                                                                                    struct LightSampleRec
-                                                                                    {
-                                                                                        vec3 normal;
-                                                                                        vec3 emission;
-                                                                                        vec3 direction;
-                                                                                        float dist;
-                                                                                        float pdf;
-                                                                                    };
-                                                                                        */
+                                                                                        struct LightSampleRec
+                                                                                        {
+                                                                                            vec3 normal;
+                                                                                            vec3 emission;
+                                                                                            vec3 direction;
+                                                                                            float dist;
+                                                                                            float pdf;
+                                                                                        };
+                                                                                            */
 
     #ifdef RESTIR_SAMPLE_INDEX_POSITION
     res.sam.index = int(second.y);
@@ -75,7 +75,7 @@ Reservoir UpdateReservoir(Reservoir r, ReservoirSample sam, float weight) {
 //
 float CalculateW(Reservoir res) {
     //return (1.0 / (res.sam.radiance)) * (res.sumWeights / float(res.numberOfWeights));
-    return (float(res.sumWeights) / float(res.numberOfWeights)) / float(res.sam.pdf);
+    return (float(res.sumWeights) / float(res.numberOfWeights)) / (res.sam.weight * float(res.sam.pdf));
 }
 //Reservoir UpdateReservoir(Reservoir r, LightSampleRec s)
 //{
