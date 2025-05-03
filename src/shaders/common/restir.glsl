@@ -4,10 +4,10 @@ void SaveReservoir(Reservoir res) {
     reservoirOut1.x = res.sam.weight;
     #ifdef RESTIR_SAMPLE_INDEX_POSITION
     reservoirOut1.y = float(res.sam.index); //vec4(res.sam.radiance, res.sam.direction.x);
-    reservoirOut2 = vec4(res.sam.position, 0); // Position here
+    reservoirOut2 = vec4(res.sam.fullDirection, 0); // Position here
     #elif RESTIR_SAMPLE_DIRECTION
     reservoirOut1 = vec4(res.sam.weight, res.sam.direction); //vec4(res.sam.radiance, res.sam.direction.x);
-    reservoirOut2 = vec4(0, 0, 0, 0); // Position here
+    reservoirOut2 = vec4(res.sam.fullDirection, 0); // Position here
     #else // By default, use index based sampling
     reservoirOut1.y = float(res.sam.index); //vec4(float(res.sam.index), res.sam.weight, 0, 0); //vec4(res.sam.radiance, res.sam.direction.x);
     reservoirOut2 = vec4(0, 0, 0, 0);
@@ -29,25 +29,12 @@ Reservoir GetReservoirFromPosition(ivec2 pos) {
     res.sumWeights = first.z;
     res.sam.pdf = first.a;
     res.sam.weight = second.x;
-
-    /*
-
-
-                                                                                        struct LightSampleRec
-                                                                                        {
-                                                                                            vec3 normal;
-                                                                                            vec3 emission;
-                                                                                            vec3 direction;
-                                                                                            float dist;
-                                                                                            float pdf;
-                                                                                        };
-                                                                                            */
-
     #ifdef RESTIR_SAMPLE_INDEX_POSITION
     res.sam.index = int(second.y);
-    res.sam.position = third.xyz;
+    res.sam.fullDirection = third.xyz;
     #elif RESTIR_SAMPLE_DIRECTION
-    res.sam.direction = second.yza;
+    res.sam.index = int(second.y);
+    res.sam.fullDirection = third.xyz;
     #else
     res.sam.index = int(second.y);
     #endif
@@ -101,7 +88,7 @@ float CalculatePHat(vec3 radiance) {
 
 Reservoir CombineReservoirs(Reservoir main, Reservoir new)
 {
-    UpdateReservoir(main, new.sam, float(new.W) * float(new.numberOfWeights) * float(new.sam.weight));
+    UpdateReservoir(main, new.sam, float(new.W) * float(new.numberOfWeights) * (float(new.sam.weight) * new.sam.pdf));
     main.numberOfWeights += new.numberOfWeights;
     main.sumWeights += new.sumWeights;
     main.W = CalculateW(main);

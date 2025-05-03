@@ -29,6 +29,7 @@
 #include "ShaderIncludes.h"
 #include "Scene.h"
 #include "OpenImageDenoise/oidn.hpp"
+#include <experimental/filesystem>
 
 namespace GLSLPT
 {
@@ -456,7 +457,7 @@ namespace GLSLPT
         if (!scene->lights.empty())
             pathtraceDefines += "#define OPT_LIGHTS\n";
 
-        // RESTIR_SAMPLE_DIRECTION
+        //pathtraceDefines += "#define RESTIR_SAMPLE_INDEX_POSITION\n";
 
         if (scene->renderOptions.enableRR)
         {

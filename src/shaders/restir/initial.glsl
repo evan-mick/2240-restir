@@ -88,6 +88,10 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     ret.index = index;
     ret.pdf = lightSample.pdf;
 
+    #ifdef RESTIR_SAMPLE_INDEX_POSITION
+    ret.fullDirection = lightSample.direction * lightSample.dist * 1.1;
+    #endif
+
     float pHat = CalculatePHat(Ld);
     ret.weight = (pHat / lightSample.pdf) / 20; // lightSample.pdf;
 

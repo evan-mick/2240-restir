@@ -228,12 +228,6 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, bool restirSample
         #endif
         //res.sam.direction = second.yza;
 
-        /*#else
-                                        res.sam.index = int(second.y);
-                                        #endif
-                                        #ifndef RESTIR_SAMPLE_INDEX_POSITION
-                                        res.sam.index = int(second.y);
-                                        res.sam.position = third.xyz;*/
         // Fetch light Data
         vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
         vec3 emission = texelFetch(lightsTex, ivec2(index + 1, 0), 0).xyz;
@@ -249,6 +243,14 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, bool restirSample
         light = Light(position, emission, u, v, radius, area, type);
 
         SampleOneLight(light, scatterPos, lightSample);
+        #ifdef RESTIR_SAMPLE_INDEX_POSITION
+        float dist = length(res.sam.fullDirection);
+        vec3 dir = normalize(res.sam.fullDirection);
+        lightSample.dist = dist;
+        lightSample.direction = dir;
+        lightSample.pdf = res.sam.pdf;
+        #endif
+
         Li = lightSample.emission;
         //if (restirSample) {
 

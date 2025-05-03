@@ -155,9 +155,10 @@ struct LightSampleRec
 struct ReservoirSample {
     #ifdef RESTIR_SAMPLE_INDEX_POSITION
     int index;
-    vec3 position;
+    vec3 fullDirection;
+
     #elif RESTIR_SAMPLE_DIRECTION
-    vec3 direction;
+    vec3 fullDirection;
     #else // By default, use index based sampling
     int index; // could potentially help this by doing cdf for light sampling
     #endif
