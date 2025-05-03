@@ -88,7 +88,12 @@ mesh
 	material large_box_white
 	position .3685 .166 .35125
 	scale 0.01 0.01 0.01
-}
+}tex: 14 coord: 390048 100 100 100 100 
+tex: 15 coord: 390048 -nan 6032 -nan 1 
+tex: 16 coord: 390048 100 100 100 100 
+tex: 11 coord: 390048 100 100 0 0 
+tex: 12 coord: 390048 0 0 -nan 1 
+tex: 13 coord: 390048 100 100 0 0 
 
 mesh
 {

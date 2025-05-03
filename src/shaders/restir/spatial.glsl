@@ -26,7 +26,7 @@ void main(void)
 
     if (TexCoords.x < 0.5) {
         for (int x = -sampleRange; x < sampleRange; x++) {
-            for (int y = -sampleRange; y < sampleRange; x++) {
+            for (int y = -sampleRange; y < sampleRange; y++) {
                 cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(x, y)));
             }
         }
