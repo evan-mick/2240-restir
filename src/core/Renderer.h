@@ -110,6 +110,13 @@ namespace GLSLPT
         int sampleNum;
     };
 
+    enum ReSTIRPHatOptions {
+        PHAT_ADD = 0, // default
+        PHAT_LUMINANCE = 1,
+        PHAT_MAX = 2,
+        PHAT_CONST = 3,
+    };
+
     class Scene;
 
     class Renderer
@@ -184,6 +191,8 @@ namespace GLSLPT
         bool denoised;
 
         bool initialized;
+
+        ReSTIRPHatOptions phatOption = PHAT_ADD;
 
     public:
         Renderer(Scene* scene, const std::string& shadersDirectory);

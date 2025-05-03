@@ -221,8 +221,19 @@ vec3 DirectLightFull(in Ray r, in State state, bool isSurface, bool restirSample
 
         Reservoir res = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
         //Pick a light to sample
-        int index = restirSample ? res.sam.index : (int(rand() * float(numOfLights)) * 5);
 
+        int randInd = (int(rand() * float(numOfLights)) * 5);
+        #ifndef RESTIR_SAMPLE_DIRECTION
+        int index = restirSample ? res.sam.index : randInd;
+        #endif
+        //res.sam.direction = second.yza;
+
+        /*#else
+                                        res.sam.index = int(second.y);
+                                        #endif
+                                        #ifndef RESTIR_SAMPLE_INDEX_POSITION
+                                        res.sam.index = int(second.y);
+                                        res.sam.position = third.xyz;*/
         // Fetch light Data
         vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
         vec3 emission = texelFetch(lightsTex, ivec2(index + 1, 0), 0).xyz;

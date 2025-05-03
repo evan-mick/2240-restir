@@ -1,9 +1,17 @@
 
 void SaveReservoir(Reservoir res) {
-    reservoirOut0 = vec4(float(res.sam.index), res.sam.weight, 0, 0); //vec4(res.sam.radiance, res.sam.direction.x);
-    // DID ADDITIONAL TEST HERE PUTTING INDEX IN DIRECTLY, it works with that so
-    reservoirOut1 = vec4(float(res.numberOfWeights), res.W, res.sumWeights, res.sam.pdf); // res.sam.direction.yz,
-    reservoirOut2 = vec4(0, 0, 0.0, 0.0);
+    reservoirOut0 = vec4(float(res.numberOfWeights), res.W, res.sumWeights, res.sam.pdf); // res.sam.direction.yz,
+    reservoirOut1.x = res.sam.weight;
+    #ifdef RESTIR_SAMPLE_INDEX_POSITION
+    reservoirOut1.y = float(res.sam.index); //vec4(res.sam.radiance, res.sam.direction.x);
+    reservoirOut2 = vec4(res.sam.position, 0); // Position here
+    #elif RESTIR_SAMPLE_DIRECTION
+    reservoirOut1 = vec4(res.sam.weight, res.sam.direction); //vec4(res.sam.radiance, res.sam.direction.x);
+    reservoirOut2 = vec4(0, 0, 0, 0); // Position here
+    #else // By default, use index based sampling
+    reservoirOut1.y = float(res.sam.index); //vec4(float(res.sam.index), res.sam.weight, 0, 0); //vec4(res.sam.radiance, res.sam.direction.x);
+    reservoirOut2 = vec4(0, 0, 0, 0);
+    #endif
 }
 
 Reservoir GetReservoirFromPosition(ivec2 pos) {
@@ -16,13 +24,33 @@ Reservoir GetReservoirFromPosition(ivec2 pos) {
     //res.sam.radiance = first.xyz;
     //res.sam.direction = vec3(first.a, second.xy);
 
-    res.sam.index = int(first.x);
-    res.sam.weight = first.y;
+    res.numberOfWeights = int(first.x);
+    res.W = first.y;
+    res.sumWeights = first.z;
+    res.sam.pdf = first.a;
+    res.sam.weight = second.x;
 
-    res.numberOfWeights = int(second.x);
-    res.W = second.y;
-    res.sumWeights = second.z;
-    res.sam.pdf = second.a;
+    /*
+
+
+                                                                                    struct LightSampleRec
+                                                                                    {
+                                                                                        vec3 normal;
+                                                                                        vec3 emission;
+                                                                                        vec3 direction;
+                                                                                        float dist;
+                                                                                        float pdf;
+                                                                                    };
+                                                                                        */
+
+    #ifdef RESTIR_SAMPLE_INDEX_POSITION
+    res.sam.index = int(second.y);
+    res.sam.position = third.xyz;
+    #elif RESTIR_SAMPLE_DIRECTION
+    res.sam.direction = second.yza;
+    #else
+    res.sam.index = int(second.y);
+    #endif
 
     // Old
     //res.picked.normal = first.xyz;
@@ -58,6 +86,18 @@ float CalculateW(Reservoir res) {
 //    //}
 //    return r;
 //}
+
+float CalculatePHat(vec3 radiance) {
+    #if defined(PHAT_LUMINANCE)
+    return Luminance(radiance);
+    #elif defined(PHAT_MAX)
+    return max(radiance.z, max(radiance.x, radiance.y));
+    #elif defined(PHAT_CONST)
+    return 0.01;
+    #else
+    return (radiance.x + radiance.y + radiance.z) / 3;
+    #endif
+}
 
 Reservoir CombineReservoirs(Reservoir main, Reservoir new)
 {

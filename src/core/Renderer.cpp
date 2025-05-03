@@ -439,11 +439,24 @@ namespace GLSLPT
         std::string pathtraceDefines = "";
         std::string tonemapDefines = "";
 
+        switch (phatOption) {
+        case PHAT_LUMINANCE:
+            pathtraceDefines += "#define PHAT_LUMINANCE\n";
+        case PHAT_MAX:
+            pathtraceDefines += "#define PHAT_MAX\n";
+        case PHAT_CONST:
+            pathtraceDefines += "#define PHAT_CONST\n";
+        default:
+        break;
+        }
+
         if (scene->renderOptions.enableEnvMap && scene->envMap != nullptr)
             pathtraceDefines += "#define OPT_ENVMAP\n";
 
         if (!scene->lights.empty())
             pathtraceDefines += "#define OPT_LIGHTS\n";
+
+        // RESTIR_SAMPLE_DIRECTION
 
         if (scene->renderOptions.enableRR)
         {
