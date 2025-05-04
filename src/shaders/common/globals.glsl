@@ -163,6 +163,7 @@ struct ReservoirSample {
     int index; // could potentially help this by doing cdf for light sampling
     #endif
     // Could storing just the index mess up big W? won't the new radiance be off?
+    //I think we deffinitely need radiance?
     float pdf;
     float weight;
 };

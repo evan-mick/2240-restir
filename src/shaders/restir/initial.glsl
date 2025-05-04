@@ -79,12 +79,20 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     // NO MIS RN, this is not accurate to their code, too bad!
     vec3 brdf = DisneySample(state, -ray.direction, state.ffnormal, lightSample.direction, scatterSample.pdf);
 
-    //if (scatterSample.pdf > 0.0) {
-    vec3 Ld = (brdf / lightSample.pdf) * lightSample.emission;
+    //this should only have geometry term and no pdf division
+    //WARNING something wrong is happening
+    //This should not be divided by area
 
-    //ret.radiance = Ld; //lightSample.pdf;
-    //}
-    //ret.direction = lightSample.direction;
+    float cosLi = max(dot(lightSample.normal, -lightSample.direction), 0.0);
+    float cosLo = max(dot(state.ffnormal, lightSample.direction), 0.0);
+    float G = cosLi * cosLo / (lightSample.dist * lightSample.dist);
+    //vec3 unshadowed = brdf * lightSample.emission * G;
+    vec3 Ld = (brdf) * lightSample.emission * G;
+
+    if(TexCoords.x < 0.5){
+        Ld.xyz *= lightSample.pdf;
+    }
+
     ret.index = index;
     ret.pdf = lightSample.pdf;
 
@@ -93,8 +101,11 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     #endif
 
     float pHat = CalculatePHat(Ld);
-    ret.weight = (pHat / lightSample.pdf) / 20; // lightSample.pdf;
+    ret.weight = (pHat / lightSample.pdf);
 
+    //for efficiency we should move this outside of the loop and only do it 
+    //for the surviving candidate
+    //would require storing wi :(
     Ray shadowRay = Ray(scatterPos, lightSample.direction);
     bool inShadow = AnyHit(shadowRay, lightSample.dist - EPS);
 

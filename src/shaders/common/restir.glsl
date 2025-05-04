@@ -62,7 +62,7 @@ Reservoir UpdateReservoir(Reservoir r, ReservoirSample sam, float weight) {
 //
 float CalculateW(Reservoir res) {
     //return (1.0 / (res.sam.radiance)) * (res.sumWeights / float(res.numberOfWeights));
-    return (float(res.sumWeights) / float(res.numberOfWeights)) / (res.sam.weight * float(res.sam.pdf));
+    return ((res.sumWeights) / float(res.numberOfWeights)) / (res.sam.weight * float(res.sam.pdf));
 }
 //Reservoir UpdateReservoir(Reservoir r, LightSampleRec s)
 //{
@@ -82,7 +82,7 @@ float CalculatePHat(vec3 radiance) {
     #elif defined(PHAT_CONST)
     return 0.01;
     #else
-    return (radiance.x + radiance.y + radiance.z) / 3;
+    return length(radiance);
     #endif
 }
 
