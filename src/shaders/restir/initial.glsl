@@ -96,8 +96,9 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
 
     ret.index = index;
     ret.pdf = lightSample.pdf;
-    ret.camDist = lightSample.dist;
-
+    ret.camDist = length(state.fhp - position);
+    ret.radiance = Ld;
+    ret.normal = state.normal;
     ret.fullDirection = lightSample.direction * lightSample.dist;
 
     float pHat = CalculatePHat(Ld);
