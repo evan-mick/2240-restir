@@ -74,6 +74,11 @@ Reservoir UpdateReservoir(Reservoir r, ReservoirSample sam, float weight) {
     }
     return r;
 }
+
+mat3 GetCameraInverseRotation() {
+    return transpose(mat3(prevCamera.right, prevCamera.up, prevCamera.forward)); // orthonormal matrix inverse is transpose, thx gpt
+}
+
 //
 float CalculateW(Reservoir res) {
     //return (1.0 / (res.sam.radiance)) * (res.sumWeights / float(res.numberOfWeights));
