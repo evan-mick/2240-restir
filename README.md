@@ -56,3 +56,34 @@ Evan -> Extensions start, getting stuff on better computer
 Trey -> Intel scenes
 
 Will meet saturday at 12, work for a while. Move on to temporal start. 
+
+
+Try different PDFs for extension?
+
+
+Need list of stuff we need for spatial and temporal
+
+Randomize spatial sampling
+
+Storing distance and normal for spatial
+discard if too far
+
+
+Temporal
+previous inverse rotation
+previous position
+previous view/forward
+
+
+camera should be updated to have previous stuff
+put uniforms for previous stuff in
+calculate inverse rotation 
+pass in inverse rotation
+
+copy over code for temporal
+
+
+For our sample
+- emission
+- direction (full)
+- no more pdf (?)

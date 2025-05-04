@@ -175,6 +175,12 @@ namespace GLSLPT
 
     void Camera::UpdateCamera()
     {
+
+        prevPosition = position;
+        prevUp = up;
+        prevRight = right;
+        prevForward = forward;
+
         Vec3 forward_temp;
         forward_temp.x = cos(Math::Radians(yaw)) * cos(Math::Radians(pitch));
         forward_temp.y = sin(Math::Radians(pitch));

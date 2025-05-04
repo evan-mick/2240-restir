@@ -47,7 +47,7 @@ uniform sampler2D envMapCDFTex;
 uniform sampler2D reservoirs0;
 uniform sampler2D reservoirs1;
 uniform sampler2D reservoirs2;
-//uniform sampler2D reservoirs3;
+uniform sampler2D reservoirs3;
 
 uniform vec2 envMapRes;
 uniform float envMapTotalSum;

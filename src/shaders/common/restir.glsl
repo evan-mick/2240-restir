@@ -1,17 +1,33 @@
 
+
+/*struct ReservoirSample {
+    int index;
+    vec3 fullDirection;
+    vec3 normal;
+    vec3 radiance;
+    float camDist;
+
+    // Could storing just the index mess up big W? won't the new radiance be off?
+    //I think we deffinitely need radiance?
+    float pdf;
+    float weight;
+};
+
+struct Reservoir {
+    ReservoirSample sam;
+    //float pdf;
+    float sumWeights;
+    int numberOfWeights;
+    float W;
+
+    // big W (weight offset) = 1/radiance * (sumWeights / numberOfWeights)
+};*/
+
 void SaveReservoir(Reservoir res) {
     reservoirOut0 = vec4(float(res.numberOfWeights), res.W, res.sumWeights, res.sam.pdf); // res.sam.direction.yz,
-    reservoirOut1.x = res.sam.weight;
-    #ifdef RESTIR_SAMPLE_INDEX_POSITION
-    reservoirOut1.y = float(res.sam.index); //vec4(res.sam.radiance, res.sam.direction.x);
-    reservoirOut2 = vec4(res.sam.fullDirection, 0); // Position here
-    #elif RESTIR_SAMPLE_DIRECTION
-    reservoirOut1 = vec4(res.sam.weight, res.sam.direction); //vec4(res.sam.radiance, res.sam.direction.x);
-    reservoirOut2 = vec4(res.sam.fullDirection, 0); // Position here
-    #else // By default, use index based sampling
-    reservoirOut1.y = float(res.sam.index); //vec4(float(res.sam.index), res.sam.weight, 0, 0); //vec4(res.sam.radiance, res.sam.direction.x);
-    reservoirOut2 = vec4(0, 0, 0, 0);
-    #endif
+    reservoirOut1 = vec4(res.sam.weight, res.sam.normal);
+    reservoirOut2 = vec4(res.sam.camDist, res.sam.fullDirection);
+    reservoirOut3 = vec4(float(res.sam.index), res.sam.radiance);
 }
 
 Reservoir GetReservoirFromPosition(ivec2 pos) {
@@ -20,6 +36,7 @@ Reservoir GetReservoirFromPosition(ivec2 pos) {
     vec4 first = texelFetch(reservoirs0, pos, 0);
     vec4 second = texelFetch(reservoirs1, pos, 0);
     vec4 third = texelFetch(reservoirs2, pos, 0);
+    vec4 fourth = texelFetch(reservoirs3, pos, 0);
 
     //res.sam.radiance = first.xyz;
     //res.sam.direction = vec3(first.a, second.xy);
@@ -27,18 +44,16 @@ Reservoir GetReservoirFromPosition(ivec2 pos) {
     res.numberOfWeights = int(first.x);
     res.W = first.y;
     res.sumWeights = first.z;
-    res.sam.pdf = first.a;
-    res.sam.weight = second.x;
-    #ifdef RESTIR_SAMPLE_INDEX_POSITION
-    res.sam.index = int(second.y);
-    res.sam.fullDirection = third.xyz;
-    #elif RESTIR_SAMPLE_DIRECTION
-    res.sam.index = int(second.y);
-    res.sam.fullDirection = third.xyz;
-    #else
-    res.sam.index = int(second.y);
-    #endif
+    res.sam.pdf = first.w;
 
+    res.sam.weight = second.x;
+    res.sam.normal = second.yzw;
+
+    res.sam.camDist = (third.x);
+    res.sam.fullDirection = third.yzw;
+
+    res.sam.index = int(fourth.x);
+    res.sam.radiance = fourth.yzw;
     // Old
     //res.picked.normal = first.xyz;
     //res.picked.emission = vec3(first.a, second.x, second.y);
@@ -90,7 +105,7 @@ Reservoir CombineReservoirs(Reservoir main, Reservoir new)
 {
     UpdateReservoir(main, new.sam, float(new.W) * float(new.numberOfWeights) * (float(new.sam.weight) * new.sam.pdf));
     main.numberOfWeights += new.numberOfWeights;
-    main.sumWeights += new.sumWeights;
+    //main.sumWeights += new.sumWeights;
     main.W = CalculateW(main);
     return main;
 }

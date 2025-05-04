@@ -28,6 +28,7 @@ layout(location = 0) out vec4 color;
 layout(location = 1) out vec4 reservoirOut0;
 layout(location = 2) out vec4 reservoirOut1;
 layout(location = 3) out vec4 reservoirOut2;
+layout(location = 4) out vec4 reservoirOut3;
 
 in vec2 TexCoords;
 

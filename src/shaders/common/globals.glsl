@@ -153,15 +153,12 @@ struct LightSampleRec
 //};
 
 struct ReservoirSample {
-    #ifdef RESTIR_SAMPLE_INDEX_POSITION
     int index;
     vec3 fullDirection;
+    vec3 normal;
+    vec3 radiance;
+    float camDist;
 
-    #elif RESTIR_SAMPLE_DIRECTION
-    vec3 fullDirection;
-    #else // By default, use index based sampling
-    int index; // could potentially help this by doing cdf for light sampling
-    #endif
     // Could storing just the index mess up big W? won't the new radiance be off?
     //I think we deffinitely need radiance?
     float pdf;
@@ -179,6 +176,7 @@ struct Reservoir {
 };
 
 uniform Camera camera;
+uniform Camera prevCamera;
 
 //RNG from code by Moroz Mykhailo (https://www.shadertoy.com/view/wltcRS)
 

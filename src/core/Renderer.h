@@ -164,7 +164,7 @@ namespace GLSLPT
         GLuint accumTexture;
         GLuint tileOutputTexture[2];
 
-        static constexpr int reservoirTextureNum = 6; // 2 * 3, 2 for temporal (buffer swapping), 3 for number of textures (bc 12 floats needed per pixel, and only up to 4 floats can be stored per texture)  
+        static constexpr int reservoirTextureNum = 8; // 2 * 3, 2 for temporal (buffer swapping), 3 for number of textures (bc 12 floats needed per pixel, and only up to 4 floats can be stored per texture)  
         GLuint reservoirTextures[reservoirTextureNum];  
         GLuint denoisedTexture;
 

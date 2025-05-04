@@ -4,6 +4,7 @@ layout(location = 0) out vec4 color;
 layout(location = 1) out vec4 reservoirOut0;
 layout(location = 2) out vec4 reservoirOut1;
 layout(location = 3) out vec4 reservoirOut2;
+layout(location = 4) out vec4 reservoirOut3;
 
 in vec2 TexCoords;
 
@@ -89,21 +90,20 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     //vec3 unshadowed = brdf * lightSample.emission * G;
     vec3 Ld = (brdf) * lightSample.emission * G;
 
-    if(TexCoords.x < 0.5){
-        Ld.xyz *= lightSample.pdf;
-    }
+    //if(TexCoords.x < 0.5){
+    //    Ld.xyz *= lightSample.pdf;
+    //}
 
     ret.index = index;
     ret.pdf = lightSample.pdf;
+    ret.camDist = lightSample.dist;
 
-    #ifdef RESTIR_SAMPLE_INDEX_POSITION
-    ret.fullDirection = lightSample.direction * lightSample.dist * 1.1;
-    #endif
+    ret.fullDirection = lightSample.direction * lightSample.dist;
 
     float pHat = CalculatePHat(Ld);
     ret.weight = (pHat / lightSample.pdf);
 
-    //for efficiency we should move this outside of the loop and only do it 
+    //for efficiency we should move this outside of the loop and only do it
     //for the surviving candidate
     //would require storing wi :(
     Ray shadowRay = Ray(scatterPos, lightSample.direction);

@@ -320,8 +320,8 @@ namespace GLSLPT
         // Create FBOs for path trace shader 
         glGenFramebuffers(1, &pathTraceFBO);
         glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);
-        GLenum drawBuffers[4] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
-        glDrawBuffers(4, drawBuffers);
+        GLenum drawBuffers[5] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4 };
+        glDrawBuffers(5, drawBuffers);
 
         // Create Texture for FBO
         glGenTextures(1, &pathTraceTexture);
@@ -602,11 +602,11 @@ namespace GLSLPT
             // can simply put another texture for the resovoirs there and be done
             //
 
-            GLenum drawBuffers[4] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
+            GLenum drawBuffers[5] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4 };
 
             glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);
             glViewport(0, 0, renderSize.x, renderSize.y);
-            glDrawBuffers(4, drawBuffers);
+            glDrawBuffers(5, drawBuffers);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             SetReservoirFramebufferAttachments(true);
@@ -625,7 +625,7 @@ namespace GLSLPT
 
             glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);
             glViewport(0, 0, renderSize.x, renderSize.y);
-            glDrawBuffers(4, drawBuffers);
+            glDrawBuffers(5, drawBuffers);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             SetReservoirFramebufferAttachments(false);
@@ -648,7 +648,7 @@ namespace GLSLPT
             glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);
             glViewport(0, 0, renderSize.x, renderSize.y);
             //glViewport(0, 0, tileWidth, tileHeight);
-            glDrawBuffers(4, drawBuffers);
+            glDrawBuffers(5, drawBuffers);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             SetReservoirFramebufferAttachments(true);
@@ -696,6 +696,18 @@ namespace GLSLPT
         glUniform1f(glGetUniformLocation(shaderObject, "camera.fov"), scene->camera->fov);
         glUniform1f(glGetUniformLocation(shaderObject, "camera.focalDist"), scene->camera->focalDist);
         glUniform1f(glGetUniformLocation(shaderObject, "camera.aperture"), scene->camera->aperture);
+
+
+
+        glUniform3f(glGetUniformLocation(shaderObject, "prevCamera.position"), scene->camera->prevPosition.x, scene->camera->prevPosition.y, scene->camera->prevPosition.z);
+        glUniform3f(glGetUniformLocation(shaderObject, "prevCamera.right"), scene->camera->prevRight.x, scene->camera->prevRight.y, scene->camera->prevRight.z);
+        glUniform3f(glGetUniformLocation(shaderObject, "prevCamera.up"), scene->camera->prevUp.x, scene->camera->prevUp.y, scene->camera->prevUp.z);
+        glUniform3f(glGetUniformLocation(shaderObject, "prevCamera.forward"), scene->camera->prevForward.x, scene->camera->prevForward.y, scene->camera->prevForward.z);
+        glUniform1f(glGetUniformLocation(shaderObject, "prevCamera.fov"), scene->camera->fov);
+        glUniform1f(glGetUniformLocation(shaderObject, "prevCamera.focalDist"), scene->camera->focalDist);
+        glUniform1f(glGetUniformLocation(shaderObject, "prevCamera.aperture"), scene->camera->aperture);
+
+
         glUniform1i(glGetUniformLocation(shaderObject, "enableEnvMap"), scene->envMap == nullptr ? false : scene->renderOptions.enableEnvMap);
         glUniform1f(glGetUniformLocation(shaderObject, "envMapIntensity"), scene->renderOptions.envMapIntensity);
         glUniform1f(glGetUniformLocation(shaderObject, "envMapRot"), scene->renderOptions.envMapRot / 360.0f);
@@ -733,6 +745,7 @@ namespace GLSLPT
         glUniform1i(glGetUniformLocation(shaderObject, "reservoirs0"), 11);
         glUniform1i(glGetUniformLocation(shaderObject, "reservoirs1"), 12);
         glUniform1i(glGetUniformLocation(shaderObject, "reservoirs2"), 13);
+        glUniform1i(glGetUniformLocation(shaderObject, "reservoirs3"), 14);
         //glUniform1i(glGetUniformLocation(shaderObject, "reservoirs3"), 14);
     }
 
@@ -741,15 +754,18 @@ namespace GLSLPT
         int buff = inv ? (1 - currentBuffer) : currentBuffer;
 
         glActiveTexture(GL_TEXTURE11);
-        glBindTexture(GL_TEXTURE_2D, reservoirTextures[(buff*3) + 0]);
+        glBindTexture(GL_TEXTURE_2D, reservoirTextures[(buff*4) + 0]);
         glActiveTexture(GL_TEXTURE12);
-        glBindTexture(GL_TEXTURE_2D, reservoirTextures[(buff*3) + 1]);
+        glBindTexture(GL_TEXTURE_2D, reservoirTextures[(buff*4) + 1]);
         glActiveTexture(GL_TEXTURE13);
-        glBindTexture(GL_TEXTURE_2D, reservoirTextures[(buff*3) + 2]);
+        glBindTexture(GL_TEXTURE_2D, reservoirTextures[(buff*4) + 2]);
+        glActiveTexture(GL_TEXTURE14);
+        glBindTexture(GL_TEXTURE_2D, reservoirTextures[(buff*4) + 3]);
 
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[(1 - buff)*3 + 0], 0);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, reservoirTextures[(1 - buff)*3 + 1], 0);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, reservoirTextures[(1 - buff)*3 + 2], 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, reservoirTextures[(1 - buff)*4 + 0], 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, reservoirTextures[(1 - buff)*4 + 1], 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, reservoirTextures[(1 - buff)*4 + 2], 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT4, GL_TEXTURE_2D, reservoirTextures[(1 - buff)*4 + 3], 0);
         //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT4, GL_TEXTURE_2D, reservoirTextures[(1 - currentBuffer)*3 + 3], 0);
 
 

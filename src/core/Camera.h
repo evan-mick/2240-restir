@@ -43,6 +43,11 @@ namespace GLSLPT
         void ComputeViewProjectionMatrix(float* view, float* projection, float ratio);
         void SetFov(float val);
 
+        Vec3 prevPosition;
+        Vec3 prevUp;
+        Vec3 prevRight;
+        Vec3 prevForward;
+
         Vec3 position;
         Vec3 up;
         Vec3 right;
