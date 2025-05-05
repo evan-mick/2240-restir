@@ -141,8 +141,8 @@ void main(void)
     cur = CombineReservoirs(cur, prevRev);
 
     SaveReservoir(cur);
-    reservoirOut0.z = cur.sam.weight; //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
-    reservoirOut0.a = reservoirOut0.z / cur.sumWeights;
+    //reservoirOut0.z = cur.sam.weight; //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
+    //reservoirOut0.a = reservoirOut0.z / cur.sumWeights;
     //reservoirOut1 = vec4(1.0, 1.0, 1.0, 1.0);
     //reservoirOut2 = vec4(1.0, 1.0, 1.0, 1.0);
     //color = vec4(1.0);
