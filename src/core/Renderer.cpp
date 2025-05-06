@@ -29,7 +29,7 @@
 #include "ShaderIncludes.h"
 #include "Scene.h"
 #include "OpenImageDenoise/oidn.hpp"
-#include <experimental/filesystem>
+#include <filesystem>
 
 namespace GLSLPT
 {
