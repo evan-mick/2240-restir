@@ -25,7 +25,7 @@ struct Reservoir {
 
 void SaveReservoir(Reservoir res) {
     reservoirOut0 = vec4(float(res.numberOfWeights), res.W, res.sumWeights, res.sam.pdf); // res.sam.direction.yz,
-    reservoirOut1 = vec4(res.sam.weight, res.sam.normal);
+    reservoirOut1 = vec4(res.sam.weight, res.sam.hitPosition);
     reservoirOut2 = vec4(res.sam.camDist, res.sam.fullDirection);
     reservoirOut3 = vec4(float(res.sam.index), res.sam.radiance);
 }
@@ -47,7 +47,7 @@ Reservoir GetReservoirFromPosition(ivec2 pos) {
     res.sam.pdf = first.w;
 
     res.sam.weight = second.x;
-    res.sam.normal = second.yzw;
+    res.sam.hitPosition = second.yzw;
 
     res.sam.camDist = (third.x);
     res.sam.fullDirection = third.yzw;

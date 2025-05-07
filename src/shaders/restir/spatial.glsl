@@ -24,7 +24,7 @@ const int num_iters = 4;
 const int num_neighs = 4;
 const float valid_dist_thresh = 0.1; //10%
 
-ivec2 get_offset(){
+ivec2 get_offset() {
     float a = rand();
     float b = rand();
     float x_disp = sqrt(b) * cos(TWO_PI * a);
@@ -32,40 +32,35 @@ ivec2 get_offset(){
     x_disp *= radius;
     y_disp *= radius;
     return ivec2(int(x_disp), int(y_disp));
-
 }
 
-bool in_bounds(ivec2 neigh){
-    return (neigh.x >= 0 && neigh.x < resolution.x &&neigh.y >= 0 && neigh.y < resolution.y);
+bool in_bounds(ivec2 neigh) {
+    return (neigh.x >= 0 && neigh.x < resolution.x && neigh.y >= 0 && neigh.y < resolution.y);
 }
 
-bool mergeable(Reservoir cur, Reservoir neighbor){
-    float dot = dot(cur.sam.normal, neighbor.sam.normal);
+bool mergeable(Reservoir cur, Reservoir neighbor) {
+    float dot = dot(cur.sam.hitPosition, neighbor.sam.hitPosition);
     bool sim_norms = dot > 0.9;
     float dist_range = cur.sam.camDist * valid_dist_thresh;
     float high = cur.sam.camDist + dist_range;
     float low = cur.sam.camDist - dist_range;
     bool sim_dists = neighbor.sam.camDist < high && neighbor.sam.camDist > low;
-    
 
-    return sim_norms && sim_dists;
-
-
+    return sim_dists; //sim_norms && sim_dists;
 }
-
 
 void main(void)
 {
     ivec2 cur_pix = ivec2(gl_FragCoord.xy);
     Reservoir cur = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
 
-    for (int i = 0; i < num_iters; i++){
-        for (int n = 0; n < num_neighs; n++){
+    for (int i = 0; i < num_iters; i++) {
+        for (int n = 0; n < num_neighs; n++) {
             ivec2 offset = get_offset();
             ivec2 neigh = cur_pix + offset;
-            if(in_bounds(neigh)){
+            if (in_bounds(neigh)) {
                 Reservoir neighbor = GetReservoirFromPosition(neigh);
-                if(mergeable(cur, neighbor)){
+                if (mergeable(cur, neighbor)) {
                     cur = CombineReservoirs(cur, neighbor);
                 }
             }

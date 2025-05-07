@@ -98,7 +98,7 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     ret.pdf = lightSample.pdf;
     ret.camDist = length(state.fhp - position);
     ret.radiance = Ld;
-    ret.normal = state.normal;
+    ret.hitPosition = state.fhp;
     ret.fullDirection = lightSample.direction * lightSample.dist; // THIS DOESN"T MAKE SENSE
 
     float pHat = CalculatePHat(Ld);
@@ -134,7 +134,7 @@ Reservoir GetTemporalNeighbor(Reservoir cur) {
     Reservoir res;
     res.sam.weight = 0;
 
-    vec2 coord = getRasterCoord(camera.position + cur.sam.fullDirection, prevCamera.position);
+    vec2 coord = getRasterCoord(cur.sam.hitPosition, prevCamera.position);
 
     if (coord.x >= 0 && coord.y >= 0 && coord.x <= resolution.x && coord.y <= resolution.y) {
         return GetReservoirFromPosition(ivec2(coord));

@@ -155,7 +155,7 @@ struct LightSampleRec
 struct ReservoirSample {
     int index;
     vec3 fullDirection;
-    vec3 normal;
+    vec3 hitPosition;
     vec3 radiance;
     float camDist;
 
