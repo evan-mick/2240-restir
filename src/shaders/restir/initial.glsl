@@ -137,8 +137,8 @@ void main(void)
     cur.W = CalculateW(cur); // -nan right now
 
     // Temporal reuse
-    Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
-    cur = CombineReservoirs(cur, prevRev);
+    // Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
+    // cur = CombineReservoirs(cur, prevRev);
 
     SaveReservoir(cur);
     //reservoirOut0.z = cur.sam.weight; //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
