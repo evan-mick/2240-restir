@@ -222,8 +222,8 @@ void SampleRectLight(in Light light, in vec3 scatterPos, inout LightSampleRec li
     float distSq = lightSample.dist * lightSample.dist;
     lightSample.direction /= lightSample.dist;
     lightSample.normal = normalize(cross(light.u, light.v));
-    lightSample.emission = light.emission;
-    lightSample.pdf = distSq / ((float(numOfLights))*(light.area * abs(dot(lightSample.normal, lightSample.direction))));
+    lightSample.emission = (light.emission * abs(dot(lightSample.normal, lightSample.direction))) / distSq;
+    lightSample.pdf = 1 / ((float(numOfLights))*(light.area));
 }
 
 void SampleDistantLight(in Light light, in vec3 scatterPos, inout LightSampleRec lightSample)

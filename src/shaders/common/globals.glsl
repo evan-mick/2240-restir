@@ -204,6 +204,10 @@ void pcg4d(inout uvec4 v)
     v.w += v.y * v.z;
 }
 
+void update_seed(int i){
+    seed += uvec4(1664525u * uint(i), 1013904223u * uint(i), 374761393u * uint(i), 668265263u * uint(i));
+}
+
 float rand()
 {
     pcg4d(seed);
