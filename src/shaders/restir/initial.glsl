@@ -20,9 +20,10 @@ in vec2 TexCoords;
 #include /../common/restir.glsl
 #include /../common/pathtrace.glsl
 
-ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
+ReservoirSample GetNewSampleAtPixel(ivec2 pos, int i) {
     // This code for getting a ray is just stolen from tile.glsl
-    //    InitRNG(pos, frameNum);
+    InitRNG(pos, frameNum);
+    update_seed(i);
 
     //vec2 coordsTile = (TexCoords / 2.0) + 1.0; //mix(tileOffset, tileOffset + invNumTiles, TexCoords);
 
@@ -87,7 +88,7 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     float cosLi = max(dot(lightSample.normal, -lightSample.direction), 0.0);
     float cosLo = max(dot(state.ffnormal, lightSample.direction), 0.0);
     float G = cosLi * cosLo / (lightSample.dist * lightSample.dist);
-    //vec3 unshadowed = brdf * lightSample.emission * G;
+    //vec3 unshadowed = brdf * lightSample.emission;
     vec3 Ld = (brdf) * lightSample.emission * G;
 
     //if(TexCoords.x < 0.5){
@@ -145,7 +146,7 @@ Reservoir GetTemporalNeighbor(Reservoir cur) {
 
 void main(void)
 {
-    InitRNG(gl_FragCoord.xy, frameNum);
+    //InitRNG(gl_FragCoord.xy, frameNum);
     // TODO: Generate sample function
     // Should shoot ray, generate light sample from place where hit, and return that
     // A simpler pathtrace function
@@ -158,14 +159,12 @@ void main(void)
     ReservoirSample sam;
     for (int i = 0; i < 32; i++) {
         //cur.sam = sam;
-        sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy));
+        sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy), i);
         cur = UpdateReservoir(cur, sam, sam.weight); //Luminance(sam.radiance) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
     }
     cur.W = CalculateW(cur); // -nan right now
 
-    // Temporal reuse
-    Reservoir prevRev = GetTemporalNeighbor(cur); //GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
-    cur = CombineReservoirs(cur, prevRev);
+    
 
     SaveReservoir(cur);
     //reservoirOut0.z = cur.sam.weight; //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);

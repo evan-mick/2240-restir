@@ -59,7 +59,6 @@ void main(void)
     ivec2 cur_pix = ivec2(gl_FragCoord.xy);
     Reservoir cur = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
 
-    if(TexCoords.x < 0.5){
         for (int i = 0; i < num_iters; i++){
             for (int n = 0; n < num_neighs; n++){
                 ivec2 offset = get_offset();
@@ -72,15 +71,7 @@ void main(void)
                 }
             }
         }
-    }
-
-    // if ( < 0.5) {
-    //     for (int x = -sampleRange; x < sampleRange; x++) {
-    //         for (int y = -sampleRange; y < sampleRange; y++) {
-    //             cur = CombineReservoirs(cur, GetReservoirFromPosition(ivec2(gl_FragCoord.xy) + ivec2(x, y)));
-    //         }
-    //     }
-    // }
+    
 
     SaveReservoir(cur);
 }
