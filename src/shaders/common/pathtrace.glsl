@@ -515,5 +515,5 @@ vec4 PathTraceFull(Ray r, bool resample, out LightSampleRec directLightSample)
 
 vec4 PathTrace(Ray r) {
     LightSampleRec lightSample;
-    return PathTraceFull(r, true, lightSample);
+    return PathTraceFull(r, false, lightSample);
 }
