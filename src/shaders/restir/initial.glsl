@@ -135,8 +135,9 @@ Reservoir GetTemporalNeighbor(Reservoir cur) {
     res.sam.weight = 0;
 
     vec2 coord = getRasterCoord(cur.sam.hitPosition, prevCamera.position);
+    //return GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
 
-    if (coord.x >= 0 && coord.y >= 0 && coord.x <= resolution.x && coord.y <= resolution.y) {
+    if (coord.x >= 0 && coord.y >= 0 && coord.x < resolution.x && coord.y < resolution.y) {
         return GetReservoirFromPosition(ivec2(coord));
     }
 
@@ -150,8 +151,8 @@ void main(void)
     // Should shoot ray, generate light sample from place where hit, and return that
     // A simpler pathtrace function
     // Can use the same FBO as tile?
-    //Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
-    Reservoir cur;
+    Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
+    Reservoir cur = prevRev;
     cur.sumWeights = 0;
     cur.numberOfWeights = 0;
 
@@ -184,7 +185,7 @@ void main(void)
     bool hit = ClosestHit(ray, state, lightSample);
 
     ReservoirSample sam;
-    for (int i = 0; i < 128; i++) {
+    for (int i = 0; i < 1; i++) {
         int index = int(rand() * float(numOfLights)) * 5;
 
         //// Fetch light Data
@@ -240,6 +241,9 @@ void main(void)
         cur = UpdateReservoir(cur, ret, ret.weight); //Luminance(sam.radiance) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
     }
     cur.W = CalculateW(cur); // -nan right now
+
+    if (frameNum > 5)
+        cur = CombineReservoirs(cur, GetTemporalNeighbor(cur));
 
     int index = cur.sam.index;
     vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;

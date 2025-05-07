@@ -611,17 +611,6 @@ namespace GLSLPT
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             SetReservoirFramebufferAttachments(true);
             quad->Draw(initialSampleShader);
-            
-            //std::cout << "post initial" << std::endl;
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3]);
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 0]);
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 1]);
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 2]);
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3]);
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 0]);
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 1]);
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 2]);
-            //std::cout << std::endl;
 
             glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);
             glViewport(0, 0, renderSize.x, renderSize.y);
@@ -631,17 +620,6 @@ namespace GLSLPT
             SetReservoirFramebufferAttachments(false);
             quad->Draw(spatialSampleShader);
 
-
-            //std::cout << "post spatial" << std::endl;
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3]);
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 0]);
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 1]);
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 0]);
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 1]);
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(currentBuffer)*3 + 2]);
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3]);
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 2]);
-            
             // Renders to pathTraceTexture while using previously accumulated samples from accumTexture
             // Rendering is done a tile per frame, so if a 500x500 image is rendered with a tileWidth and tileHeight of 250 then, all tiles (for a single sample) 
             // get rendered after 4 frames
@@ -655,9 +633,9 @@ namespace GLSLPT
             quad->Draw(pathTraceShader);
             //std::cout << std::endl;
             
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3]);
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 1]);
-            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*3 + 2]);
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*4]);
+            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*4 + 1]);
+            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*4 + 2]);
 
             // pathTraceTexture is copied to accumTexture and re-used as input for the first step.
             glBindFramebuffer(GL_FRAMEBUFFER, accumFBO);
@@ -685,7 +663,7 @@ namespace GLSLPT
         glBindTexture(GL_TEXTURE_2D, tex);
         glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, data);
         std::cout << "tex: " << tex << " coord: " << coord << " " << data[coord + 0] << " " << data[coord + 1] << " "<< data[coord + 2] << " "<< data[coord + 3] << " " << std::endl;;
-        delete data;
+        delete[] data;
     }
 
     void Renderer::SetSampleUniforms(GLuint shaderObject) {

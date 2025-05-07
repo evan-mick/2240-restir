@@ -108,7 +108,7 @@ float CalculatePHat(vec3 radiance) {
 
 Reservoir CombineReservoirs(Reservoir main, Reservoir new)
 {
-    UpdateReservoir(main, new.sam, float(new.W) * float(new.numberOfWeights) * (float(new.sam.weight) * new.sam.pdf));
+    main = UpdateReservoir(main, new.sam, float(new.W) * float(new.numberOfWeights) * (float(new.sam.weight) * new.sam.pdf));
     main.numberOfWeights += new.numberOfWeights;
     //main.sumWeights += new.sumWeights;
     main.W = CalculateW(main);
