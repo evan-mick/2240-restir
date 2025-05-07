@@ -99,7 +99,7 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     ret.camDist = length(state.fhp - position);
     ret.radiance = Ld;
     ret.normal = state.normal;
-    ret.fullDirection = lightSample.direction * lightSample.dist;
+    ret.fullDirection = lightSample.direction * lightSample.dist; // THIS DOESN"T MAKE SENSE
 
     float pHat = CalculatePHat(Ld);
     ret.weight = (pHat / lightSample.pdf);
@@ -114,6 +114,33 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
         ret.weight = 0;
 
     return ret;
+}
+
+vec2 getRasterCoord(vec3 pos, vec3 worldPos) {
+    vec3 dir = normalize(pos - worldPos);
+    float d = 1.f / dot(dir, camera.forward); // was view
+
+    mat3 rotationMatInv = GetCameraInverseRotation();
+    vec3 p = rotationMatInv * (dir * d);
+    float aspect = resolution.x / resolution.y;
+    float tanFovY = tan(radians(prevCamera.fov));
+
+    p /= vec3(vec2(aspect, 1.f) * tanFovY, 1.f);
+    vec2 ndc = -p.xy;
+    return resolution * (ndc * .5f + .5f);
+}
+
+Reservoir GetTemporalNeighbor(Reservoir cur) {
+    Reservoir res;
+    res.sam.weight = 0;
+
+    vec2 coord = getRasterCoord(camera.position + cur.sam.fullDirection, prevCamera.position);
+
+    if (coord.x >= 0 && coord.y >= 0 && coord.x <= resolution.x && coord.y <= resolution.y) {
+        return GetReservoirFromPosition(ivec2(coord));
+    }
+
+    return res;
 }
 
 void main(void)
@@ -137,7 +164,7 @@ void main(void)
     cur.W = CalculateW(cur); // -nan right now
 
     // Temporal reuse
-    Reservoir prevRev = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
+    Reservoir prevRev = GetTemporalNeighbor(cur); //GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
     cur = CombineReservoirs(cur, prevRev);
 
     SaveReservoir(cur);
