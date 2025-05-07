@@ -20,103 +20,6 @@ in vec2 TexCoords;
 #include /../common/restir.glsl
 #include /../common/pathtrace.glsl
 
-ReservoirSample GetNewSampleAtPixel(ivec2 pos, int i) {
-    // This code for getting a ray is just stolen from tile.glsl
-    InitRNG(pos, frameNum);
-    update_seed(i);
-
-    //vec2 coordsTile = (TexCoords / 2.0) + 1.0; //mix(tileOffset, tileOffset + invNumTiles, TexCoords);
-
-    float r1 = 2.0 * rand();
-    float r2 = 2.0 * rand();
-
-    vec2 jitter;
-    jitter.x = r1 < 1.0 ? sqrt(r1) - 1.0 : 1.0 - sqrt(2.0 - r1);
-    jitter.y = r2 < 1.0 ? sqrt(r2) - 1.0 : 1.0 - sqrt(2.0 - r2);
-
-    jitter /= (resolution * 0.5);
-    vec2 d = (TexCoords * 2.0 - 1.0) + jitter;
-    //vec2 d = TexCoords; //(coordsTile * 2.0 - 1.0) + jitter;
-
-    float scale = tan(camera.fov * 0.5);
-    d.y *= resolution.y / resolution.x * scale;
-    d.x *= scale;
-    vec3 rayDir = normalize(d.x * camera.right + d.y * camera.up + camera.forward);
-
-    vec3 focalPoint = camera.focalDist * rayDir;
-    float cam_r1 = rand() * TWO_PI;
-    float cam_r2 = rand() * camera.aperture;
-    vec3 randomAperturePos = (cos(cam_r1) * camera.right + sin(cam_r1) * camera.up) * sqrt(cam_r2);
-    vec3 finalRayDir = normalize(focalPoint - randomAperturePos);
-
-    Ray ray = Ray(camera.position + randomAperturePos, finalRayDir);
-
-    //vec4 pixelColor = PathTraceFull(ray, true, ret);
-    int index = int(rand() * float(numOfLights)) * 5;
-
-    //// Fetch light Data
-    vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
-    vec3 emission = texelFetch(lightsTex, ivec2(index + 1, 0), 0).xyz;
-    vec3 u = texelFetch(lightsTex, ivec2(index + 2, 0), 0).xyz; // u vector for rect
-    vec3 v = texelFetch(lightsTex, ivec2(index + 3, 0), 0).xyz; // v vector for rect
-    vec3 params = texelFetch(lightsTex, ivec2(index + 4, 0), 0).xyz;
-    float radius = params.x;
-    float area = params.y;
-    float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
-
-    Light light = Light(position, emission, u, v, radius, area, type);
-    State state;
-
-    ReservoirSample ret;
-
-    LightSampleRec lightSample;
-
-    ScatterSampleRec scatterSample;
-
-    bool hit = ClosestHit(ray, state, lightSample);
-    vec3 scatterPos = state.fhp + state.normal * EPS;
-    SampleOneLight(light, scatterPos, lightSample);
-
-    GetMaterial(state, ray);
-    // NO MIS RN, this is not accurate to their code, too bad!
-    vec3 brdf = DisneySample(state, -ray.direction, state.ffnormal, lightSample.direction, scatterSample.pdf);
-
-    //this should only have geometry term and no pdf division
-    //WARNING something wrong is happening
-    //This should not be divided by area
-
-    float cosLi = max(dot(lightSample.normal, -lightSample.direction), 0.0);
-    float cosLo = max(dot(state.ffnormal, lightSample.direction), 0.0);
-    float G = cosLi * cosLo / (lightSample.dist * lightSample.dist);
-    //vec3 unshadowed = brdf * lightSample.emission;
-    vec3 Ld = (brdf) * lightSample.emission * G;
-
-    //if(TexCoords.x < 0.5){
-    //    Ld.xyz *= lightSample.pdf;
-    //}
-
-    ret.index = index;
-    ret.pdf = lightSample.pdf;
-    ret.camDist = length(state.fhp - position);
-    ret.radiance = Ld;
-    ret.normal = state.normal;
-    ret.fullDirection = lightSample.direction * lightSample.dist; // THIS DOESN"T MAKE SENSE
-
-    float pHat = CalculatePHat(Ld);
-    ret.weight = (pHat / lightSample.pdf);
-
-    //for efficiency we should move this outside of the loop and only do it
-    //for the surviving candidate
-    //would require storing wi :(
-    Ray shadowRay = Ray(scatterPos, lightSample.direction);
-    bool inShadow = AnyHit(shadowRay, lightSample.dist - EPS);
-
-    if (inShadow)
-        ret.weight = 0;
-
-    return ret;
-}
-
 vec2 getRasterCoord(vec3 pos, vec3 worldPos) {
     vec3 dir = normalize(pos - worldPos);
     float d = 1.f / dot(dir, camera.forward); // was view
@@ -156,15 +59,111 @@ void main(void)
     cur.sumWeights = 0;
     cur.numberOfWeights = 0;
 
+     
+    InitRNG(gl_FragCoord.xy, frameNum);
+    float r1 = 2.0 * rand();
+    float r2 = 2.0 * rand();
+
+    vec2 jitter;
+    jitter.x = r1 < 1.0 ? sqrt(r1) - 1.0 : 1.0 - sqrt(2.0 - r1);
+    jitter.y = r2 < 1.0 ? sqrt(r2) - 1.0 : 1.0 - sqrt(2.0 - r2);
+
+    jitter /= (resolution * 0.5);
+    vec2 d = (TexCoords * 2.0 - 1.0) + jitter;
+    //vec2 d = TexCoords; //(coordsTile * 2.0 - 1.0) + jitter;
+
+    float scale = tan(camera.fov * 0.5);
+    d.y *= resolution.y / resolution.x * scale;
+    d.x *= scale;
+    vec3 rayDir = normalize(d.x * camera.right + d.y * camera.up + camera.forward);
+
+    vec3 focalPoint = camera.focalDist * rayDir;
+    float cam_r1 = rand() * TWO_PI;
+    float cam_r2 = rand() * camera.aperture;
+    vec3 randomAperturePos = (cos(cam_r1) * camera.right + sin(cam_r1) * camera.up) * sqrt(cam_r2);
+    vec3 finalRayDir = normalize(focalPoint - randomAperturePos);
+
+    Ray ray = Ray(camera.position + randomAperturePos, finalRayDir);
+    State state;
+    LightSampleRec lightSample;
+    bool hit = ClosestHit(ray, state, lightSample);
+    
+
     ReservoirSample sam;
-    for (int i = 0; i < 32; i++) {
-        //cur.sam = sam;
-        sam = GetNewSampleAtPixel(ivec2(gl_FragCoord.xy), i);
-        cur = UpdateReservoir(cur, sam, sam.weight); //Luminance(sam.radiance) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
+    for (int i = 0; i < 128; i++) {
+        int index = int(rand() * float(numOfLights)) * 5;
+
+        //// Fetch light Data
+        vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
+        vec3 emission = texelFetch(lightsTex, ivec2(index + 1, 0), 0).xyz;
+        vec3 u = texelFetch(lightsTex, ivec2(index + 2, 0), 0).xyz; // u vector for rect
+        vec3 v = texelFetch(lightsTex, ivec2(index + 3, 0), 0).xyz; // v vector for rect
+        vec3 params = texelFetch(lightsTex, ivec2(index + 4, 0), 0).xyz;
+        float radius = params.x;
+        float area = params.y;
+        float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
+
+        Light light = Light(position, emission, u, v, radius, area, type);
+
+        ReservoirSample ret;
+        ScatterSampleRec scatterSample;
+
+        vec3 scatterPos = state.fhp + state.normal * EPS;
+        SampleOneLight(light, scatterPos, lightSample);
+
+        GetMaterial(state, ray);
+        // NO MIS RN, this is not accurate to their code, too bad!
+        vec3 brdf = DisneySample(state, -ray.direction, state.ffnormal, lightSample.direction, scatterSample.pdf);
+
+        //this should only have geometry term and no pdf division
+        //WARNING something wrong is happening
+        //This should not be divided by area
+
+        float cosLi = max(dot(lightSample.normal, -lightSample.direction), 0.0);
+        float cosLo = max(dot(state.ffnormal, lightSample.direction), 0.0);
+        float G = cosLi * cosLo / (lightSample.dist * lightSample.dist);
+        //vec3 unshadowed = brdf * lightSample.emission;
+        vec3 Ld = (brdf) * lightSample.emission * G;
+
+        //if(TexCoords.x < 0.5){
+        //    Ld.xyz *= lightSample.pdf;
+        //}
+
+        ret.index = index;
+        ret.pdf = lightSample.pdf;
+        ret.camDist = length(state.fhp - position);
+        ret.radiance = Ld;
+        ret.normal = state.normal;
+        ret.fullDirection = lightSample.direction * lightSample.dist; // THIS DOESN"T MAKE SENSE
+
+        float pHat = CalculatePHat(Ld);
+        ret.weight = (pHat / lightSample.pdf);
+
+        //for efficiency we should move this outside of the loop and only do it
+        //for the surviving candidate
+        //would require storing wi :(
+
+        cur = UpdateReservoir(cur, ret, ret.weight); //Luminance(sam.radiance) / sam.pdf); // need to divide radiance by p(x_i), but might be fine if uniformly distributed and thus the same, important for multisampling tho
     }
     cur.W = CalculateW(cur); // -nan right now
 
-    
+    int index = cur.sam.index; 
+    vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
+    vec3 emission = texelFetch(lightsTex, ivec2(index + 1, 0), 0).xyz;
+    vec3 u = texelFetch(lightsTex, ivec2(index + 2, 0), 0).xyz; // u vector for rect
+    vec3 v = texelFetch(lightsTex, ivec2(index + 3, 0), 0).xyz; // v vector for rect
+    vec3 params = texelFetch(lightsTex, ivec2(index + 4, 0), 0).xyz;
+    float radius = params.x;
+    float area = params.y;
+    float type = params.z; // 0->Rect, 1->Sphere, 2->Distant
+
+    Light light = Light(position, emission, u, v, radius, area, type);
+    vec3 scatterPos = state.fhp + state.normal * EPS;
+    SampleOneLight(light, scatterPos, lightSample);
+    Ray shadowRay = Ray(scatterPos, lightSample.direction);
+    bool inShadow = AnyHit(shadowRay, lightSample.dist - EPS);
+    if (inShadow)
+        cur.W = 0;
 
     SaveReservoir(cur);
     //reservoirOut0.z = cur.sam.weight; //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
