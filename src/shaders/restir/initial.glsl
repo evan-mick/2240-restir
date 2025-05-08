@@ -242,8 +242,8 @@ void main(void)
     }
     cur.W = CalculateW(cur); // -nan right now
 
-    if (frameNum > 5)
-        cur = CombineReservoirs(cur, GetTemporalNeighbor(cur));
+    //if (frameNum > 5)
+    //    cur = CombineReservoirs(cur, GetTemporalNeighbor(cur));
 
     int index = cur.sam.index;
     vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
