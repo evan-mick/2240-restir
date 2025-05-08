@@ -20,7 +20,7 @@ in vec2 TexCoords;
 #include /../common/restir.glsl
 
 const int radius = 16;
-const int num_iters = 4;
+const int num_iters = 32;
 const int num_neighs = 4;
 const float valid_dist_thresh = 0.1; //10%
 

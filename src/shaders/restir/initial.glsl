@@ -135,7 +135,8 @@ Reservoir GetTemporalNeighbor(Reservoir cur) {
     res.sam.weight = 0;
 
     vec2 coord = getRasterCoord(cur.sam.hitPosition, prevCamera.position);
-    return GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
+    res = ResetReservoirCounters(GetReservoirFromPosition(ivec2(gl_FragCoord.xy)));
+    return res;
 
     if (coord.x >= 0 && coord.y >= 0 && coord.x < resolution.x && coord.y < resolution.y) {
         return GetReservoirFromPosition(ivec2(coord));

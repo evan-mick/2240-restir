@@ -23,6 +23,13 @@ struct Reservoir {
     // big W (weight offset) = 1/radiance * (sumWeights / numberOfWeights)
 };*/
 
+Reservoir ResetReservoirCounters(Reservoir res) {
+    res.sumWeights = res.sam.weight > 0.0 ? res.sam.weight : 0.0;
+    res.numberOfWeights = res.sam.weight > 0.0 ? 1 : 0;
+    res.W = res.sam.weight > 0.0 ? 1.0 : 0.0;
+    return res;
+}
+
 void SaveReservoir(Reservoir res) {
     reservoirOut0 = vec4(float(res.numberOfWeights), res.W, res.sumWeights, res.sam.pdf); // res.sam.direction.yz,
     reservoirOut1 = vec4(res.sam.weight, res.sam.hitPosition);
@@ -66,6 +73,10 @@ Reservoir GetReservoirFromPosition(ivec2 pos) {
 }
 
 Reservoir UpdateReservoir(Reservoir r, ReservoirSample sam, float weight) {
+    if (weight <= 0.000001) {
+        return r;
+    }
+
     r.sumWeights += weight;
     r.numberOfWeights += 1;
     float weightDiv = weight / r.sumWeights;
