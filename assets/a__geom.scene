@@ -1,0 +1,76 @@
+renderer
+{
+	resolution 800 800
+	maxdepth 2
+	tilewidth 200
+	tileheight 200
+	#envmap HDR/sunset.hdr
+	envmapintensity 2.0
+}
+
+camera
+{
+	position .0 .5 -1.75
+	lookat .0 .3 .0
+	fov 40
+}
+
+material ceiling_white
+{
+	color 0.725 0.71 0.68
+}
+
+material back_wall_white
+{
+	color 0.725 0.71 0.68
+}
+
+material floor_white
+{
+	color 0.725 0.71 0.68
+}
+
+material small_box_white
+{
+	color 0.725 0.71 0.68
+}
+
+material large_box_white
+{
+	color 0.725 0.71 0.68
+}
+
+material red
+{
+	color 0.63 0.065 0.05
+}
+
+material green
+{
+	color 0.14 0.45 0.091
+}
+
+mesh
+{
+	file cornell_box/cbox_floor.obj
+	material red
+	position .0 0 .0
+	scale 0.08 0.08 0.08
+}
+
+mesh
+{
+	file cornell_box/cbox_smallbox.obj
+	material small_box_white
+	position .0 .000 .0
+	scale 0.04 0.005 0.04
+}
+
+mesh
+{
+	file m_2240/armadilloo.obj
+	material small_box_white
+	position .0 .2 .0
+	scale 0.4 0.4 0.4
+}
+

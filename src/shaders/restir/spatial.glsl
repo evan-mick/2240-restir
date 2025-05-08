@@ -59,18 +59,18 @@ void main(void)
     ivec2 cur_pix = ivec2(gl_FragCoord.xy);
     Reservoir cur = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
 
-        for (int i = 0; i < num_iters; i++){
-            for (int n = 0; n < num_neighs; n++){
-                ivec2 offset = get_offset();
-                ivec2 neigh = cur_pix + offset;
-                if(in_bounds(neigh)){
-                    Reservoir neighbor = GetReservoirFromPosition(neigh);
-                    if(mergeable(cur, neighbor)){
-                        cur = CombineReservoirs(cur, neighbor);
-                    }
-                }
-            }
-        }
+    //     // for (int i = 0; i < num_iters; i++){
+    //     //     for (int n = 0; n < num_neighs; n++){
+    //     //         ivec2 offset = get_offset();
+    //     //         ivec2 neigh = cur_pix + offset;
+    //     //         if(in_bounds(neigh)){
+    //     //             Reservoir neighbor = GetReservoirFromPosition(neigh);
+    //     //             if(mergeable(cur, neighbor)){
+    //     //                 cur = CombineReservoirs(cur, neighbor);
+    //     //             }
+    //     //         }
+    //     //     }
+    //     // }
     
 
     SaveReservoir(cur);

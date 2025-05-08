@@ -140,6 +140,7 @@ def generate_light(point, normal, size=0.1, emission=(5, 5, 5)):
     v1_str = f"{v1[0]:.8f} {v1[1]:.8f} {v1[2]:.8f}"
     v2_str = f"{v2[0]:.8f} {v2[1]:.8f} {v2[2]:.8f}"
     pos_str = f"{center[0]:.8f} {center[1]:.8f} {center[2]:.8f}"
+    emission = [random.uniform(0, 30) for _ in range(3)]
     emission_str = f"{emission[0]} {emission[1]} {emission[2]}"
 
     light_block = f"""light
@@ -168,18 +169,18 @@ def write_scene_with_lights(original_lines, lights, out_path):
 
 if __name__ == "__main__":
     # Scene files
-    dome_pos = (0, 1, 0)
-    num_lights = 100
-    scene = "a_aa"
+    dome_pos = (0, 12, 0)
+    num_lights = 1000
+    scene = "a__geom"
     input_scene_path = f"assets/{scene}.scene"
-    base_output_name = f"assets/a__pla_{scene}"
+    base_output_name = f"assets/a__aaa_teststarry_night{scene}"
     output_scene_path = f"{base_output_name}_{num_lights}.scene"
    
     
     base_scene = parse_scene(input_scene_path)
 
-    points, normals = sample_plane(dome_pos, num_lights=num_lights)
-    normals = [offset_normal(n, jitter_degrees=15) for n in normals]
+    points, normals = sample_hemis(dome_pos, num_lights=num_lights, radius=9)
+    normals = [offset_normal(n, jitter_degrees=90) for n in normals]
 
     lights = []
     for p, n in zip(points, normals):
