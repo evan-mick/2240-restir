@@ -176,7 +176,7 @@ def write_scene_with_lights(original_lines, lights, out_path):
 
 if __name__ == "__main__":
     # Scene files
-    dome_pos = (0, -7, 0)
+    dome_pos = (0, -6, 0)
     num_lights = 1000
     scene = "a__geom"
     input_scene_path = f"assets/{scene}.scene"

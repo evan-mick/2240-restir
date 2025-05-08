@@ -55,14 +55,14 @@ mesh
 	file cornell_box/cbox_floor.obj
 	material red
 	position .0 0 .0
-	scale 0.08 0.08 0.08
+	scale 0.1 0.1 0.1
 }
 
 mesh
 {
 	file cornell_box/cbox_smallbox.obj
 	material small_box_white
-	position .0 .000 .0
+	position .0 .043 .0
 	scale 0.04 0.005 0.04
 }
 
@@ -70,7 +70,7 @@ mesh
 {
 	file m_2240/armadilloo.obj
 	material small_box_white
-	position .0 .2 .0
+	position .0 .49 .0
 	scale 0.4 0.4 0.4
 }
 
