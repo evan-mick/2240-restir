@@ -50,7 +50,7 @@ def offset_normal(normal, jitter_degrees=10):
     offset = x * tangent + y * bitangent + z * normal_z
     return offset / np.linalg.norm(offset)
 
-def sample_hemis(world_pos, num_lights, radius=0.3):
+def sample_hemis(world_pos, num_lights, radius=0.3, up=True):
     points = []
     norms = []
 
@@ -61,8 +61,8 @@ def sample_hemis(world_pos, num_lights, radius=0.3):
     if rings < 1:
         rings = 1
 
-    # Allocate points to rings based on sin(theta) to approximate uniform area sampling
-    theta_vals = [math.pi / 2 + (math.pi / 2) * (i / rings) for i in range(1, rings + 1)]
+    # Sample theta from 0 to π/2 (upper hemisphere)
+    theta_vals = [(math.pi / 2) * (i / rings) for i in range(1, rings + 1)]
     weights = [math.sin(t) for t in theta_vals]
     total_weight = sum(weights)
 
@@ -71,18 +71,25 @@ def sample_hemis(world_pos, num_lights, radius=0.3):
 
     for theta, count in zip(theta_vals, per_ring_counts):
         for j in range(count):
-            phi = (2 * math.pi * j) / count  # full circle around Y
+            phi = (2 * math.pi * j) / count  # full circle
 
             # Spherical to Cartesian
             x = math.sin(theta) * math.cos(phi)
             y = math.cos(theta)
             z = math.sin(theta) * math.sin(phi)
 
+            a = -1.0
+            if not up:
+                y = -y  # Flip the hemisphere downward
+                a = 1.0
+
+
             normal = np.array([x, y, z])
-            point = world_pos + radius * normal  # apply radius here
+            point = world_pos + radius * normal
+            normal *= a
 
             points.append(point.tolist())
-            norms.append(normal.tolist())  # still unit vector
+            norms.append(normal.tolist())
 
     return points, norms
 
@@ -169,17 +176,17 @@ def write_scene_with_lights(original_lines, lights, out_path):
 
 if __name__ == "__main__":
     # Scene files
-    dome_pos = (0, 12, 0)
+    dome_pos = (0, -7, 0)
     num_lights = 1000
     scene = "a__geom"
     input_scene_path = f"assets/{scene}.scene"
-    base_output_name = f"assets/a__aaa_teststarry_night{scene}"
+    base_output_name = f"assets/a__aaa_aupteststarry_night{scene}"
     output_scene_path = f"{base_output_name}_{num_lights}.scene"
    
     
     base_scene = parse_scene(input_scene_path)
 
-    points, normals = sample_hemis(dome_pos, num_lights=num_lights, radius=9)
+    points, normals = sample_hemis(dome_pos, num_lights=num_lights, radius=9, up=True)
     normals = [offset_normal(n, jitter_degrees=90) for n in normals]
 
     lights = []
