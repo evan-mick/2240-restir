@@ -20,7 +20,7 @@ in vec2 TexCoords;
 #include /../common/restir.glsl
 
 const int radius = 16;
-const int num_iters = 4;
+const int num_iters = 32;
 const int num_neighs = 4;
 const float valid_dist_thresh = 0.1; //10%
 
@@ -54,14 +54,18 @@ void main(void)
     ivec2 cur_pix = ivec2(gl_FragCoord.xy);
     Reservoir cur = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
 
-    for (int i = 0; i < num_iters; i++) {
-        for (int n = 0; n < num_neighs; n++) {
-            ivec2 offset = get_offset();
-            ivec2 neigh = cur_pix + offset;
-            if (in_bounds(neigh)) {
-                Reservoir neighbor = GetReservoirFromPosition(neigh);
-                if (mergeable(cur, neighbor)) {
-                    cur = CombineReservoirs(cur, neighbor);
+    bool useSpatial = (TexCoords.x < 0.5);
+
+    if (useSpatial) {
+        for (int i = 0; i < num_iters; i++) {
+            for (int n = 0; n < num_neighs; n++) {
+                ivec2 offset = get_offset();
+                ivec2 neigh = cur_pix + offset;
+                if (in_bounds(neigh)) {
+                    Reservoir neighbor = GetReservoirFromPosition(neigh);
+                    if (mergeable(cur, neighbor)) {
+                        cur = CombineReservoirs(cur, neighbor);
+                    }
                 }
             }
         }
