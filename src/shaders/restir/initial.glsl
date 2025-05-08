@@ -135,7 +135,7 @@ Reservoir GetTemporalNeighbor(Reservoir cur) {
     res.sam.weight = 0;
 
     vec2 coord = getRasterCoord(cur.sam.hitPosition, prevCamera.position);
-    //return GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
+    return GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
 
     if (coord.x >= 0 && coord.y >= 0 && coord.x < resolution.x && coord.y < resolution.y) {
         return GetReservoirFromPosition(ivec2(coord));
@@ -232,7 +232,10 @@ void main(void)
         ret.fullDirection = lightSample.direction * lightSample.dist; // THIS DOESN"T MAKE SENSE
 
         float pHat = CalculatePHat(Ld);
-        ret.weight = (pHat / lightSample.pdf);
+        if (lightSample.pdf > 0.0f)
+            ret.weight = (pHat / lightSample.pdf);
+        else
+            ret.weight = 0;
 
         //for efficiency we should move this outside of the loop and only do it
         //for the surviving candidate
@@ -242,8 +245,8 @@ void main(void)
     }
     cur.W = CalculateW(cur); // -nan right now
 
-    //if (frameNum > 5)
-    //    cur = CombineReservoirs(cur, GetTemporalNeighbor(cur));
+    if (frameNum > 5)
+        cur = CombineReservoirs(cur, GetTemporalNeighbor(cur));
 
     int index = cur.sam.index;
     vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;

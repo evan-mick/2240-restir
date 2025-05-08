@@ -82,7 +82,18 @@ mat3 GetCameraInverseRotation() {
 //
 float CalculateW(Reservoir res) {
     //return (1.0 / (res.sam.radiance)) * (res.sumWeights / float(res.numberOfWeights));
-    return ((res.sumWeights) / float(res.numberOfWeights)) / (res.sam.weight * float(res.sam.pdf));
+
+    float denom = res.sam.weight * float(res.sam.pdf);
+
+    if (denom > 0)
+        denom = float(res.numberOfWeights) / denom;
+    else
+        return 0.0;
+
+    if (denom > 0)
+        return (res.sumWeights) / denom;
+
+    return 0.0;
 }
 //Reservoir UpdateReservoir(Reservoir r, LightSampleRec s)
 //{
@@ -108,8 +119,9 @@ float CalculatePHat(vec3 radiance) {
 
 Reservoir CombineReservoirs(Reservoir main, Reservoir new)
 {
-    main = UpdateReservoir(main, new.sam, float(new.W) * float(new.numberOfWeights) * (float(new.sam.weight) * new.sam.pdf));
-    main.numberOfWeights += new.numberOfWeights;
+    float safeNumberOfWeights = min(20.0 * float(main.numberOfWeights), float(new.numberOfWeights));
+    main = UpdateReservoir(main, new.sam, float(new.W) * safeNumberOfWeights * (float(new.sam.weight) * new.sam.pdf));
+    //main.numberOfWeights += int(safeNumberOfWeights);
     //main.sumWeights += new.sumWeights;
     main.W = CalculateW(main);
     return main;
