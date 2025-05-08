@@ -245,9 +245,6 @@ void main(void)
     }
     cur.W = CalculateW(cur); // -nan right now
 
-    if (frameNum > 5)
-        cur = CombineReservoirs(cur, GetTemporalNeighbor(cur));
-
     int index = cur.sam.index;
     vec3 position = texelFetch(lightsTex, ivec2(index + 0, 0), 0).xyz;
     vec3 emission = texelFetch(lightsTex, ivec2(index + 1, 0), 0).xyz;
@@ -265,6 +262,12 @@ void main(void)
     bool inShadow = AnyHit(shadowRay, lightSample.dist - EPS);
     if (inShadow)
         cur.W = 0;
+
+    if (frameNum > 5) {
+        Reservoir prev = GetTemporalNeighbor(cur);
+        prev.W = min(20*cur.W, prev.W);
+        cur = CombineReservoirs(cur, prev);
+    }
 
     SaveReservoir(cur);
     //reservoirOut0.z = cur.sam.weight; //texelFetch(reservoirs0, ivec2(gl_FragCoord.xy), 0);
