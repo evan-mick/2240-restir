@@ -609,7 +609,7 @@ namespace GLSLPT
             glDrawBuffers(5, drawBuffers);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
-            SetReservoirFramebufferAttachments(true);
+            SetReservoirFramebufferAttachments(false);
             quad->Draw(initialSampleShader);
 
             glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);
@@ -617,7 +617,7 @@ namespace GLSLPT
             glDrawBuffers(5, drawBuffers);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
-            SetReservoirFramebufferAttachments(false);
+            SetReservoirFramebufferAttachments(true);
             quad->Draw(spatialSampleShader);
 
             // Renders to pathTraceTexture while using previously accumulated samples from accumTexture
@@ -629,11 +629,12 @@ namespace GLSLPT
             glDrawBuffers(5, drawBuffers);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, accumTexture);
-            SetReservoirFramebufferAttachments(true);
+            SetReservoirFramebufferAttachments(false);
             quad->Draw(pathTraceShader);
             //std::cout << std::endl;
             
             DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*4]);
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*4 + 1]);
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*4 + 1]);
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*4 + 2]);
 

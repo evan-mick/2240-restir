@@ -68,8 +68,7 @@ Reservoir GetReservoirFromPosition(ivec2 pos) {
 Reservoir UpdateReservoir(Reservoir r, ReservoirSample sam, float weight) {
     r.sumWeights += weight;
     r.numberOfWeights += 1;
-    float weightDiv = weight / r.sumWeights;
-    if (rand() < (weightDiv)) {
+    if (weight * rand() < r.sumWeights) {
         r.sam = sam;
     }
     return r;
@@ -80,10 +79,23 @@ mat3 GetCameraInverseRotation() {
 }
 
 //
+//float CalculateW(Reservoir res) {
+//    float safePdf = max(res.sam.pdf, 1e-6);
+//    float safeWeight = max(res.sam.weight, 1e-6);
+//    //return (1.0 / (res.sam.radiance)) * (res.sumWeights / float(res.numberOfWeights));
+//    return ((res.sumWeights) / float(res.numberOfWeights)) / (safeWeight * safePdf);
+//}
+
 float CalculateW(Reservoir res) {
-    //return (1.0 / (res.sam.radiance)) * (res.sumWeights / float(res.numberOfWeights));
-    return ((res.sumWeights) / float(res.numberOfWeights)) / (res.sam.weight * float(res.sam.pdf));
+    if (res.numberOfWeights == 0) return 0.0;
+    float denom = res.sam.weight * res.sam.pdf;
+    if (denom <= 0.0 || isinf(denom)) return 0.0;
+
+    float W = res.sumWeights / float(res.numberOfWeights) / denom;
+
+    return !isinf(W) ? W : 0.0;
 }
+
 //Reservoir UpdateReservoir(Reservoir r, LightSampleRec s)
 //{
 //    float weight = s.pdf; // NEED TO LOOK INTO THIS
@@ -108,9 +120,26 @@ float CalculatePHat(vec3 radiance) {
 
 Reservoir CombineReservoirs(Reservoir main, Reservoir new)
 {
-    main = UpdateReservoir(main, new.sam, float(new.W) * float(new.numberOfWeights) * (float(new.sam.weight) * new.sam.pdf));
+    /*Reservoir ret;
+
+                        ret = UpdateReservoir(ret, main.sam, float(main.W) * float(main.numberOfWeights) * (CalculatePHat(main.sam.radiance)));
+                        ret = UpdateReservoir(ret, new.sam, float(new.W) * float(new.numberOfWeights) * (CalculatePHat(new.sam.radiance)));
+
+                        ret.numberOfWeights = main.numberOfWeights + new.numberOfWeights;
+
+                        ret.W = (1 / CalculatePHat(new.sam.radiance)) * ret.sumWeights / float(ret.numberOfWeights);*/
+
+    //main = UpdateReservoir(main, new.sam, float(new.W) * float(new.numberOfWeights) * (float(new.sam.weight) * new.sam.pdf));
+    // https://github.com/HummaWhite/ReSTIR/blob/50d5d7ded551b0ac894ba690e7476b52a4845cec/src/restir.h
+
+    main.sumWeights += new.sumWeights;
     main.numberOfWeights += new.numberOfWeights;
+
+    if (rand() * main.sumWeights < new.sumWeights) {
+        main.sam = new.sam;
+    }
+    //main.numberOfWeights += new.numberOfWeights;
     //main.sumWeights += new.sumWeights;
-    main.W = CalculateW(main);
+    //main.W = CalculateW(main);
     return main;
 }
