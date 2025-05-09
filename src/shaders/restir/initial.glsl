@@ -116,6 +116,24 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     return ret;
 }
 
+bool getWorldPoint(out vec3 pos) {
+    vec2 d = (TexCoords * 2.0 - 1.0);
+    float scale = tan(camera.fov * 0.5);
+    d.y *= resolution.y / resolution.x * scale;
+    d.x *= scale;
+    vec3 rayDir = normalize(d.x * camera.right + d.y * camera.up + camera.forward);
+    Ray ray = Ray(camera.position, rayDir);
+
+    State state;
+
+    LightSampleRec lightSample;
+    bool hit = ClosestHit(ray, state, lightSample);
+
+    pos = state.fhp;
+
+    return hit;
+}
+
 vec2 getRasterCoord(vec3 cameraPos, vec3 worldPos) {
     vec3 dir = normalize(worldPos - cameraPos);
     float d = 1.f / dot(dir, camera.forward); // was view
@@ -138,12 +156,16 @@ Reservoir GetTemporalNeighbor(Reservoir cur) {
     Reservoir res;
     res.sam.weight = 0;
 
-    vec2 coord = gl_FragCoord.xy; //getRasterCoord(camera.position, cur.sam.hitPosition);
-    //res = ResetReservoirCounters(GetReservoirFromPosition(ivec2(gl_FragCoord.xy)));
-    //return res;
+    vec3 pos;
+    bool hit = getWorldPoint(pos);
+
+    vec2 coord = getRasterCoord(prevCamera.position, pos);
+    res = ResetReservoirCounters(GetReservoirFromPosition(ivec2(gl_FragCoord.xy)));
+    return res;
+    //reservoirOut0 = vec4(hit, resolution, 0);
     //reservoirOut1 = vec4(coord, gl_FragCoord.xy);
 
-    if (coord.x >= 0 && coord.y >= 0 && coord.x < resolution.x && coord.y < resolution.y) {
+    if (hit && coord.x >= 0 && coord.y >= 0 && coord.x < resolution.x && coord.y < resolution.y) {
         return ResetReservoirCounters(GetReservoirFromPosition(ivec2(coord)));
     }
 
@@ -191,7 +213,7 @@ void main(void)
     bool hit = ClosestHit(ray, state, lightSample);
 
     ReservoirSample sam;
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < 1; i++) {
         int index = int(rand() * float(numOfLights)) * 5;
 
         //// Fetch light Data
@@ -251,7 +273,7 @@ void main(void)
     }
     cur.W = CalculateW(cur); // -nan right now
 
-    if (frameNum > 5)
+    if (frameNum > 3)
         cur = CombineReservoirs(cur, GetTemporalNeighbor(cur));
 
     int index = cur.sam.index;
