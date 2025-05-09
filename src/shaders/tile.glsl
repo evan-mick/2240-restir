@@ -77,14 +77,14 @@ void main(void)
 
     LightSampleRec rec;
 
-    bool useRestir = true; //(TexCoords.x < 0.5);
+    bool useRestir = (TexCoords.x < 0.5);
     vec4 pixelColor = vec4(0, 0, 0, 1.0);
     for (int i = 0; i < 1; i++) {
         pixelColor += PathTraceFull(ray, useRestir, rec);
     }
 
     // Multiply by W for reservoir
-    Reservoir reser = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
+    //Reservoir reser = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
     //float W = useRestir ? CalculateW(reser) : 1.0; // TODO: Figure this stuff out
     //pixelColor.xyz /= 2;
     //pixelColor /= 4;

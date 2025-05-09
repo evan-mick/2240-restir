@@ -23,6 +23,9 @@ struct Reservoir {
     // big W (weight offset) = 1/radiance * (sumWeights / numberOfWeights)
 };*/
 
+const float valid_dist_thresh = 0.1; //10%
+const int radius = 16;
+
 Reservoir ResetReservoirCounters(Reservoir res) {
     res.sumWeights = res.sam.weight > 0.0 ? res.sam.weight : 0.0;
     res.numberOfWeights = res.sam.weight > 0.0 ? 1 : 0;
@@ -86,8 +89,33 @@ Reservoir UpdateReservoir(Reservoir r, ReservoirSample sam, float weight) {
     return r;
 }
 
-mat3 GetCameraInverseRotation() {
-    return transpose(mat3(prevCamera.right, prevCamera.up, prevCamera.forward)); // orthonormal matrix inverse is transpose, thx gpt
+mat3 GetCameraInverseRotation(Camera cam) {
+    return inverse(mat3(cam.right, cam.up, cam.forward)); // orthonormal matrix inverse is transpose, thx gpt
+}
+
+ivec2 get_offset() {
+    float a = rand();
+    float b = rand();
+    float x_disp = sqrt(b) * cos(TWO_PI * a);
+    float y_disp = sqrt(b) * sin(TWO_PI * a);
+    x_disp *= radius;
+    y_disp *= radius;
+    return ivec2(int(x_disp), int(y_disp));
+}
+
+bool in_bounds(ivec2 neigh) {
+    return (neigh.x >= 0 && neigh.x < resolution.x && neigh.y >= 0 && neigh.y < resolution.y);
+}
+
+bool mergeable(Reservoir cur, Reservoir neighbor) {
+    float dot = dot(cur.sam.hitPosition, neighbor.sam.hitPosition);
+    bool sim_norms = dot > 0.9;
+    float dist_range = cur.sam.camDist * valid_dist_thresh;
+    float high = cur.sam.camDist + dist_range;
+    float low = cur.sam.camDist - dist_range;
+    bool sim_dists = neighbor.sam.camDist < high && neighbor.sam.camDist > low;
+
+    return sim_dists; //sim_norms && sim_dists;
 }
 
 //

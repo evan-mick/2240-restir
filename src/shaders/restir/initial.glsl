@@ -116,14 +116,18 @@ ReservoirSample GetNewSampleAtPixel(ivec2 pos) {
     return ret;
 }
 
-vec2 getRasterCoord(vec3 pos, vec3 worldPos) {
-    vec3 dir = normalize(pos - worldPos);
+vec2 getRasterCoord(vec3 cameraPos, vec3 worldPos) {
+    vec3 dir = normalize(worldPos - cameraPos);
     float d = 1.f / dot(dir, camera.forward); // was view
 
-    mat3 rotationMatInv = GetCameraInverseRotation();
+    mat3 rotationMatInv = GetCameraInverseRotation(camera);
     vec3 p = rotationMatInv * (dir * d);
     float aspect = resolution.x / resolution.y;
     float tanFovY = tan(radians(prevCamera.fov));
+
+    if (p.z < 0) {
+        return vec2(-1, -1);
+    }
 
     p /= vec3(vec2(aspect, 1.f) * tanFovY, 1.f);
     vec2 ndc = -p.xy;
@@ -134,12 +138,13 @@ Reservoir GetTemporalNeighbor(Reservoir cur) {
     Reservoir res;
     res.sam.weight = 0;
 
-    vec2 coord = getRasterCoord(cur.sam.hitPosition, prevCamera.position);
-    res = ResetReservoirCounters(GetReservoirFromPosition(ivec2(gl_FragCoord.xy)));
-    return res;
+    vec2 coord = gl_FragCoord.xy; //getRasterCoord(camera.position, cur.sam.hitPosition);
+    //res = ResetReservoirCounters(GetReservoirFromPosition(ivec2(gl_FragCoord.xy)));
+    //return res;
+    //reservoirOut1 = vec4(coord, gl_FragCoord.xy);
 
     if (coord.x >= 0 && coord.y >= 0 && coord.x < resolution.x && coord.y < resolution.y) {
-        return GetReservoirFromPosition(ivec2(coord));
+        return ResetReservoirCounters(GetReservoirFromPosition(ivec2(coord)));
     }
 
     return res;
@@ -186,7 +191,7 @@ void main(void)
     bool hit = ClosestHit(ray, state, lightSample);
 
     ReservoirSample sam;
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 32; i++) {
         int index = int(rand() * float(numOfLights)) * 5;
 
         //// Fetch light Data

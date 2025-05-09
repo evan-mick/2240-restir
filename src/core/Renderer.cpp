@@ -611,6 +611,7 @@ namespace GLSLPT
             glBindTexture(GL_TEXTURE_2D, accumTexture);
             SetReservoirFramebufferAttachments(true);
             quad->Draw(initialSampleShader);
+            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*4 + 1]);
 
             glBindFramebuffer(GL_FRAMEBUFFER, pathTraceFBO);
             glViewport(0, 0, renderSize.x, renderSize.y);
@@ -633,7 +634,7 @@ namespace GLSLPT
             quad->Draw(pathTraceShader);
             //std::cout << std::endl;
             
-            DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*4]);
+            //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*4]);
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*4 + 1]);
             //DumpTexDataAtPoint(renderSize.x/2, renderSize.y/2, reservoirTextures[(1 - currentBuffer)*4 + 2]);
 

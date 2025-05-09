@@ -19,35 +19,8 @@ in vec2 TexCoords;
 #include /../common/globals.glsl
 #include /../common/restir.glsl
 
-const int radius = 16;
-const int num_iters = 32;
+const int num_iters = 4;
 const int num_neighs = 4;
-const float valid_dist_thresh = 0.1; //10%
-
-ivec2 get_offset() {
-    float a = rand();
-    float b = rand();
-    float x_disp = sqrt(b) * cos(TWO_PI * a);
-    float y_disp = sqrt(b) * sin(TWO_PI * a);
-    x_disp *= radius;
-    y_disp *= radius;
-    return ivec2(int(x_disp), int(y_disp));
-}
-
-bool in_bounds(ivec2 neigh) {
-    return (neigh.x >= 0 && neigh.x < resolution.x && neigh.y >= 0 && neigh.y < resolution.y);
-}
-
-bool mergeable(Reservoir cur, Reservoir neighbor) {
-    float dot = dot(cur.sam.hitPosition, neighbor.sam.hitPosition);
-    bool sim_norms = dot > 0.9;
-    float dist_range = cur.sam.camDist * valid_dist_thresh;
-    float high = cur.sam.camDist + dist_range;
-    float low = cur.sam.camDist - dist_range;
-    bool sim_dists = neighbor.sam.camDist < high && neighbor.sam.camDist > low;
-
-    return sim_dists; //sim_norms && sim_dists;
-}
 
 void main(void)
 {
