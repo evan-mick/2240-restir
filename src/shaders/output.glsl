@@ -27,13 +27,23 @@
 out vec4 color;
 in vec2 TexCoords;
 
+#include /../common/uniforms.glsl
+
 uniform sampler2D imgTex;
 uniform int xcoord;
+uniform vec2 resolution;
 
 void main()
 {
     color = texture(imgTex, TexCoords);
-    if (abs(gl_FragCoord.x - xcoord) <= 1.0) {
-        color = vec4(1.0, 1.0, 1.0, 1.0); // white band
+    // Get x coordinate in [0,1] range from TexCoords
+    float x = TexCoords.x;
+
+    // Draw 3-pixel wide white vertical bands at 1/3 and 2/3 of the screen
+    // Assuming screen width is normalized to [0,1], we define a threshold in texture space
+    float band_width = 3.0 / resolution.x; // 3 pixels wide, convert to normalized width
+
+    if (abs(x - 1.0/3.0) < band_width * 0.5 || abs(x - 2.0/3.0) < band_width * 0.5) {
+        color = vec4(1.0, 1.0, 1.0, 1.0); // white divider
     }
 }

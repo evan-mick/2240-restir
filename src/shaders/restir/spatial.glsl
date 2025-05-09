@@ -27,7 +27,7 @@ void main(void)
     ivec2 cur_pix = ivec2(gl_FragCoord.xy);
     Reservoir cur = GetReservoirFromPosition(ivec2(gl_FragCoord.xy));
 
-    bool useSpatial = true; //(TexCoords.x < 0.5);
+    bool useSpatial = (TexCoords.x > (2.0/3.0));
 
     if (useSpatial) {
         for (int i = 0; i < num_iters; i++) {

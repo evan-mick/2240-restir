@@ -251,7 +251,7 @@ void main(void)
     }
     cur.W = CalculateW(cur); // -nan right now
 
-    if (frameNum > 5)
+    if (frameNum > 5 && TexCoords.x > (2.0/3.0) )
         cur = CombineReservoirs(cur, GetTemporalNeighbor(cur));
 
     int index = cur.sam.index;

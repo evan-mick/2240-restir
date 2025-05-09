@@ -77,7 +77,7 @@ void main(void)
 
     LightSampleRec rec;
 
-    bool useRestir = (TexCoords.x < 0.5);
+    bool useRestir = (TexCoords.x > (1.0/3.0));
     vec4 pixelColor = vec4(0, 0, 0, 1.0);
     for (int i = 0; i < 1; i++) {
         pixelColor += PathTraceFull(ray, useRestir, rec);

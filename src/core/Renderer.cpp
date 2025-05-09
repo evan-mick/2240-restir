@@ -568,8 +568,9 @@ namespace GLSLPT
         pathTraceShaderLowRes->StopUsing();
 
         outputShader->Use();
-        glUniform1i(glGetUniformLocation(outputShader->getObject(), "xcoord"), restirXBound);
-        pathTraceShaderLowRes->StopUsing();
+        GLuint resLoc = glGetUniformLocation(outputShader->getObject(), "resolution");
+        glUniform2f(resLoc, (float)scene->renderOptions.windowResolution.x, (float)scene->renderOptions.windowResolution.y);
+        outputShader->StopUsing();
         
 
     }
