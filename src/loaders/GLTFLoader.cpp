@@ -363,6 +363,20 @@ namespace GLSLPT
             }
         }
 
+        if(gltfNode.extensions.find("KHR_lights_punctual") != gltfNode.extensions.end()) {
+            int lightIdx = gltfNode.extensions["KHR_lights_punctual"].Get("light").GetNumberAsInt();
+            tinygltf::Light gltf_light = gltfModel.lights[lightIdx];
+            if(gltf_light.type == "point" && rand() < .5) {
+                Light light;
+                light.radius = .1;
+                light.type = LightType::SphereLight;
+                light.area = 4.0f * PI * light.radius * light.radius;
+                light.emission = Vec3((float) gltf_light.intensity * gltf_light.color[0], (float) gltf_light.intensity * gltf_light.color[1], (float) gltf_light.intensity * gltf_light.color[2]);
+                light.position = Vec3(xform[0][3], xform[1][3], xform[2][3]);
+                scene->AddLight(light);
+            }
+        }
+
         for (size_t i = 0; i < gltfNode.children.size(); i++)
         {
             TraverseNodes(scene, gltfModel, gltfNode.children[i], xform, meshPrimMap);
