@@ -1,89 +1,30 @@
 
-# An OpenGL ReSTIR implementation
+# A ReSTIR implementation
 
-This uses a premade pathtracer with modifications on top for direct light sample reuse
-
-Seems like we're doing stuff for "Analytic lights" in "DirectLight" in pathtrace.glsl, around line 216
-
-
-TODO:
-
-- Get a large scene file
-- re-examine sampling strategy
-    - \omega_o or add a position to the light
-- W werid values
+This project uses a premade OpenGL pathtracer with modifications for direct light sample reuse.
+It was done for the course CSCI 2240 Advanced Computer Graphics at Brown University. 
 
 
+### Group: RizzSTIR
+### Members: Arin Idhant, Trey Wiedmann, Evan Mickelson
+### [Paper Link](https://research.nvidia.com/publication/2020-07_spatiotemporal-reservoir-resampling-real-time-ray-tracing-dynamic-direct)
+The paper's authors are
+- Benedikt Bitterli 
+- Chris Wyman
+- Matt Pharr
+- Peter Shirley 
+- Aaron Lefohn
+- Wojciech Jarosz 
 
-- Per pixel jitter
-    - have randomization from pixel level, or same ray shot, but bounce different for different samples
+Honorary papers that were also helpful include [ReSTIR GI](https://research.nvidia.com/publication/2021-06_restir-gi-path-resampling-real-time-path-tracing) and [Generalized Resampled Importance Sampling](https://research.nvidia.com/publication/2022-07_generalized-resampled-importance-sampling-foundations-restir)
 
-Ran into a bug where the reservoirs weren't working creating weird offsets, after much search and logical lookups, it was that we hadn't passed in the uniforms for the camera leading to weird intersections and thus weird samples. 
+Other sources
+- [Gentle introduction](http://intro-to-restir.cwyman.org/)
+- [Understanding the math behind ReSTIR](https://agraphicsguynotes.com/posts/understanding_the_math_behind_restir_di/)
 
+Images
 
-Looking at numbers for pdf doesn't do much. 
-
-Area restir.
-
-
-Scene with many many lights, some of them rotated away. 
-Scene like that will work the best. Bias random triangles to the side. 
-
-Third scene with restir improvements, and see if improvements with spatial reuse. 
-
-Look at reference for temporal reuse. 
-- standard, using ris paper's "domain" changes. 
-- jacobian tacked on to W
-
-
-Some numerical quantification, write a script that can do MSE vs a quantitative render. See quantitatively compared to noise. 
-
-
-Extensions
-- try different methods for calculating weights
-- try different sampling methods
-    - index
-    - direction
-    - index and position
-- tiling system?
-- accumulation stuff
-    - set frames for accumulation
+Here is a link to [our presentation](https://docs.google.com/presentation/d/1OA_NKY1Eo5WP1C1tcTaC8LcgJjIRJX5aoFfvYs4lwVg/edit?usp=sharing)
 
 
 
-Arin -> Lights
-Evan -> Extensions start, getting stuff on better computer
-Trey -> Intel scenes
-
-Will meet saturday at 12, work for a while. Move on to temporal start. 
-
-
-Try different PDFs for extension?
-
-
-Need list of stuff we need for spatial and temporal
-
-Randomize spatial sampling
-
-Storing distance and normal for spatial
-discard if too far
-
-
-Temporal
-previous inverse rotation
-previous position
-previous view/forward
-
-
-camera should be updated to have previous stuff
-put uniforms for previous stuff in
-calculate inverse rotation 
-pass in inverse rotation
-
-copy over code for temporal
-
-
-For our sample
-- emission
-- direction (full)
-- no more pdf (?)
