@@ -25,9 +25,8 @@ Other sources
 Images
 
 In this image, there are 2 blank, non emissive lights outside the cornell box. On the left, ReSTIR is used, on the right, it is not.
-![[./screenshots/restir/cornell_distractor_lights.png]]
+![cornell](./screenshots/restir/cornell_distractor_lights.png)
 
-# Hyperion scene
 
 In the following three images, on the left is our ReSTIR output, and the right is without. All using one super sample
 
