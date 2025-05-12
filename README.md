@@ -28,21 +28,31 @@ In this image, there are 2 blank, non emissive lights outside the cornell box. O
 ![[./screenshots/restir/cornell_distractor_lights.png]]
 
 # Hyperion scene
+
 In the following three images, on the left is our ReSTIR output, and the right is without. All using one super sample
-![[./screenshots/restir/hyperion_restir.png]]
-![[./screenshots/restir/hyperion_ris_vs_none.png]]
+
+![hyperion restir](./screenshots/restir/hyperion_restir.png)
+![hyperion vs none](./screenshots/restir/hyperion_ris_vs_none.png)
+
 Here is a denoised image.
-![[./screenshots/restir/denoiser.png]]
+
+![denoised](./screenshots/restir/denoiser.png)
 
 
 
 Here is a scene with two thousand lights.  
-![[./screenshots/restir/2k_candles.png]]
-![[./screenshots/restir/2k_candles_2.png]]
+
+![candles 1](./screenshots/restir/2k_candles.png)
+
+
+![candles](./screenshots/restir/2k_candles_2.png)
+
 
 On the left is no ReSTIR, the middle is importance sampling, and the right is importance sampling with spatial and temporal reservoir sharing (all of ReSTIR). 
-![[./screenshots/restir/1000_lights.png]]
-![[./screenshots/restir/armadillo_restir.png]]
+
+![1000 lights](./screenshots/restir/1000_lights.png)
+
+![Armadillo](./screenshots/restir/armadillo_restir.png)
 
 
 Here is a link to [our presentation](https://docs.google.com/presentation/d/1OA_NKY1Eo5WP1C1tcTaC8LcgJjIRJX5aoFfvYs4lwVg/edit?usp=sharing)
