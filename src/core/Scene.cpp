@@ -31,52 +31,9 @@
 #include "Scene.h"
 #include "Camera.h"
 #include <array>
-using Face = std::array<Vec3, 4>;
 
 namespace GLSLPT
 {
-    std::array<Vec3, 8> computeCorners(const Vec3& min, const Vec3& max) {
-        return {{
-            {min[0], min[1], min[2]}, // 0: minX, minY, minZ
-            {max[0], min[1], min[2]}, // 1: maxX, minY, minZ
-            {max[0], max[1], min[2]}, // 2: maxX, maxY, minZ
-            {min[0], max[1], min[2]}, // 3: minX, maxY, minZ
-            {min[0], min[1], max[2]}, // 4: minX, minY, maxZ
-            {max[0], min[1], max[2]}, // 5: maxX, minY, maxZ
-            {max[0], max[1], max[2]}, // 6: maxX, maxY, maxZ
-            {min[0], max[1], max[2]}  // 7: minX, maxY, maxZ
-        }};
-    }
-
-    std::array<Face, 6> computeFaces(const Vec3& min, const Vec3& max) {
-        const auto corners = computeCorners(min, max);
-    
-        // Define faces (using indices into 'corners' array)
-        return {{
-            // Front face (Z = maxZ)
-            {corners[4], corners[5], corners[6], corners[7]},
-            // Back face (Z = minZ)
-            {corners[0], corners[3], corners[2], corners[1]},
-            // Left face (X = minX)
-            {corners[0], corners[4], corners[7], corners[3]},
-            // Right face (X = maxX)
-            {corners[1], corners[2], corners[6], corners[5]},
-            // Bottom face (Y = minY)
-            {corners[0], corners[1], corners[5], corners[4]},
-            // Top face (Y = maxY)
-            {corners[3], corners[7], corners[6], corners[2]}
-        }};
-    }
-
-    Vec3 transformVec(const Vec3& v1, const Mat4& transform) {
-
-        Vec3 transformed_v1(transform.data[0][0] * v1[0] + transform.data[0][1] * v1[1] + transform.data[0][2] * v1[2] + transform.data[0][3],
-            transform.data[1][0] * v1[0] + transform.data[1][1] * v1[1] + transform.data[1][2] * v1[2] + transform.data[1][3],
-        transform.data[2][0] * v1[0] + transform.data[2][1] * v1[1] + transform.data[2][2] * v1[2] + transform.data[2][3]);
-
-        return transformed_v1;
-    }
-
     Scene::~Scene()
     {
         for (int i = 0; i < meshes.size(); i++)
@@ -179,73 +136,6 @@ namespace GLSLPT
     {
         int id = meshInstances.size();
         meshInstances.push_back(meshInstance);
-        Vec3 emit = materials[meshInstance.materialID].emission;
-        
-        bool isLight = false; //GLSLPT::Vec3::Length(emit) > .01;
-
-        if(!isLight) {
-            return id;
-        }
-
-        Mesh *mesh = meshes[meshInstance.meshID];
-        const int numTris = mesh->verticesUVX.size() / 3;
-        Mat4 transform = meshInstance.transform;
-        
-        if(mesh->bvh->GetHeight() == 0) {
-            mesh->BuildBVH();
-        }
-        const auto faces = computeFaces(mesh->bvh->Bounds().pmin, mesh->bvh->Bounds().pmax);
-
-        for(const auto &face : faces) {
-            Vec3 v0 = transformVec(face[0], transform);
-            Vec3 v1 = transformVec(face[1], transform);
-            Vec3 v3 = transformVec(face[3], transform);
-
-            Light light;
-
-            light.type = LightType::RectLight;
-            light.position = v0;
-            light.v = v3 - light.position;
-            light.u = v1 - light.position;
-            light.area = Vec3::Length(Vec3::Cross(light.u, light.v));
-            if(light.area < 0) {
-                Vec3 t = light.v;
-                light.v = light.u;
-                light.u = t;
-                light.area = -light.area;
-            }
-            light.emission = Vec3(.1, .1, .1) * emit;
-            lights.push_back(light);
-        }
-
-        /*
-        for(int i = 0; i < numTris; i++) {
-            Vec3 v1(mesh->verticesUVX[3*i + 0][0], mesh->verticesUVX[3*i + 0][1], mesh->verticesUVX[3*i + 0][2]);
-            Vec3 v2(mesh->verticesUVX[3*i + 1][0], mesh->verticesUVX[3*i + 1][1], mesh->verticesUVX[3*i + 1][2]);
-            Vec3 v3(mesh->verticesUVX[3*i + 2][0], mesh->verticesUVX[3*i + 2][1], mesh->verticesUVX[3*i + 2][2]);
-
-            Vec3 _v1(transform.data[0][0] * v1[0] + transform.data[0][1] * v1[1] + transform.data[0][2] * v1[2] + transform.data[0][3],
-                transform.data[1][0] * v1[0] + transform.data[1][1] * v1[1] + transform.data[1][2] * v1[2] + transform.data[1][3],
-            transform.data[2][0] * v1[0] + transform.data[2][1] * v1[1] + transform.data[2][2] * v1[2] + transform.data[2][3]);
-
-            Vec3 _v2(transform.data[0][0] * v2[0] + transform.data[0][1] * v2[1] + transform.data[0][2] * v2[2] + transform.data[0][3],
-                transform.data[1][0] * v2[0] + transform.data[1][1] * v2[1] + transform.data[1][2] * v2[2] + transform.data[1][3],
-            transform.data[2][0] * v2[0] + transform.data[2][1] * v2[1] + transform.data[2][2] * v2[2] + transform.data[2][3]);
-
-            Vec3 _v3(transform.data[0][0] * v3[0] + transform.data[0][1] * v3[1] + transform.data[0][2] * v3[2] + transform.data[0][3],
-                transform.data[1][0] * v3[0] + transform.data[1][1] * v3[1] + transform.data[1][2] * v3[2] + transform.data[1][3],
-            transform.data[2][0] * v3[0] + transform.data[2][1] * v3[1] + transform.data[2][2] * v3[2] + transform.data[2][3]);
-
-            Light light;
-            light.type = LightType::RectLight;
-            light.position = _v1;
-            light.v = _v2 - light.position;
-            light.u = _v3 - light.position;
-            light.area = abs(Vec3::Length(Vec3::Cross(light.u, light.v)));
-            light.emission = emit;
-            lights.push_back(light);
-        }*/
-
         return id;
     }
 
